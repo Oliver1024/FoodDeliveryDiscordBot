@@ -23,7 +23,9 @@ interface BotComponent {
 public class Bot {
 
     @Inject
-    Bot() {}
+    Bot(MessageListener messageListener) {
+        this.messageListener = messageListener;
+    }
 
     @Inject MessageListener messageListener;
 

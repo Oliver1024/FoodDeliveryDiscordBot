@@ -13,10 +13,15 @@ public class CommandModule {
         return sayCommand;
     }
 
-    
     @Provides
     @IntoSet
     public Command provideOrderCommand(OrderCommand orderCommand) {
         return orderCommand;
+    }
+
+    @Provides
+    @IntoSet
+    public Command provideCheckoutCommand(CheckoutCommand checkoutCommand) {
+        return checkoutCommand;
     }
 }
