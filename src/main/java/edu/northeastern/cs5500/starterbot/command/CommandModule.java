@@ -24,4 +24,10 @@ public class CommandModule {
     public Command provideCheckoutCommand(CheckoutCommand checkoutCommand) {
         return checkoutCommand;
     }
+
+    @Provides
+    @IntoSet
+    public Command provideNewOrderCommand(NewOrderCommand newOrderCommand) {
+        return newOrderCommand;
+    }
 }
