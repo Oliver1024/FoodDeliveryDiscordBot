@@ -3,6 +3,7 @@ package edu.northeastern.cs5500.starterbot.controller;
 import com.mongodb.lang.Nullable;
 import edu.northeastern.cs5500.starterbot.model.Restaurant;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
+import java.util.HashMap;
 import javax.inject.Inject;
 
 public class RestaurantController {
@@ -23,6 +24,18 @@ public class RestaurantController {
      */
     @Nullable
     public String getRestaurantName(String toCheckName) {
+        return null;
+    }
+
+    /**
+     * TO DO: check dish number is included in restaurant menu
+     *
+     * @param dishNumber
+     * @param restaurantName
+     * @return HashMap contains dish name and dish price
+     */
+    @Nullable
+    public HashMap<String, Double> getDish(Integer dishNumber, String restaurantName) {
         return null;
     }
 }
