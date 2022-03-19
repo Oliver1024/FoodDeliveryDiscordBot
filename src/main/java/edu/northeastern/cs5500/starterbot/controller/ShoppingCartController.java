@@ -49,6 +49,7 @@ public class ShoppingCartController {
         newCart.setUserId(userId);
         newCart.setUsername(username);
         newCart.setRestaurantName(restaurantName);
+        newCart.setOrderItems(new ArrayList<>());
         // add the object into repository;
         this.shoppingCartRepository.add(newCart);
     }
