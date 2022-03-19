@@ -7,6 +7,7 @@ import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
@@ -82,17 +83,26 @@ public class ShoppingCartController {
     @Nullable
     public HashMap<String, Double> addDish(String userId, HashMap<String, Double> newDish) {
         Collection<ShoppingCart> carts = shoppingCartRepository.getAll();
-        HashMap<String, Double> orderedDishes = newDish;
+        HashMap<String, Double> orderedDishes = new HashMap<>();
         for (ShoppingCart shoppingCart : carts) {
             if (shoppingCart.getUserId().equalsIgnoreCase(userId)) {
                 ArrayList<DishObject> target = shoppingCart.getOrderItems();
+                for (Entry<String, Double> entry : newDish.entrySet()) {
+                    String name = entry.getKey();
+                    double price = entry.getValue();
+                    DishObject dishObject = new DishObject();
+                    dishObject.setDish(name);
+                    dishObject.setPrice(price);
+                    target.add(dishObject);
+                }
+                shoppingCart.setOrderItems(target);
+                shoppingCartRepository.update(shoppingCart);
                 for (DishObject dish : target) {
                     orderedDishes.put(dish.getDish(), dish.getPrice());
                 }
                 return orderedDishes;
             }
         }
-
         return null;
     }
 }
