@@ -84,17 +84,16 @@ public class ShoppingCartController {
     public HashMap<String, Double> addDish(String userId, HashMap<String, Double> newDish) {
         Collection<ShoppingCart> carts = shoppingCartRepository.getAll();
         HashMap<String, Double> orderedDishes = new HashMap<>();
-        ;
         for (ShoppingCart shoppingCart : carts) {
             if (shoppingCart.getUserId().equalsIgnoreCase(userId)) {
                 ArrayList<DishObject> target = shoppingCart.getOrderItems();
                 for (Entry<String, Double> entry : newDish.entrySet()) {
                     String name = entry.getKey();
                     double price = entry.getValue();
-                    DishObject newdish = new DishObject();
-                    newdish.setDish(name);
-                    newdish.setPrice(price);
-                    target.add(newdish);
+                    DishObject dishObject = new DishObject();
+                    dishObject.setDish(name);
+                    dishObject.setPrice(price);
+                    target.add(dishObject);
                 }
                 shoppingCart.setOrderItems(target);
                 shoppingCartRepository.update(shoppingCart);
