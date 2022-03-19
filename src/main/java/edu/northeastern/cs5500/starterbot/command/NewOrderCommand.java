@@ -65,7 +65,6 @@ public class NewOrderCommand implements Command {
             eb.addField("/showcart: ", "to show the shopping cart", false);
             eb.setColor(Color.BLUE);
             event.replyEmbeds(eb.build()).queue();
-            eb.setDescription("aaa");
         }
     }
 }
