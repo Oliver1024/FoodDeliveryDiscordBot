@@ -6,10 +6,9 @@ import edu.northeastern.cs5500.starterbot.model.ShoppingCart;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import net.dv8tion.jda.internal.utils.tuple.Pair;
 
 public class ShoppingCartController {
     GenericRepository<ShoppingCart> shoppingCartRepository;
@@ -22,8 +21,8 @@ public class ShoppingCartController {
     /**
      * check if the user has an unfinished order.
      *
-     * @param userId
-     * @return boolean values
+     * @param userId the user's discord id
+     * @return boolean values indicating whether the user has unfinished order
      */
     @Nonnull
     public Boolean isUserInShoppingCart(String userId) {
@@ -40,9 +39,9 @@ public class ShoppingCartController {
     /**
      * create a new shopping cart for the current user.
      *
-     * @param userId
-     * @param username
-     * @param restaurantName
+     * @param userId the user's discord id
+     * @param username the user's discord nickname
+     * @param restaurantName the restaurant that the user are ordering at
      */
     public void createNewShoppingCart(String userId, String username, String restaurantName) {
         // set new object of cart;
@@ -56,10 +55,10 @@ public class ShoppingCartController {
     }
 
     /**
-     * check user id is in the shopping cart
+     * check if the userId is in the shopping cart
      *
-     * @param userId
-     * @return String restaurant name, otherwise return null
+     * @param userId the user's discord id
+     * @return the restaurant name that the user are ordering at, otherwise return null
      */
     @Nullable
     public String getRestaurantName(String userId) {
@@ -74,31 +73,27 @@ public class ShoppingCartController {
     }
 
     /**
-     * add new order dishes into shopping cart
+     * add new ordered dish into shopping cart and into the online database
      *
-     * @param userId
-     * @param newDish
-     * @return hashMap contains all dishes in the shopping cart
+     * @param userId the user's discord id
+     * @param newDish the new dish to be added into the shopping cart and database
+     * @return Arraylist containing all dishes in the shopping cart
      */
     @Nullable
-    public HashMap<String, Double> addDish(String userId, HashMap<String, Double> newDish) {
+    public ArrayList<Pair<String, Double>> addDish(String userId, Pair<String, Double> newDish) {
         Collection<ShoppingCart> carts = shoppingCartRepository.getAll();
-        HashMap<String, Double> orderedDishes = new HashMap<>();
+        ArrayList<Pair<String, Double>> orderedDishes = new ArrayList<>();
         for (ShoppingCart shoppingCart : carts) {
             if (shoppingCart.getUserId().equalsIgnoreCase(userId)) {
                 ArrayList<DishObject> target = shoppingCart.getOrderItems();
-                for (Entry<String, Double> entry : newDish.entrySet()) {
-                    String name = entry.getKey();
-                    double price = entry.getValue();
-                    DishObject dishObject = new DishObject();
-                    dishObject.setDish(name);
-                    dishObject.setPrice(price);
-                    target.add(dishObject);
-                }
+                DishObject dishObject = new DishObject();
+                dishObject.setDish(newDish.getLeft());
+                dishObject.setPrice(newDish.getRight());
+                target.add(dishObject);
                 shoppingCart.setOrderItems(target);
                 shoppingCartRepository.update(shoppingCart);
                 for (DishObject dish : target) {
-                    orderedDishes.put(dish.getDish(), dish.getPrice());
+                    orderedDishes.add(Pair.of(dish.getDish(), dish.getPrice()));
                 }
                 return orderedDishes;
             }
