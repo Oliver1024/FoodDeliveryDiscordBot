@@ -33,6 +33,12 @@ public class CommandModule {
 
     @Provides
     @IntoSet
+    public Command provideRestaurantsCommand(RestaurantsCommand restaurantsCommand) {
+        return restaurantsCommand;
+    }
+
+    @Provides
+    @IntoSet
     public Command providePreferredNameCommand(PreferredNameCommand preferredNameCommand) {
         return preferredNameCommand;
     }

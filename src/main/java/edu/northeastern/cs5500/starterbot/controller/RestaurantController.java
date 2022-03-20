@@ -19,17 +19,15 @@ public class RestaurantController {
     }
 
     /**
-     * To do: Please implement this function, we need this function to check if the restaurant name
-     * user input is in our database. If so, return the name of the restaurant, otherwise, return
-     * null. And please ignore the case of the input. (you can use .equalsIgnorCase())
+     * Check if the restaurant name that user input is in our database.
      *
-     * @param name
-     * @return
+     * @param name the restaurant name that user input
+     * @return return the name of the restaurant if it exists in the database, otherwise, return
+     *     null.
      */
     @Nullable
     public String getRestaurantName(String toCheckName) {
         // get all restaurants to a Collection
-
         Collection<Restaurant> AllRestaurants = restaurantRepository.getAll();
 
         // compare the name of restaurant ,  if we got the target return the name else return null
@@ -42,17 +40,14 @@ public class RestaurantController {
     }
 
     /**
-     * TO DO: check dish number is included in restaurant menu
+     * Check dish number is included in restaurant menu
      *
-     * @param dishNumber
-     * @param restaurantName
-     * @return HashMap contains dish name and dish price
+     * @param dishNumber the dish number that user input
+     * @param restaurantName the restaurant that the user are ordering at
+     * @return HashMap containing dish names and their corresponding dish prices
      */
     @NotNull
     public HashMap<String, Double> getDish(Integer dishNumber, String restaurantName) {
-        // find the target object of restaurant
-        // get all restaurants to a Collection
-
         Collection<Restaurant> AllRestaurants = restaurantRepository.getAll();
         HashMap<String, Double> target = new HashMap<>();
         for (Restaurant restaurant : AllRestaurants) {
@@ -66,5 +61,20 @@ public class RestaurantController {
             }
         }
         return target;
+    }
+
+    /**
+     * Gets all the names of restaurants in our database
+     *
+     * @return the string with all the restaurants' names
+     */
+    @NotNull
+    public String getAllRestaurantsName() {
+        String restaurantsName = "";
+        Collection<Restaurant> restaurants = restaurantRepository.getAll();
+        for (Restaurant restaurant : restaurants) {
+            restaurantsName = restaurantsName + restaurant.getName() + "\n";
+        }
+        return restaurantsName;
     }
 }
