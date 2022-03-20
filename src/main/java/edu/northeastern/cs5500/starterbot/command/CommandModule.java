@@ -30,4 +30,10 @@ public class CommandModule {
     public Command provideNewOrderCommand(NewOrderCommand newOrderCommand) {
         return newOrderCommand;
     }
+
+    @Provides
+    @IntoSet
+    public Command providePreferredNameCommand(PreferredNameCommand preferredNameCommand) {
+        return preferredNameCommand;
+    }
 }
