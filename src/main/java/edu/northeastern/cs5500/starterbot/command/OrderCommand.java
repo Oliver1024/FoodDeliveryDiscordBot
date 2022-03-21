@@ -74,7 +74,6 @@ public class OrderCommand implements Command {
                     shoppingCartController.addDish(user.getId(), orderDish);
             EmbedBuilder eb = new EmbedBuilder();
             eb.setTitle("Shopping cart: ");
-            eb.addBlankField(false);
             eb.setDescription(
                     "**"
                             + orderDish.getLeft()
