@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.interactions.commands.CommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+import net.dv8tion.jda.internal.utils.tuple.Pair;
 
 @Singleton
 @Slf4j
@@ -50,7 +51,14 @@ public class OrderCommand implements Command {
         }
 
         if (userInput.equalsIgnoreCase("random")) {
-            event.reply("random order food").queue();
+            Pair<String, Integer> randomDishPair = restaurantController.randomDish(restaurantName);
+            event.reply(
+                            "how about order "
+                                    + randomDishPair.getLeft()
+                                    + "? Type `/order "
+                                    + randomDishPair.getRight()
+                                    + "` to order this dish")
+                    .queue();
         } else if (userInput.matches("[+-]?\\d*(\\.\\d+)?")) {
             HashMap<String, Double> orderDish =
                     restaurantController.getDish(Integer.parseInt(userInput), restaurantName);
