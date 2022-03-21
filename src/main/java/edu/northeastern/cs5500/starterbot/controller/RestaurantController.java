@@ -6,9 +6,10 @@ import edu.northeastern.cs5500.starterbot.model.Restaurant;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Random;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import org.jetbrains.annotations.NotNull;
+import net.dv8tion.jda.internal.utils.tuple.Pair;
 
 public class RestaurantController {
     GenericRepository<Restaurant> restaurantRepository;
@@ -46,21 +47,20 @@ public class RestaurantController {
      * @param restaurantName the restaurant that the user are ordering at
      * @return HashMap containing dish names and their corresponding dish prices
      */
-    @NotNull
-    public HashMap<String, Double> getDish(Integer dishNumber, String restaurantName) {
-        Collection<Restaurant> AllRestaurants = restaurantRepository.getAll();
-        HashMap<String, Double> target = new HashMap<>();
-        for (Restaurant restaurant : AllRestaurants) {
+    @Nullable
+    public Pair<String, Double> getDish(Integer dishNumber, String restaurantName) {
+        Collection<Restaurant> restaurants = restaurantRepository.getAll();
+        for (Restaurant restaurant : restaurants) {
             if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
                 ArrayList<DishObject> menu = restaurant.getMenu();
-                if (menu.size() >= dishNumber && dishNumber > 0) {
+                if (dishNumber > 0 && dishNumber <= menu.size()) {
                     String name = menu.get(dishNumber - 1).getDish();
                     double price = menu.get(dishNumber - 1).getPrice();
-                    target.put(name, price);
+                    return Pair.of(name, price);
                 }
             }
         }
-        return target;
+        return null;
     }
 
     /**
@@ -68,7 +68,7 @@ public class RestaurantController {
      *
      * @return the string with all the restaurants' names
      */
-    @NotNull
+    @Nonnull
     public String getAllRestaurantsName() {
         String restaurantsName = "";
         Collection<Restaurant> restaurants = restaurantRepository.getAll();
@@ -76,5 +76,26 @@ public class RestaurantController {
             restaurantsName = restaurantsName + restaurant.getName() + "\n";
         }
         return restaurantsName;
+    }
+
+    /**
+     * To randomly select one dish from the given restaurant.
+     *
+     * @param the restaurant that the user are ordering at
+     * @return the pair of dish name and dish price as the random dish
+     */
+    @Nullable
+    public Pair<String, Integer> randomDish(String restaurantName) {
+        Collection<Restaurant> restaurants = restaurantRepository.getAll();
+        for (Restaurant restaurant : restaurants) {
+            if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
+                Integer numOfDishes = restaurant.getMenu().size();
+                Random rand = new Random();
+                Integer randomIndex = rand.nextInt(numOfDishes);
+                String randomDish = restaurant.getMenu().get(randomIndex).getDish();
+                return Pair.of(randomDish, randomIndex + 1);
+            }
+        }
+        return null;
     }
 }
