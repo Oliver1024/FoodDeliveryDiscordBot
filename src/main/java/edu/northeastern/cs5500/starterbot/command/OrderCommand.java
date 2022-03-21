@@ -3,7 +3,8 @@ package edu.northeastern.cs5500.starterbot.command;
 import edu.northeastern.cs5500.starterbot.controller.RestaurantController;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
 import java.awt.Color;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,6 @@ import net.dv8tion.jda.api.interactions.commands.CommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
-import net.dv8tion.jda.internal.utils.tuple.Pair;
 
 @Singleton
 @Slf4j
@@ -32,14 +32,9 @@ public class OrderCommand implements Command {
 
     @Override
     public CommandData getCommandData() {
-        return new CommandData(
-                        getName(),
-                        "please type in a number to order the corresponding dish, or 'random' to ask bot to recommend one for you.")
+        return new CommandData(getName(), "please order")
                 .addOptions(
-                        new OptionData(
-                                        OptionType.STRING,
-                                        "content",
-                                        "please type in a number to order the corresponding dish, or 'random' to ask bot to recommend one for you.")
+                        new OptionData(OptionType.STRING, "content", "please order")
                                 .setRequired(true));
     }
 
@@ -55,49 +50,27 @@ public class OrderCommand implements Command {
         }
 
         if (userInput.equalsIgnoreCase("random")) {
-            Pair<String, Integer> randomDishPair = restaurantController.randomDish(restaurantName);
-            event.reply(
-                            "how about order "
-                                    + randomDishPair.getLeft()
-                                    + "? Type `/order "
-                                    + randomDishPair.getRight()
-                                    + "` to order this dish")
-                    .queue();
+            event.reply("random order food").queue();
         } else if (userInput.matches("[+-]?\\d*(\\.\\d+)?")) {
-            Pair<String, Double> orderDish =
+            HashMap<String, Double> orderDish =
                     restaurantController.getDish(Integer.parseInt(userInput), restaurantName);
             if (orderDish == null) {
                 event.reply("enter right number of dish").queue();
                 return;
             }
-            ArrayList<Pair<String, Double>> totalDishes =
+            HashMap<String, Double> totalDishes =
                     shoppingCartController.addDish(user.getId(), orderDish);
             EmbedBuilder eb = new EmbedBuilder();
             eb.setTitle("Shopping cart: ");
-            eb.setDescription(
-                    "**"
-                            + orderDish.getLeft()
-                            + "** has been added! Your cart at **"
-                            + restaurantName
-                            + "** include: ");
-            Double totalPrice = 0.0;
+            eb.setDescription("Your order dishes at " + restaurantName + ": ");
 
-            for (int i = 0; i < totalDishes.size(); i++) {
-                Pair<String, Double> curDish = totalDishes.get(i);
-                String dish = curDish.getLeft();
-                Double price = curDish.getRight();
-                totalPrice += price;
-                eb.addField((i + 1) + ". " + dish + ": ", "$" + price.toString(), false);
+            for (Map.Entry<String, Double> entry : totalDishes.entrySet()) {
+                String dish = entry.getKey();
+                Double price = entry.getValue();
+                eb.addField(dish + ": ", price.toString(), true);
             }
-            eb.addBlankField(false);
-            eb.addField("Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
-
-            eb.setColor(Color.GREEN);
+            eb.setColor(Color.BLUE);
             event.replyEmbeds(eb.build()).queue();
-        } else {
-            event.reply(
-                            "please type in a number to order the corresponding dish, or type in 'random' to ask bot to recommend one for you.")
-                    .queue();
         }
     }
 }
