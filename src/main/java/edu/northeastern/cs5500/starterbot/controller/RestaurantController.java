@@ -7,7 +7,9 @@ import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Random;
 import javax.inject.Inject;
+import net.dv8tion.jda.internal.utils.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
 public class RestaurantController {
@@ -76,5 +78,26 @@ public class RestaurantController {
             restaurantsName = restaurantsName + restaurant.getName() + "\n";
         }
         return restaurantsName;
+    }
+
+    /**
+     * To randomly select one dish from the given restaurant.
+     *
+     * @param
+     * @return the pair of dish name and dish price as the random dish
+     */
+    @Nullable
+    public Pair<String, Integer> randomDish(String restaurantName) {
+        Collection<Restaurant> restaurants = restaurantRepository.getAll();
+        for (Restaurant restaurant : restaurants) {
+            if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
+                Integer numOfDishes = restaurant.getMenu().size();
+                Random rand = new Random();
+                Integer randomIndex = rand.nextInt(numOfDishes);
+                String randomDish = restaurant.getMenu().get(randomIndex).getDish();
+                return Pair.of(randomDish, randomIndex + 1);
+            }
+        }
+        return null;
     }
 }
