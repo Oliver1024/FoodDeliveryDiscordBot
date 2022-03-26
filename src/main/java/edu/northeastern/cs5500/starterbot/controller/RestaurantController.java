@@ -6,7 +6,6 @@ import edu.northeastern.cs5500.starterbot.model.Restaurant;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Random;
 import javax.inject.Inject;
 import net.dv8tion.jda.internal.utils.tuple.Pair;
@@ -48,21 +47,20 @@ public class RestaurantController {
      * @param restaurantName the restaurant that the user are ordering at
      * @return HashMap containing dish names and their corresponding dish prices
      */
-    @NotNull
-    public HashMap<String, Double> getDish(Integer dishNumber, String restaurantName) {
+    @Nullable
+    public Pair<String, Double> getDish(Integer dishNumber, String restaurantName) {
         Collection<Restaurant> AllRestaurants = restaurantRepository.getAll();
-        HashMap<String, Double> target = new HashMap<>();
         for (Restaurant restaurant : AllRestaurants) {
             if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
                 ArrayList<DishObject> menu = restaurant.getMenu();
-                if (menu.size() >= dishNumber && dishNumber > 0) {
+                if (dishNumber > 0 && dishNumber <= menu.size()) {
                     String name = menu.get(dishNumber - 1).getDish();
                     double price = menu.get(dishNumber - 1).getPrice();
-                    target.put(name, price);
+                    return Pair.of(name, price);
                 }
             }
         }
-        return target;
+        return null;
     }
 
     /**
