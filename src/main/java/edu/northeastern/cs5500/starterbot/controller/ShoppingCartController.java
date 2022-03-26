@@ -6,10 +6,9 @@ import edu.northeastern.cs5500.starterbot.model.ShoppingCart;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import net.dv8tion.jda.internal.utils.tuple.Pair;
 
 public class ShoppingCartController {
     GenericRepository<ShoppingCart> shoppingCartRepository;
@@ -81,24 +80,20 @@ public class ShoppingCartController {
      * @return hashMap contains all dishes in the shopping cart
      */
     @Nullable
-    public HashMap<String, Double> addDish(String userId, HashMap<String, Double> newDish) {
+    public ArrayList<Pair<String, Double>> addDish(String userId, Pair<String, Double> newDish) {
         Collection<ShoppingCart> carts = shoppingCartRepository.getAll();
-        HashMap<String, Double> orderedDishes = new HashMap<>();
+        ArrayList<Pair<String, Double>> orderedDishes = new ArrayList<>();
         for (ShoppingCart shoppingCart : carts) {
             if (shoppingCart.getUserId().equalsIgnoreCase(userId)) {
                 ArrayList<DishObject> target = shoppingCart.getOrderItems();
-                for (Entry<String, Double> entry : newDish.entrySet()) {
-                    String name = entry.getKey();
-                    double price = entry.getValue();
-                    DishObject dishObject = new DishObject();
-                    dishObject.setDish(name);
-                    dishObject.setPrice(price);
-                    target.add(dishObject);
-                }
+                DishObject dishObject = new DishObject();
+                dishObject.setDish(newDish.getLeft());
+                dishObject.setPrice(newDish.getRight());
+                target.add(dishObject);
                 shoppingCart.setOrderItems(target);
                 shoppingCartRepository.update(shoppingCart);
                 for (DishObject dish : target) {
-                    orderedDishes.put(dish.getDish(), dish.getPrice());
+                    orderedDishes.add(Pair.of(dish.getDish(), dish.getPrice()));
                 }
                 return orderedDishes;
             }

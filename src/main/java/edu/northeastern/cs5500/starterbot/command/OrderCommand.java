@@ -3,8 +3,7 @@ package edu.northeastern.cs5500.starterbot.command;
 import edu.northeastern.cs5500.starterbot.controller.RestaurantController;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
 import java.awt.Color;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -60,25 +59,39 @@ public class OrderCommand implements Command {
                                     + "` to order this dish")
                     .queue();
         } else if (userInput.matches("[+-]?\\d*(\\.\\d+)?")) {
-            HashMap<String, Double> orderDish =
+            Pair<String, Double> orderDish =
                     restaurantController.getDish(Integer.parseInt(userInput), restaurantName);
             if (orderDish == null) {
                 event.reply("enter right number of dish").queue();
                 return;
             }
-            HashMap<String, Double> totalDishes =
+            ArrayList<Pair<String, Double>> totalDishes =
                     shoppingCartController.addDish(user.getId(), orderDish);
             EmbedBuilder eb = new EmbedBuilder();
             eb.setTitle("Shopping cart: ");
-            eb.setDescription("Your order dishes at " + restaurantName + ": ");
+            eb.setDescription(
+                    "**"
+                            + orderDish.getLeft()
+                            + "** has been added! Your cart at **"
+                            + restaurantName
+                            + "** include: ");
+            Double totalPrice = 0.0;
 
-            for (Map.Entry<String, Double> entry : totalDishes.entrySet()) {
-                String dish = entry.getKey();
-                Double price = entry.getValue();
-                eb.addField(dish + ": ", price.toString(), true);
+            for (int i = 0; i < totalDishes.size(); i++) {
+                Pair<String, Double> curDish = totalDishes.get(i);
+                String dish = curDish.getLeft();
+                Double price = curDish.getRight();
+                totalPrice += price;
+                eb.addField((i + 1) + ". " + dish + ": ", "$" + price.toString(), false);
             }
-            eb.setColor(Color.BLUE);
+            eb.addField("Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
+
+            eb.setColor(Color.GREEN);
             event.replyEmbeds(eb.build()).queue();
+        } else {
+            event.reply(
+                            "please type in a number to order the corresponding dish, or 'random' to ask bot recommend one for you.")
+                    .queue();
         }
     }
 }
