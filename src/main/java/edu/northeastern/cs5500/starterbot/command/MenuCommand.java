@@ -11,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.CommandInteraction;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 @Singleton
 @Slf4j
@@ -31,7 +33,10 @@ public class MenuCommand implements Command {
     // need change
     @Override
     public CommandData getCommandData() {
-        return new CommandData(getName(), "command");
+        return new CommandData(getName(), "menu")
+                .addOptions(
+                        new OptionData(OptionType.STRING, "content", "show  menu")
+                                .setRequired(false));
     }
 
     @Override
