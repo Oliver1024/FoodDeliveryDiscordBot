@@ -98,4 +98,15 @@ public class RestaurantController {
         }
         return null;
     }
+
+    @Nullable
+    public ArrayList<DishObject> getMenu(String restaurantName) {
+        Collection<Restaurant> AllRestaurants = restaurantRepository.getAll();
+        for (Restaurant restaurant : AllRestaurants) {
+            if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
+                return restaurant.getMenu();
+            }
+        }
+        return null;
+    }
 }
