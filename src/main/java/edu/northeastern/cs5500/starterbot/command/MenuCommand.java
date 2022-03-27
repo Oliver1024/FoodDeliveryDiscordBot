@@ -31,13 +31,6 @@ public class MenuCommand implements Command {
     // need change
     @Override
     public CommandData getCommandData() {
-        // return new CommandData(getName(), "Tell the bot what name to address you with")
-        //         .addOptions(
-        //                 new OptionData(
-        //                                 OptionType.STRING,
-        //                                 "menu",
-        //                                 "The bot will state the menu you are choosing")
-        //                         .setRequired(true));
         return new CommandData(getName(), "command");
     }
 
@@ -67,7 +60,6 @@ public class MenuCommand implements Command {
         eb.setTitle(restaurantName + "'s menu: ");
         ArrayList<DishObject> resultMenu = restaurantController.getMenu(restaurantName);
         for (int index = 0; index < resultMenu.size(); index++) {
-            resultMenu.get(index).getDish();
             eb.addField(
                     index + 1 + ". " + resultMenu.get(index).getDish() + ": ",
                     resultMenu.get(index).getPrice().toString(),
