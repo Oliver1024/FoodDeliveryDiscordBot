@@ -82,22 +82,48 @@ public class ShoppingCartController {
     @Nullable
     public ArrayList<Pair<String, Double>> addDish(String userId, Pair<String, Double> newDish) {
         Collection<ShoppingCart> carts = shoppingCartRepository.getAll();
-        ArrayList<Pair<String, Double>> orderedDishes = new ArrayList<>();
         for (ShoppingCart shoppingCart : carts) {
             if (shoppingCart.getUserId().equalsIgnoreCase(userId)) {
-                ArrayList<DishObject> target = shoppingCart.getOrderItems();
+                ArrayList<DishObject> dishes = shoppingCart.getOrderItems();
                 DishObject dishObject = new DishObject();
                 dishObject.setDish(newDish.getLeft());
                 dishObject.setPrice(newDish.getRight());
-                target.add(dishObject);
-                shoppingCart.setOrderItems(target);
+                dishes.add(dishObject);
+
+                shoppingCart.setOrderItems(dishes);
                 shoppingCartRepository.update(shoppingCart);
-                for (DishObject dish : target) {
-                    orderedDishes.add(Pair.of(dish.getDish(), dish.getPrice()));
-                }
-                return orderedDishes;
+
+                return this.getArrayOfPairsOfDishes(dishes);
             }
         }
         return null;
+    }
+
+    @Nullable
+    public ArrayList<DishObject> getOrderedDishes(String userId) {
+        Collection<ShoppingCart> carts = shoppingCartRepository.getAll();
+        for (ShoppingCart shoppingCart : carts) {
+            if (shoppingCart.getUserId().equalsIgnoreCase(userId)) {
+                return shoppingCart.getOrderItems();
+            }
+        }
+        return null;
+    }
+
+    private ArrayList<Pair<String, Double>> getArrayOfPairsOfDishes(ArrayList<DishObject> dishes) {
+        ArrayList<Pair<String, Double>> orderedDishes = new ArrayList<>();
+        for (DishObject dish : dishes) {
+            orderedDishes.add(Pair.of(dish.getDish(), dish.getPrice()));
+        }
+        return orderedDishes;
+    }
+
+    public void deleteCart(String userId) {
+        Collection<ShoppingCart> carts = shoppingCartRepository.getAll();
+        for (ShoppingCart shoppingCart : carts) {
+            if (shoppingCart.getUserId().equalsIgnoreCase(userId)) {
+                shoppingCartRepository.delete(shoppingCart.getId());
+            }
+        }
     }
 }
