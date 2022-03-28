@@ -30,7 +30,6 @@ public class MenuCommand implements Command {
         return "menu";
     }
 
-    // need change
     @Override
     public CommandData getCommandData() {
         return new CommandData(getName(), "menu")
@@ -42,9 +41,13 @@ public class MenuCommand implements Command {
     @Override
     public void onEvent(CommandInteraction event) {
         log.info("event: /menu");
-
         User user = event.getUser();
-        String userInput = event.getOption("content").getAsString();
+        String userInput;
+        if (event.getOption("content") == null) {
+            userInput = null;
+        } else {
+            userInput = event.getOption("content").getAsString();
+        }
         Boolean isUserInShoppingCart = shoppingCartController.isUserInShoppingCart(user.getId());
         String restaurantName = null;
 
