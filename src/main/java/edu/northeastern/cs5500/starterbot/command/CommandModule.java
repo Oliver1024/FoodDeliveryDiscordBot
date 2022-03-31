@@ -48,4 +48,10 @@ public class CommandModule {
     public Command provideMenuCommand(MenuCommand menuCommand) {
         return menuCommand;
     }
+
+    @Provides
+    @IntoSet
+    public Command provideShowCartCommand(MenuCommand showCartCommand) {
+        return showCartCommand;
+    }
 }
