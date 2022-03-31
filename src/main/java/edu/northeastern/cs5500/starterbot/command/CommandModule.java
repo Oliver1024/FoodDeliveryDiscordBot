@@ -51,7 +51,7 @@ public class CommandModule {
 
     @Provides
     @IntoSet
-    public Command provideShowCartCommand(MenuCommand showCartCommand) {
+    public Command provideShowCartCommand(ShowCartCommand showCartCommand) {
         return showCartCommand;
     }
 }
