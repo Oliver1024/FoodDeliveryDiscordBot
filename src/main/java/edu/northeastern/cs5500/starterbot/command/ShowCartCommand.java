@@ -31,9 +31,6 @@ public class ShowCartCommand implements Command {
 
     @Override
     public CommandData getCommandData() {
-        // return new CommandData(getName(), "show")
-        // .addOptions(new OptionData(OptionType.STRING, "content", "show
-        // cart").setRequired(true));
         return new CommandData(getName(), "press enter to show your shopping cart");
     }
 
@@ -66,7 +63,6 @@ public class ShowCartCommand implements Command {
 
     @Override
     public void onEvent(CommandInteraction event) {
-        // TODO Auto-generated method stub
         // check user is start a new order or not
         log.info("event: /showcart");
         User user = event.getUser();
@@ -78,7 +74,6 @@ public class ShowCartCommand implements Command {
             event.reply("You haven’t started an order. There is no shopping cart for you!").queue();
         }
         // user in shipping cart
-        // Do we need to check the shopping cart is emprty or not?
         else {
             ArrayList<DishObject> orderedDishes =
                     shoppingCartController.getOrderedDishes(user.getId());
