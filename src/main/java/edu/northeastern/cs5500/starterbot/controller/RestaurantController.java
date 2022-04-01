@@ -7,9 +7,9 @@ import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import net.dv8tion.jda.internal.utils.tuple.Pair;
-import org.jetbrains.annotations.NotNull;
 
 public class RestaurantController {
     GenericRepository<Restaurant> restaurantRepository;
@@ -66,14 +66,14 @@ public class RestaurantController {
     /**
      * Gets all the names of restaurants in our database
      *
-     * @return the string with all the restaurants' names
+     * @return the arraylist with all the restaurants' names
      */
-    @NotNull
-    public String getAllRestaurantsName() {
-        String restaurantsName = "";
+    @Nonnull
+    public ArrayList<String> getAllRestaurantsName() {
+        ArrayList<String> restaurantsName = new ArrayList<>();
         Collection<Restaurant> restaurants = restaurantRepository.getAll();
         for (Restaurant restaurant : restaurants) {
-            restaurantsName = restaurantsName + restaurant.getName() + "\n";
+            restaurantsName.add(restaurant.getName());
         }
         return restaurantsName;
     }
