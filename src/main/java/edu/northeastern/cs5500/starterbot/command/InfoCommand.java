@@ -67,6 +67,12 @@ public class InfoCommand implements Command {
         event.replyEmbeds(buildReplyEmbed(restaurant)).queue();
     }
 
+    /**
+     * Return EmbeBuild object and show restaurant info
+     *
+     * @param restaurant Restaurant
+     * @return return Embuild object
+     */
     protected MessageEmbed buildReplyEmbed(Restaurant restaurant) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle(restaurant.getName() + "'s info");

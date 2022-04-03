@@ -110,6 +110,12 @@ public class RestaurantController {
         return null;
     }
 
+    /**
+     * Return restaurant obejct
+     *
+     * @param restaurantName String
+     * @return restaurant object
+     */
     @Nullable
     public Restaurant getRestaurant(String restaurantName) {
         Collection<Restaurant> allRestaurants = restaurantRepository.getAll();
