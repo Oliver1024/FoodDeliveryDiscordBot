@@ -31,9 +31,19 @@ public class ShowCartCommand implements Command {
 
     @Override
     public CommandData getCommandData() {
-        return new CommandData(getName(), "press enter to show your shopping cart");
+        return new CommandData(getName(), "Press enter to show your shopping cart");
     }
 
+    /**
+     * Helper function that check orderedDishes is emprty or not, if orderedDishes is empty return
+     * price $0.0 otherwise, orderedDishes is not empty return listing of dishes and price and total
+     * price
+     *
+     * @param restaurantName String the name of restaurants
+     * @param orderedDishes ArrayList the dishes that users ordered
+     * @return return Your shopping cart is empty. Total:$0.0, when orderedDishes is empty.
+     *     Otherwise, return listing of dishes and price of dishes and total price of orders.
+     */
     protected MessageEmbed buildEB(String restaurantName, ArrayList<DishObject> orderedDishes) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle("Shopping cart:");
@@ -44,7 +54,6 @@ public class ShowCartCommand implements Command {
         // if orderedDishes is emprty return 0.0 price
         if (orderedDishes.isEmpty()) {
             eb.addField("Your shopping cart is empty. Total:", "$0.0", false);
-            eb.setColor(Color.GREEN);
         }
         // if orderedDishes is not empty return dish and price
         else {
@@ -56,8 +65,8 @@ public class ShowCartCommand implements Command {
                 totalPrice += orderedDishes.get(i).getPrice();
             }
             eb.addField("Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
-            eb.setColor(Color.GREEN);
         }
+        eb.setColor(Color.GREEN);
         return eb.build();
     }
 
@@ -66,19 +75,17 @@ public class ShowCartCommand implements Command {
         // check user is start a new order or not
         log.info("event: /showcart");
         User user = event.getUser();
-        Boolean isUserInShoppingCart = shoppingCartController.isUserInShoppingCart(user.getId());
         String restaurantName = shoppingCartController.getRestaurantName(user.getId());
 
         // user is not in shopping cart
-        if (isUserInShoppingCart == null) {
+        if (restaurantName == null) {
             event.reply("You haven’t started an order. There is no shopping cart for you!").queue();
         }
         // user in shipping cart
         else {
             ArrayList<DishObject> orderedDishes =
                     shoppingCartController.getOrderedDishes(user.getId());
-            MessageEmbed eb = buildEB(restaurantName, orderedDishes);
-            event.replyEmbeds(eb).queue();
+            event.replyEmbeds(buildEB(restaurantName, orderedDishes)).queue();
         }
     }
 }
