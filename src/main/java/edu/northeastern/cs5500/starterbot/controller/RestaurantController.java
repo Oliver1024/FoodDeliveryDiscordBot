@@ -111,10 +111,10 @@ public class RestaurantController {
     }
 
     /**
-     * Return restaurant obejct
+     * Find restaurant object whose name is equal to the input restaurantName
      *
-     * @param restaurantName String
-     * @return restaurant object
+     * @param restaurantName the restaurant name we are examining
+     * @return restaurant object with the name equal to the input name
      */
     @Nullable
     public Restaurant getRestaurant(String restaurantName) {

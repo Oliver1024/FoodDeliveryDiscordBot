@@ -68,10 +68,10 @@ public class InfoCommand implements Command {
     }
 
     /**
-     * Return EmbeBuild object and show restaurant info
+     * Return MessageEmbed object with restaurant info used to reply to user
      *
-     * @param restaurant Restaurant
-     * @return return Embuild object
+     * @param restaurant Restaurant object which the user want to check
+     * @return return MessageEmbed object
      */
     protected MessageEmbed buildReplyEmbed(Restaurant restaurant) {
         EmbedBuilder eb = new EmbedBuilder();
