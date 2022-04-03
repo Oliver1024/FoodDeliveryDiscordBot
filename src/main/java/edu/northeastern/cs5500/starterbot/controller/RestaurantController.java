@@ -101,10 +101,21 @@ public class RestaurantController {
 
     @Nullable
     public ArrayList<DishObject> getMenu(String restaurantName) {
-        Collection<Restaurant> AllRestaurants = restaurantRepository.getAll();
-        for (Restaurant restaurant : AllRestaurants) {
+        Collection<Restaurant> allRestaurants = restaurantRepository.getAll();
+        for (Restaurant restaurant : allRestaurants) {
             if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
                 return restaurant.getMenu();
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public Restaurant getRestaurant(String restaurantName) {
+        Collection<Restaurant> allRestaurants = restaurantRepository.getAll();
+        for (Restaurant restaurant : allRestaurants) {
+            if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
+                return restaurant;
             }
         }
         return null;
