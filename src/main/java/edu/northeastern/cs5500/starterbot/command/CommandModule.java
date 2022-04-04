@@ -54,4 +54,10 @@ public class CommandModule {
     public Command provideShowCartCommand(ShowCartCommand showCartCommand) {
         return showCartCommand;
     }
+
+    @Provides
+    @IntoSet
+    public Command provideInfoCommand(InfoCommand infoCommand) {
+        return infoCommand;
+    }
 }

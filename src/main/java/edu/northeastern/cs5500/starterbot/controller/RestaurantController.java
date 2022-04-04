@@ -101,10 +101,27 @@ public class RestaurantController {
 
     @Nullable
     public ArrayList<DishObject> getMenu(String restaurantName) {
-        Collection<Restaurant> AllRestaurants = restaurantRepository.getAll();
-        for (Restaurant restaurant : AllRestaurants) {
+        Collection<Restaurant> allRestaurants = restaurantRepository.getAll();
+        for (Restaurant restaurant : allRestaurants) {
             if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
                 return restaurant.getMenu();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Find restaurant object whose name is equal to the input restaurantName
+     *
+     * @param restaurantName the restaurant name we are examining
+     * @return restaurant object with the name equal to the input name
+     */
+    @Nullable
+    public Restaurant getRestaurant(String restaurantName) {
+        Collection<Restaurant> allRestaurants = restaurantRepository.getAll();
+        for (Restaurant restaurant : allRestaurants) {
+            if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
+                return restaurant;
             }
         }
         return null;
