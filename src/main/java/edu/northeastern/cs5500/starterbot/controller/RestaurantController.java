@@ -99,6 +99,13 @@ public class RestaurantController {
         return null;
     }
 
+    /**
+     * from the name that the user provide, we get the menu from the target name, then return for
+     * user to use
+     *
+     * @param restaurantName String, the use is provided by user input and checked by other method.
+     * @return return the List of the menu for use
+     */
     @Nullable
     public ArrayList<DishObject> getMenu(String restaurantName) {
         Collection<Restaurant> allRestaurants = restaurantRepository.getAll();
