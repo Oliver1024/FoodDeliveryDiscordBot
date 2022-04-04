@@ -110,6 +110,6 @@ class RestaurantControllerTest {
                         .getDish()
                         .equals("testOne"));
         assertNull(restaurantController.getMenu(restaurant_name_two));
-        assertEquals(restaurantController.getMenu(restaurant_name_one).size(), 1);
+        assertEquals(1, restaurantController.getMenu(restaurant_name_one).size());
     }
 }
