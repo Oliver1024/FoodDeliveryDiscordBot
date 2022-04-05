@@ -76,7 +76,7 @@ public class RestaurantsCommand implements Command {
             userInput = event.getOption("content").getAsString();
         }
         ArrayList<String> resturantsName =
-                restaurantController.getRestaurantsNameWithCertainCusineType(userInput);
+                restaurantController.filterRestaurantByCuisine(userInput);
         event.reply(buildReplyMessage(resturantsName, userInput)).queue();
     }
 }

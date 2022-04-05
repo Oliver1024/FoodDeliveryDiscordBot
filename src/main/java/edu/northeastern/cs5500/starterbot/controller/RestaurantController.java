@@ -138,10 +138,10 @@ public class RestaurantController {
      * Get all the restaurants whose cuisine type is the input type
      *
      * @param inputCuisineType the cuisine type we want to used for filtering restaurants
-     * @return the arraylist of all the name sof all the qualified restaurants
+     * @return the arraylist of all the name of all the filtered restaurants
      */
     @Nonnull
-    public ArrayList<String> getRestaurantsNameWithCertainCusineType(String inputCuisineType) {
+    public ArrayList<String> filterRestaurantByCuisine(String inputCuisineType) {
         if (inputCuisineType == null) {
             return getAllRestaurantsName();
         }
