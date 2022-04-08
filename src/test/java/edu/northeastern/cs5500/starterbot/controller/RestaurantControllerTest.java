@@ -52,8 +52,8 @@ class RestaurantControllerTest {
         restaurantController.restaurantRepository.add(restaurantTest);
 
         assertTrue(
-                restaurantController.getDish(1, restaurant_name_one).getLeft().equals("testOne"));
-        assertFalse(restaurantController.getDish(1, restaurant_name_one).getRight() == 1.12);
+                restaurantController.getDish(1, restaurant_name_one).getDish().equals("testOne"));
+        assertFalse(restaurantController.getDish(1, restaurant_name_one).getPrice() == 1.12);
         assertNull(restaurantController.getDish(2, restaurant_name_one));
         assertNull(restaurantController.getDish(1, restaurant_name_two));
     }
@@ -86,7 +86,7 @@ class RestaurantControllerTest {
         restaurantController.restaurantRepository.add(restaurantTest);
 
         assertTrue(
-                restaurantController.randomDish(restaurant_name_one).getLeft().equals("testOne"));
+                restaurantController.randomDish(restaurant_name_one).getDish().equals("testOne"));
         assertNull(restaurantController.randomDish(restaurant_name_two));
     }
 
