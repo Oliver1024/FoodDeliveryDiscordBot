@@ -10,7 +10,6 @@ import java.util.Random;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-
 public class RestaurantController {
     GenericRepository<Restaurant> restaurantRepository;
 
@@ -54,7 +53,7 @@ public class RestaurantController {
             if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
                 ArrayList<DishObject> menu = restaurant.getMenu();
                 if (dishNumber > 0 && dishNumber <= menu.size()) {
-                    return menu.get(dishNumber-1);
+                    return menu.get(dishNumber - 1);
                 }
             }
         }
@@ -90,7 +89,7 @@ public class RestaurantController {
                 Integer numOfDishes = restaurant.getMenu().size();
                 Random rand = new Random();
                 Integer randomIndex = rand.nextInt(numOfDishes);
-                return  restaurant.getMenu().get(randomIndex);
+                return restaurant.getMenu().get(randomIndex);
             }
         }
         return null;
