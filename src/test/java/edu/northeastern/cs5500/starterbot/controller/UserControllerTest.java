@@ -18,7 +18,7 @@ public class UserControllerTest {
     UserController userController = new UserController(new InMemoryRepository<>());
 
     @Test
-    void testGetUndelivedOrders() {
+    void testGetUndeliveredOrders() {
         DishObject dish1 = new DishObject();
         dish1.setDish("dish1");
         dish1.setPrice(9.9);
