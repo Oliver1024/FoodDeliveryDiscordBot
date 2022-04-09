@@ -79,7 +79,7 @@ public class ShowCartCommand implements Command {
 
         // user is not in shopping cart
         if (restaurantName == null) {
-            event.reply("You haven’t started an order. There is no shopping cart for you!").queue();
+            event.reply("You haven't started an order. There is no shopping cart for you!").queue();
         }
         // user in shipping cart
         else {

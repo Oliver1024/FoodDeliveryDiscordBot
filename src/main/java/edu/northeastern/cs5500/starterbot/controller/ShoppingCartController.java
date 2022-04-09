@@ -20,8 +20,8 @@ public class ShoppingCartController {
     /**
      * check if the user has an unfinished order.
      *
-     * @param userId
-     * @return boolean values
+     * @param userId String user ID
+     * @return boolean values If find user in chopping cart return true, otherwise return false
      */
     @Nonnull
     public Boolean isUserInShoppingCart(String userId) {
@@ -38,15 +38,15 @@ public class ShoppingCartController {
     /**
      * create a new shopping cart for the current user.
      *
-     * @param userId
-     * @param username
-     * @param restaurantName
+     * @param userId String user ID
+     * @param userName String name of user
+     * @param restaurantName string name of restaurant
      */
-    public void createNewShoppingCart(String userId, String username, String restaurantName) {
+    public void createNewShoppingCart(String userId, String userName, String restaurantName) {
         // set new object of cart;
         ShoppingCart newCart = new ShoppingCart();
         newCart.setUserId(userId);
-        newCart.setUsername(username);
+        newCart.setUsername(userName);
         newCart.setRestaurantName(restaurantName);
         newCart.setOrderItems(new ArrayList<>());
         // add the object into repository;
@@ -56,7 +56,7 @@ public class ShoppingCartController {
     /**
      * check user id is in the shopping cart
      *
-     * @param userId
+     * @param userId String user ID
      * @return String restaurant name, otherwise return null
      */
     @Nullable
@@ -74,9 +74,9 @@ public class ShoppingCartController {
     /**
      * add new order dishes into shopping cart
      *
-     * @param userId
-     * @param newDish
-     * @return hashMap contains all dishes in the shopping cart
+     * @param userId String user ID
+     * @param newDish DishOjbect ArrayList of dishes
+     * @return ArrayList contains all dishes in the shopping cart, otherwise return null
      */
     @Nullable
     public ArrayList<DishObject> addDish(String userId, DishObject newDish) {
@@ -93,6 +93,12 @@ public class ShoppingCartController {
         return null;
     }
 
+    /**
+     * get ordered dishes from the shopping cart
+     *
+     * @param userId String user ID
+     * @return ArrayList contains all ordered dishes in the shopping cart, otherwise, return null
+     */
     @Nullable
     public ArrayList<DishObject> getOrderedDishes(String userId) {
         Collection<ShoppingCart> carts = shoppingCartRepository.getAll();
@@ -104,6 +110,11 @@ public class ShoppingCartController {
         return null;
     }
 
+    /**
+     * delete shopping cart
+     *
+     * @param userId String user ID
+     */
     public void deleteCart(String userId) {
         Collection<ShoppingCart> carts = shoppingCartRepository.getAll();
         for (ShoppingCart shoppingCart : carts) {
