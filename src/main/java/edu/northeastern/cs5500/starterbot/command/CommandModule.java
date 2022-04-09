@@ -60,4 +60,10 @@ public class CommandModule {
     public Command provideInfoCommand(InfoCommand infoCommand) {
         return infoCommand;
     }
+
+    @Provides
+    @IntoSet
+    public Command provideOrderStatusCommand(OrderStatusCommand orderStatusCommand) {
+        return orderStatusCommand;
+    }
 }
