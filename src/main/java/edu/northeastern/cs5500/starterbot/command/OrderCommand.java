@@ -51,11 +51,12 @@ public class OrderCommand implements Command {
 
         if (userInput.equalsIgnoreCase("random")) {
             DishObject randomDish = restaurantController.randomDish(restaurantName);
+            int randomDishIndex = restaurantController.findDishNumber(restaurantName, randomDish);
             event.reply(
                             "how about order "
                                     + randomDish.getDish()
                                     + "? Type `/order "
-                                    + randomDish.getPrice()
+                                    + randomDishIndex
                                     + "` to order this dish")
                     .queue();
         } else if (userInput.matches("[+-]?\\d*(\\.\\d+)?")) {

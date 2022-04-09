@@ -153,4 +153,23 @@ public class RestaurantController {
         }
         return restaurantsName;
     }
+
+    /**
+     * try to get the dishNumber in the menu
+     *
+     * @param restaurantName the target restaurantName
+     * @param targeDishObject the target dishObject which used for compare the list of menu
+     * @return get the number of target dish, remeber +1;
+     */
+    @Nonnull
+    public int findDishNumber(String restaurantName, DishObject targeDishObject) {
+        int dishNumber = -1;
+        ArrayList<DishObject> menu = getMenu(restaurantName);
+        for (int i = 0; i < menu.size(); i++) {
+            if (menu.get(i).getDish().equals(targeDishObject.getDish())) {
+                dishNumber = i + 1;
+            }
+        }
+        return dishNumber;
+    }
 }

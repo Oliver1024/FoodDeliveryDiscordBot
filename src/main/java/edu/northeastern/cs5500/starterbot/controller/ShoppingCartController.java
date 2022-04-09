@@ -84,15 +84,9 @@ public class ShoppingCartController {
         for (ShoppingCart shoppingCart : carts) {
             if (shoppingCart.getUserId().equalsIgnoreCase(userId)) {
                 ArrayList<DishObject> dishes = shoppingCart.getOrderItems();
-                DishObject dishObject = new DishObject();
-                dishObject.setDish(newDish.getDish());
-                dishObject.setPrice(newDish.getPrice());
-                dishes.add(dishObject);
-
+                dishes.add(newDish);
                 shoppingCart.setOrderItems(dishes);
                 shoppingCartRepository.update(shoppingCart);
-
-                // return this.getArrayOfPairsOfDishes(dishes);
                 return dishes;
             }
         }
