@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.Random;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import net.dv8tion.jda.internal.utils.tuple.Pair;
 
 public class RestaurantController {
     GenericRepository<Restaurant> restaurantRepository;
@@ -48,15 +47,13 @@ public class RestaurantController {
      * @return HashMap containing dish names and their corresponding dish prices
      */
     @Nullable
-    public Pair<String, Double> getDish(Integer dishNumber, String restaurantName) {
+    public DishObject getDish(Integer dishNumber, String restaurantName) {
         Collection<Restaurant> AllRestaurants = restaurantRepository.getAll();
         for (Restaurant restaurant : AllRestaurants) {
             if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
                 ArrayList<DishObject> menu = restaurant.getMenu();
                 if (dishNumber > 0 && dishNumber <= menu.size()) {
-                    String name = menu.get(dishNumber - 1).getDish();
-                    double price = menu.get(dishNumber - 1).getPrice();
-                    return Pair.of(name, price);
+                    return menu.get(dishNumber - 1);
                 }
             }
         }
@@ -85,15 +82,14 @@ public class RestaurantController {
      * @return the pair of dish name and dish price as the random dish
      */
     @Nullable
-    public Pair<String, Integer> randomDish(String restaurantName) {
+    public DishObject randomDish(String restaurantName) {
         Collection<Restaurant> restaurants = restaurantRepository.getAll();
         for (Restaurant restaurant : restaurants) {
             if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
                 Integer numOfDishes = restaurant.getMenu().size();
                 Random rand = new Random();
                 Integer randomIndex = rand.nextInt(numOfDishes);
-                String randomDish = restaurant.getMenu().get(randomIndex).getDish();
-                return Pair.of(randomDish, randomIndex + 1);
+                return restaurant.getMenu().get(randomIndex);
             }
         }
         return null;
@@ -156,5 +152,25 @@ public class RestaurantController {
             }
         }
         return restaurantsName;
+    }
+
+    /**
+     * try to get the dishNumber in the menu
+     *
+     * @param restaurantName the target restaurantName
+     * @param targeDishObject the target dishObject which used for compare the list of menu
+     * @return get the number of target dish, the dishinumber should add 1 beacause no 0 on the menu
+     *     when we use;
+     */
+    @Nonnull
+    public int findDishNumber(String restaurantName, DishObject targeDishObject) {
+        int dishNumber = -1;
+        ArrayList<DishObject> menu = getMenu(restaurantName);
+        for (int i = 0; i < menu.size(); i++) {
+            if (menu.get(i).getDish().equals(targeDishObject.getDish())) {
+                dishNumber = i + 1;
+            }
+        }
+        return dishNumber;
     }
 }

@@ -2,6 +2,7 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -37,7 +38,7 @@ class RestaurantControllerTest {
     }
 
     @Test
-    void testGetgetDish() {
+    void testgetDish() {
         // setup
         Restaurant restaurantTest = new Restaurant();
         restaurantTest.setName(restaurant_name_one);
@@ -52,9 +53,10 @@ class RestaurantControllerTest {
         restaurantController.restaurantRepository.add(restaurantTest);
 
         assertTrue(
-                restaurantController.getDish(1, restaurant_name_one).getLeft().equals("testOne"));
-        assertFalse(restaurantController.getDish(1, restaurant_name_one).getRight() == 1.12);
+                restaurantController.getDish(1, restaurant_name_one).getDish().equals("testOne"));
+        assertFalse(restaurantController.getDish(1, restaurant_name_one).getPrice() == 1.12);
         assertNull(restaurantController.getDish(2, restaurant_name_one));
+        assertNull(restaurantController.getDish(-1, restaurant_name_one));
         assertNull(restaurantController.getDish(1, restaurant_name_two));
     }
 
@@ -86,7 +88,7 @@ class RestaurantControllerTest {
         restaurantController.restaurantRepository.add(restaurantTest);
 
         assertTrue(
-                restaurantController.randomDish(restaurant_name_one).getLeft().equals("testOne"));
+                restaurantController.randomDish(restaurant_name_one).getDish().equals("testOne"));
         assertNull(restaurantController.randomDish(restaurant_name_two));
     }
 
@@ -111,5 +113,52 @@ class RestaurantControllerTest {
                         .equals("testOne"));
         assertNull(restaurantController.getMenu(restaurant_name_two));
         assertEquals(1, restaurantController.getMenu(restaurant_name_one).size());
+    }
+
+    @Test
+    void testGetRestaurant() {
+        Restaurant restaurantTest = new Restaurant();
+        restaurantTest.setName(restaurant_name_one);
+        RestaurantController restaurantController = getRestaurantController();
+        restaurantController.restaurantRepository.add(restaurantTest);
+        assertEquals(restaurantTest, restaurantController.getRestaurant(restaurant_name_one));
+        assertNull(restaurantController.getRestaurant(restaurant_name_two));
+    }
+
+    @Test
+    void testFilterRestaurantByCuisine() {
+        Restaurant restaurantTest = new Restaurant();
+        restaurantTest.setName(restaurant_name_one);
+        String inputCuisineTypeOne = "inputCuisineTypeOne";
+        ArrayList<String> cuisineTypes = new ArrayList<>();
+        cuisineTypes.add(inputCuisineTypeOne);
+        restaurantTest.setCuisineType(cuisineTypes);
+        RestaurantController restaurantController = getRestaurantController();
+        restaurantController.restaurantRepository.add(restaurantTest);
+        assertEquals(
+                restaurant_name_one, restaurantController.filterRestaurantByCuisine(null).get(0));
+        assertEquals(
+                restaurant_name_one,
+                restaurantController.filterRestaurantByCuisine(inputCuisineTypeOne).get(0));
+    }
+
+    @Test
+    void testfindDishNumber() {
+        Restaurant restaurantTest = new Restaurant();
+        restaurantTest.setName(restaurant_name_one);
+        DishObject testDishOne = new DishObject();
+        testDishOne.setDish("testOne");
+        testDishOne.setPrice(1.11);
+        DishObject testDishTwo = new DishObject();
+        testDishTwo.setDish("testTwo");
+        testDishTwo.setPrice(2.22);
+        ArrayList<DishObject> menus = new ArrayList<DishObject>();
+        menus.add(testDishOne);
+        menus.add(testDishTwo);
+        restaurantTest.setMenu(menus);
+        RestaurantController restaurantController = getRestaurantController();
+        restaurantController.restaurantRepository.add(restaurantTest);
+        assertEquals(1, restaurantController.findDishNumber(restaurant_name_one, testDishOne));
+        assertNotEquals(3, restaurantController.findDishNumber(restaurant_name_one, testDishTwo));
     }
 }

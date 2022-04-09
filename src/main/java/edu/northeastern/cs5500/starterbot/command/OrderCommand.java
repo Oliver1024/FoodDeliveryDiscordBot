@@ -2,6 +2,7 @@ package edu.northeastern.cs5500.starterbot.command;
 
 import edu.northeastern.cs5500.starterbot.controller.RestaurantController;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
+import edu.northeastern.cs5500.starterbot.model.DishObject;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.inject.Inject;
@@ -13,7 +14,6 @@ import net.dv8tion.jda.api.interactions.commands.CommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
-import net.dv8tion.jda.internal.utils.tuple.Pair;
 
 @Singleton
 @Slf4j
@@ -50,37 +50,38 @@ public class OrderCommand implements Command {
         }
 
         if (userInput.equalsIgnoreCase("random")) {
-            Pair<String, Integer> randomDishPair = restaurantController.randomDish(restaurantName);
+            DishObject randomDish = restaurantController.randomDish(restaurantName);
+            int randomDishIndex = restaurantController.findDishNumber(restaurantName, randomDish);
             event.reply(
                             "how about order "
-                                    + randomDishPair.getLeft()
+                                    + randomDish.getDish()
                                     + "? Type `/order "
-                                    + randomDishPair.getRight()
+                                    + randomDishIndex
                                     + "` to order this dish")
                     .queue();
         } else if (userInput.matches("[+-]?\\d*(\\.\\d+)?")) {
-            Pair<String, Double> orderDish =
+            DishObject orderDish =
                     restaurantController.getDish(Integer.parseInt(userInput), restaurantName);
             if (orderDish == null) {
                 event.reply("enter right number of dish").queue();
                 return;
             }
-            ArrayList<Pair<String, Double>> totalDishes =
+            ArrayList<DishObject> totalDishes =
                     shoppingCartController.addDish(user.getId(), orderDish);
             EmbedBuilder eb = new EmbedBuilder();
             eb.setTitle("Shopping cart: ");
             eb.setDescription(
                     "**"
-                            + orderDish.getLeft()
+                            + orderDish.getDish()
                             + "** has been added! Your cart at **"
                             + restaurantName
                             + "** include: ");
             Double totalPrice = 0.0;
 
             for (int i = 0; i < totalDishes.size(); i++) {
-                Pair<String, Double> curDish = totalDishes.get(i);
-                String dish = curDish.getLeft();
-                Double price = curDish.getRight();
+                DishObject curDish = totalDishes.get(i);
+                String dish = curDish.getDish();
+                Double price = curDish.getPrice();
                 totalPrice += price;
                 eb.addField((i + 1) + ". " + dish + ": ", "$" + price.toString(), false);
             }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import net.dv8tion.jda.internal.utils.tuple.Pair;
 
 public class ShoppingCartController {
     GenericRepository<ShoppingCart> shoppingCartRepository;
@@ -80,20 +79,15 @@ public class ShoppingCartController {
      * @return hashMap contains all dishes in the shopping cart
      */
     @Nullable
-    public ArrayList<Pair<String, Double>> addDish(String userId, Pair<String, Double> newDish) {
+    public ArrayList<DishObject> addDish(String userId, DishObject newDish) {
         Collection<ShoppingCart> carts = shoppingCartRepository.getAll();
         for (ShoppingCart shoppingCart : carts) {
             if (shoppingCart.getUserId().equalsIgnoreCase(userId)) {
                 ArrayList<DishObject> dishes = shoppingCart.getOrderItems();
-                DishObject dishObject = new DishObject();
-                dishObject.setDish(newDish.getLeft());
-                dishObject.setPrice(newDish.getRight());
-                dishes.add(dishObject);
-
+                dishes.add(newDish);
                 shoppingCart.setOrderItems(dishes);
                 shoppingCartRepository.update(shoppingCart);
-
-                return this.getArrayOfPairsOfDishes(dishes);
+                return dishes;
             }
         }
         return null;
@@ -108,14 +102,6 @@ public class ShoppingCartController {
             }
         }
         return null;
-    }
-
-    private ArrayList<Pair<String, Double>> getArrayOfPairsOfDishes(ArrayList<DishObject> dishes) {
-        ArrayList<Pair<String, Double>> orderedDishes = new ArrayList<>();
-        for (DishObject dish : dishes) {
-            orderedDishes.add(Pair.of(dish.getDish(), dish.getPrice()));
-        }
-        return orderedDishes;
     }
 
     public void deleteCart(String userId) {
