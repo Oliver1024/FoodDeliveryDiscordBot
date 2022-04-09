@@ -61,12 +61,12 @@ public class UserControllerTest {
         user1.setOrders(orders);
 
         userController.userRepository.add(user1);
-        ArrayList<Order> undeliveredOrders1 = userController.getUndelivedOrders("user1");
+        ArrayList<Order> undeliveredOrders1 = userController.getUndeliveredOrders("user1");
 
         assertTrue(undeliveredOrders1.size() == 1);
         assertEquals(order1, undeliveredOrders1.get(0));
 
-        ArrayList<Order> undeliveredOrders2 = userController.getUndelivedOrders("user2");
+        ArrayList<Order> undeliveredOrders2 = userController.getUndeliveredOrders("user2");
         assertNull(undeliveredOrders2);
     }
 

@@ -38,7 +38,7 @@ public class OrderStatusCommand implements Command {
     public void onEvent(CommandInteraction event) {
         log.info("event: /orderstatus");
         User user = event.getUser();
-        ArrayList<Order> undeliveredOrders = userController.getUndelivedOrders(user.getId());
+        ArrayList<Order> undeliveredOrders = userController.getUndeliveredOrders(user.getId());
         MessageEmbed replyEmbed = buildReplyEmbed(undeliveredOrders);
         userController.deliverOrders(user.getId());
         event.replyEmbeds(replyEmbed).queue();

@@ -94,7 +94,7 @@ public class UserController {
      * @return an arraylist of all the filtered orders
      */
     @Nullable
-    public ArrayList<Order> getUndelivedOrders(String userId) {
+    public ArrayList<Order> getUndeliveredOrders(String userId) {
         ArrayList<Order> undeliveredOrders = new ArrayList<Order>();
         Collection<User> users = userRepository.getAll();
         for (User user : users) {
@@ -134,7 +134,6 @@ public class UserController {
      * Check the order status of the given order based on the order time and curent time
      *
      * @param order the order we will check
-     * @param ORDER_STATUS the options of order statuses.
      * @return the order status of the given order
      */
     @Nonnull
