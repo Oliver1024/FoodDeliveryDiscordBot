@@ -159,7 +159,8 @@ public class RestaurantController {
      *
      * @param restaurantName the target restaurantName
      * @param targeDishObject the target dishObject which used for compare the list of menu
-     * @return get the number of target dish, remeber +1;
+     * @return get the number of target dish, the dishinumber should add 1 beacause no 0 on the menu
+     *     when we use;
      */
     @Nonnull
     public int findDishNumber(String restaurantName, DishObject targeDishObject) {

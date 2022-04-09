@@ -104,14 +104,6 @@ public class ShoppingCartController {
         return null;
     }
 
-    // private ArrayList<DishObject> getArrayOfPairsOfDishes(ArrayList<DishObject> dishes) {
-    //     ArrayList<DishObject> orderedDishes = new ArrayList<>();
-    //     for (DishObject dish : dishes) {
-    //         orderedDishes.add(Pair.of(dish.getDish(), dish.getPrice()));
-    //     }
-    //     return orderedDishes;
-    // }
-
     public void deleteCart(String userId) {
         Collection<ShoppingCart> carts = shoppingCartRepository.getAll();
         for (ShoppingCart shoppingCart : carts) {
