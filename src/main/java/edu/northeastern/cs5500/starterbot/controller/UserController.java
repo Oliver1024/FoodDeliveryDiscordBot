@@ -20,7 +20,6 @@ public class UserController {
     UserController(GenericRepository<User> userRepository) {
         this.userRepository = userRepository;
     }
-
     /**
      * add the order into the user's list of history orders in the database
      *
@@ -170,5 +169,62 @@ public class UserController {
         long passedMins = Duration.between(order.getOrderTime(), LocalDateTime.now()).toMinutes();
         long prepareTime = order.getOrderItems().size() * TIME_PER_DISH;
         return (passedMins > prepareTime + TIME_FOR_DELIVER);
+    }
+
+    /**
+     * from userId and k to get a list that only contain the most recrnt k orders if k bigger than
+     * the number of order in the dabase return the while orders
+     *
+     * @param userId user's id for get the target hishtory
+     * @param k the limited k number
+     * @return a list which contains order information
+     */
+    @Nonnull
+    public ArrayList<Order> getKnumsOrders(String userId, int k) {
+        Collection<User> users = userRepository.getAll();
+        ArrayList<Order> targetLIst = new ArrayList<>();
+        for (User user : users) {
+            if (user.getUserId().equals(userId)) {
+                targetLIst = user.getOrders();
+                break;
+            }
+        }
+        while (targetLIst.size() > k) {
+            targetLIst.remove(0);
+        }
+        return targetLIst;
+    }
+
+    /**
+     * from userId and k to get a list that only contain the most recrnt k orders also with a limit
+     * condition that all orders with the target restrant name if k bigger than the number of order
+     * in the dabase return the whole orders at restaurantName
+     *
+     * @param userId
+     * @param k
+     * @param restaurantName
+     * @return
+     */
+    @Nonnull
+    public ArrayList<Order> getKnumsOrders(String userId, int k, String restaurantName) {
+        Collection<User> users = userRepository.getAll();
+        ArrayList<Order> targetList = new ArrayList<>();
+        for (User user : users) {
+            if (user.getUserId().equals(userId)) {
+                for (int i = 0; i < user.getOrders().size(); i++) {
+                    if (user.getOrders()
+                            .get(i)
+                            .getRestaurantName()
+                            .equalsIgnoreCase(restaurantName)) {
+                        targetList.add(user.getOrders().get(i));
+                    }
+                }
+            }
+            break;
+        }
+        while (targetList.size() > k) {
+            targetList.remove(0);
+        }
+        return targetList;
     }
 }
