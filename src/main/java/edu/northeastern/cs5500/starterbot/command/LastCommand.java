@@ -159,6 +159,13 @@ public class LastCommand implements Command {
         }
     }
 
+    /**
+     * Return MessageEmbed object with Arrlist of result.
+     *
+     * @param result the arrylist contains all order history
+     * @param user the target user
+     * @return MessageEmbed object
+     */
     protected MessageEmbed buildReplyEmbed(ArrayList<Order> result, User user) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle(user.getName() + "'s order history: ");
