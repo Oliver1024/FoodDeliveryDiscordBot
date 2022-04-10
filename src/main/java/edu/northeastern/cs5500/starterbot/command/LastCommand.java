@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.CommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -154,23 +155,26 @@ public class LastCommand implements Command {
                     return;
                 }
             }
-
-            EmbedBuilder eb = new EmbedBuilder();
-            eb.setTitle(user.getName() + "'s order history: ");
-            for (int index = 0; index < result.size(); index++) {
-                eb.addField(
-                        index
-                                + 1
-                                + ". "
-                                + result.get(index).getRestaurantName()
-                                + ", "
-                                + result.get(index).getOrderTime().toString()
-                                + ", ",
-                        covertoSting(result.get(index).getOrderItems()),
-                        true);
-            }
-            eb.setColor(Color.BLUE);
-            event.replyEmbeds(eb.build()).queue();
+            event.replyEmbeds(buildReplyEmbed(result, user));
         }
+    }
+
+    protected MessageEmbed buildReplyEmbed(ArrayList<Order> result, User user) {
+        EmbedBuilder eb = new EmbedBuilder();
+        eb.setTitle(user.getName() + "'s order history: ");
+        for (int index = 0; index < result.size(); index++) {
+            eb.addField(
+                    index
+                            + 1
+                            + ". "
+                            + result.get(index).getRestaurantName()
+                            + ", "
+                            + result.get(index).getOrderTime().toString()
+                            + ", ",
+                    covertoSting(result.get(index).getOrderItems()),
+                    true);
+        }
+        eb.setColor(Color.BLUE);
+        return eb.build();
     }
 }
