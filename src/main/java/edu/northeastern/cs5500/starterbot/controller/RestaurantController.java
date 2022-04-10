@@ -21,9 +21,9 @@ public class RestaurantController {
     /**
      * Check if the restaurant name that user input is in our database.
      *
-     * @param name the restaurant name that user input
+     * @param toCheckName String the restaurant name that user input
      * @return return the name of the restaurant if it exists in the database, otherwise, return
-     *     null.
+     *     null
      */
     @Nullable
     public String getRestaurantName(String toCheckName) {
@@ -42,9 +42,10 @@ public class RestaurantController {
     /**
      * Check dish number is included in restaurant menu
      *
-     * @param dishNumber the dish number that user input
-     * @param restaurantName the restaurant that the user are ordering at
-     * @return HashMap containing dish names and their corresponding dish prices
+     * @param dishNumber Integer the dish number that user input
+     * @param restaurantName String the restaurant that the user are ordering at
+     * @return HashMap containing dish names and their corresponding dish prices if it exists in the
+     *     database, otherwise, return null
      */
     @Nullable
     public DishObject getDish(Integer dishNumber, String restaurantName) {
@@ -63,7 +64,7 @@ public class RestaurantController {
     /**
      * Gets all the names of restaurants in our database
      *
-     * @return the arraylist with all the restaurants' names
+     * @return the arraylist with all the name of restaurants
      */
     @Nonnull
     public ArrayList<String> getAllRestaurantsName() {
@@ -78,8 +79,9 @@ public class RestaurantController {
     /**
      * To randomly select one dish from the given restaurant.
      *
-     * @param
-     * @return the pair of dish name and dish price as the random dish
+     * @param restaurantName String the name of restaurants
+     * @return the pair of dish name and dish price as the random dish if it exists in the database,
+     *     otherwise, return null
      */
     @Nullable
     public DishObject randomDish(String restaurantName) {
@@ -96,11 +98,11 @@ public class RestaurantController {
     }
 
     /**
-     * from the name that the user provide, we get the menu from the target name, then return for
-     * user to use
+     * get menu information when user input the name of restaurants
      *
-     * @param restaurantName String, the use is provided by user input and checked by other method.
-     * @return return the List of the menu for use
+     * @param restaurantName String the name of restaurant that user provided
+     * @return return the ArrayList of the menu of the restaurant when user input the name of
+     *     restaurant, otherwise, return null
      */
     @Nullable
     public ArrayList<DishObject> getMenu(String restaurantName) {
@@ -116,8 +118,8 @@ public class RestaurantController {
     /**
      * Find restaurant object whose name is equal to the input restaurantName
      *
-     * @param restaurantName the restaurant name we are examining
-     * @return restaurant object with the name equal to the input name
+     * @param restaurantName String the restaurant name we are examining
+     * @return restaurant object with the name equal to the input name, otherwise, return null
      */
     @Nullable
     public Restaurant getRestaurant(String restaurantName) {
@@ -133,7 +135,7 @@ public class RestaurantController {
     /**
      * Get all the restaurants whose cuisine type is the input type
      *
-     * @param inputCuisineType the cuisine type we want to used for filtering restaurants
+     * @param inputCuisineType String the cuisine type we want to used for filtering restaurants
      * @return the arraylist of all the name of all the filtered restaurants
      */
     @Nonnull
@@ -155,12 +157,13 @@ public class RestaurantController {
     }
 
     /**
-     * try to get the dishNumber in the menu
+     * find the number of dishes in the menu
      *
-     * @param restaurantName the target restaurantName
-     * @param targeDishObject the target dishObject which used for compare the list of menu
-     * @return get the number of target dish, the dishinumber should add 1 beacause no 0 on the menu
-     *     when we use;
+     * @param restaurantName String the target restaurantName
+     * @param targeDishObject DishObject the target dishObject which used for compare the list of
+     *     menu
+     * @return get the number of target dish, the number of dishes should add 1 beacause there is no
+     *     index 0 on the menu, start count menu at index 1
      */
     @Nonnull
     public int findDishNumber(String restaurantName, DishObject targeDishObject) {
