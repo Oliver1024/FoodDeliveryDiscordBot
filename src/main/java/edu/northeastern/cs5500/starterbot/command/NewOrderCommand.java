@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.CommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -57,14 +58,25 @@ public class NewOrderCommand implements Command {
         } else {
             shoppingCartController.createNewShoppingCart(
                     user.getId(), user.getName(), restaurantName);
-            EmbedBuilder eb = new EmbedBuilder();
-            eb.setTitle("You start a new order at " + restaurantName + "!");
-            eb.addField("/order dish_name: ", "to order a particular dish", false);
-            eb.addField("/order dish_num: ", "to order a dish with the given number", false);
-            eb.addField("/menu: ", "to show the menu of the current restaurant", false);
-            eb.addField("/showcart: ", "to show the shopping cart", false);
-            eb.setColor(Color.BLUE);
-            event.replyEmbeds(eb.build()).queue();
+
+            event.replyEmbeds(buildReplyEmbed(restaurantName));
         }
+    }
+
+    /**
+     * Return MessageEmbed object with restaurant name
+     *
+     * @param restaurantName String, restaurant name which is the input where user will order
+     * @return MessageEmbed object
+     */
+    protected MessageEmbed buildReplyEmbed(String restaurantName) {
+        EmbedBuilder eb = new EmbedBuilder();
+        eb.setTitle("You start a new order at " + restaurantName + "!");
+        eb.addField("/order dish_name: ", "to order a particular dish", false);
+        eb.addField("/order dish_num: ", "to order a dish with the given number", false);
+        eb.addField("/menu: ", "to show the menu of the current restaurant", false);
+        eb.addField("/showcart: ", "to show the shopping cart", false);
+        eb.setColor(Color.BLUE);
+        return eb.build();
     }
 }

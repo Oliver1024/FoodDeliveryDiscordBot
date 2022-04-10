@@ -46,10 +46,10 @@ public class InfoCommand implements Command {
         log.info("event: /info");
         User user = event.getUser();
 
-        String userInput =
-                (event.getOption("content") == null)
-                        ? null
-                        : event.getOption("content").getAsString();
+        String userInput = null;
+        if (event.getOption("content") != null) {
+            userInput = event.getOption("content").getAsString();
+        }
         String restaurantName =
                 (userInput != null)
                         ? restaurantController.getRestaurantName(userInput)
