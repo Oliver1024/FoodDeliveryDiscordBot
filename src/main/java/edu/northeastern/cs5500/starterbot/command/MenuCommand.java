@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.CommandInteraction;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -42,21 +43,17 @@ public class MenuCommand implements Command {
     public void onEvent(CommandInteraction event) {
         log.info("event: /menu");
         User user = event.getUser();
-        String userInput;
-        if (event.getOption("content") == null) {
-            userInput = null;
-        } else {
+
+        String userInput = null;
+        if (event.getOption("content") != null) {
             userInput = event.getOption("content").getAsString();
         }
-        Boolean isUserInShoppingCart = shoppingCartController.isUserInShoppingCart(user.getId());
-        String restaurantName = null;
 
-        if (userInput != null) {
-            restaurantName = restaurantController.getRestaurantName(userInput);
+        String restaurantName =
+                (userInput != null)
+                        ? restaurantController.getRestaurantName(userInput)
+                        : shoppingCartController.getRestaurantName(user.getId());
 
-        } else if (isUserInShoppingCart) {
-            restaurantName = shoppingCartController.getRestaurantName(user.getId());
-        }
         if (restaurantName == null) {
             event.reply(
                             "cannot find restaurant you want to check. Please type in "
@@ -64,16 +61,28 @@ public class MenuCommand implements Command {
                     .queue();
             return;
         }
+        ArrayList<DishObject> resultMenu = restaurantController.getMenu(restaurantName);
+        event.replyEmbeds(buildReplyEmbed(resultMenu, restaurantName)).queue();
+    }
+
+    /**
+     * Return MessageEmbed object with Menu and restaurant name info which users can choose
+     * @param resultMenu - DishObject, which is for use to choose 
+     * @param restaurantName - String, which is the restaurant name
+     * @return MessageEmbed object with Menu and restaurant name
+     */
+    protected MessageEmbed buildReplyEmbed(
+            ArrayList<DishObject> resultMenu, String restaurantName) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle(restaurantName + "'s menu: ");
-        ArrayList<DishObject> resultMenu = restaurantController.getMenu(restaurantName);
+
         for (int index = 0; index < resultMenu.size(); index++) {
             eb.addField(
                     index + 1 + ". " + resultMenu.get(index).getDish() + ": ",
-                    resultMenu.get(index).getPrice().toString(),
+                    "$" + resultMenu.get(index).getPrice().toString(),
                     true);
         }
         eb.setColor(Color.BLUE);
-        event.replyEmbeds(eb.build()).queue();
+        return eb.build();
     }
 }
