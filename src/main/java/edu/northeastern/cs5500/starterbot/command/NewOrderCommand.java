@@ -65,7 +65,8 @@ public class NewOrderCommand implements Command {
 
     /**
      * Return MessageEmbed object with restaurant name
-     * @param restaurantName String, restaurant name which is the input where user will order 
+     *
+     * @param restaurantName String, restaurant name which is the input where user will order
      * @return MessageEmbed object
      */
     protected MessageEmbed buildReplyEmbed(String restaurantName) {

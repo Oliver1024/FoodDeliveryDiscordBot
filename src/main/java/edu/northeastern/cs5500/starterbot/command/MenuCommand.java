@@ -67,7 +67,8 @@ public class MenuCommand implements Command {
 
     /**
      * Return MessageEmbed object with Menu and restaurant name info which users can choose
-     * @param resultMenu - DishObject, which is for use to choose 
+     *
+     * @param resultMenu - DishObject, which is for use to choose
      * @param restaurantName - String, which is the restaurant name
      * @return MessageEmbed object with Menu and restaurant name
      */
