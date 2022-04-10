@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.northeastern.cs5500.starterbot.model.DishObject;
+import edu.northeastern.cs5500.starterbot.model.Order;
 import java.util.ArrayList;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import org.junit.jupiter.api.Test;
@@ -71,6 +72,38 @@ public class LastCommandTest {
         assertEquals(expectedString, lastCommand.covertoSting(orderItems1));
     }
 
+    @Test
+    void testMessageEmbed() {
+        DishObject dish1 = new DishObject();
+        dish1.setDish("dish1");
+        dish1.setPrice(9.9);
+
+        DishObject dish2 = new DishObject();
+        dish2.setDish("dish2");
+        dish2.setPrice(19.9);
+
+        DishObject dish3 = new DishObject();
+        dish3.setDish("dish3");
+        dish3.setPrice(7.9);
+
+        ArrayList<DishObject> orderItems1 = new ArrayList<>();
+        orderItems1.add(dish1);
+        orderItems1.add(dish2);
+        orderItems1.add(dish3);
+
+        String restaurantNameOne = "testOne";
+        String restaurantNameTwo = "testtwo";
+        Order orderOne = new Order();
+        Order orderTwo = new Order();
+        ArrayList<Order> testOrders = new ArrayList<>();
+        orderOne.setOrderItems(orderItems1);
+        orderOne.setRestaurantName(restaurantNameOne);
+        orderItems1.remove(0);
+        orderTwo.setOrderItems(orderItems1);
+        orderTwo.setRestaurantName(restaurantNameTwo);
+        //    need to fix
+
+    }
     // void testCheckIfRestrantInDataBase() {
     //     // not yet figure out where to test this method.
     // }

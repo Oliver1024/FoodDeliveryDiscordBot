@@ -155,7 +155,7 @@ public class LastCommand implements Command {
                     return;
                 }
             }
-            event.replyEmbeds(buildReplyEmbed(result, user));
+            event.replyEmbeds(buildReplyEmbed(result));
         }
     }
 
@@ -163,12 +163,11 @@ public class LastCommand implements Command {
      * Return MessageEmbed object with Arrlist of result.
      *
      * @param result the arrylist contains all order history
-     * @param user the target user
      * @return MessageEmbed object
      */
-    protected MessageEmbed buildReplyEmbed(ArrayList<Order> result, User user) {
+    protected MessageEmbed buildReplyEmbed(ArrayList<Order> result) {
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle(user.getName() + "'s order history: ");
+        eb.setTitle("your order history: ");
         for (int index = 0; index < result.size(); index++) {
             eb.addField(
                     index
