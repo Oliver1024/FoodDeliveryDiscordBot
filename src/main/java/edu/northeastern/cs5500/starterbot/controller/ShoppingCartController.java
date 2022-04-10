@@ -123,4 +123,21 @@ public class ShoppingCartController {
             }
         }
     }
+
+    /**
+     * Get the shopping cart object where the user is the same as the input user
+     *
+     * @param userId the user we want to check
+     * @return a shopping cart object
+     */
+    @Nullable
+    public ShoppingCart getShoppingCart(String userId) {
+        Collection<ShoppingCart> carts = shoppingCartRepository.getAll();
+        for (ShoppingCart shoppingCart : carts) {
+            if (shoppingCart.getUserId().equalsIgnoreCase(userId)) {
+                return shoppingCart;
+            }
+        }
+        return null;
+    }
 }

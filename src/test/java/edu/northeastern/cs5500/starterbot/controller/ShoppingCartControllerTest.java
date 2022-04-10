@@ -2,6 +2,7 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.northeastern.cs5500.starterbot.model.DishObject;
@@ -174,5 +175,19 @@ public class ShoppingCartControllerTest {
         shoppingCartController.deleteCart(userId1);
         actual = shoppingCartController.shoppingCartRepository.getAll();
         assertFalse(actual.size() == 0);
+    }
+
+    @Test
+    void testGetShoppingCart() {
+        ShoppingCart cart1 = new ShoppingCart();
+        cart1.setId(new ObjectId("6227b0779744ecb0c23a772e"));
+        cart1.setUserId("user1");
+        cart1.setUsername("Wen");
+        cart1.setRestaurantName("restaruant 1");
+        cart1.setOrderItems(new ArrayList<DishObject>());
+        shoppingCartController.shoppingCartRepository.add(cart1);
+
+        assertEquals(cart1, shoppingCartController.getShoppingCart("user1"));
+        assertNull(shoppingCartController.getShoppingCart("user2"));
     }
 }

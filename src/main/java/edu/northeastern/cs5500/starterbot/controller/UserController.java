@@ -3,6 +3,7 @@ package edu.northeastern.cs5500.starterbot.controller;
 import com.mongodb.lang.Nullable;
 import edu.northeastern.cs5500.starterbot.model.DishObject;
 import edu.northeastern.cs5500.starterbot.model.Order;
+import edu.northeastern.cs5500.starterbot.model.ShoppingCart;
 import edu.northeastern.cs5500.starterbot.model.User;
 import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.time.Duration;
@@ -46,6 +47,32 @@ public class UserController {
         }
 
         Order newOrder = createNewOrder(restaurantName, orderItems);
+        ArrayList<Order> allOrders = userToUpdate.getOrders();
+        allOrders.add(newOrder);
+        userToUpdate.setOrders(allOrders);
+
+        this.userRepository.update(userToUpdate);
+    }
+
+    /**
+     * add the order into the user's list of history orders in the database
+     *
+     * @param shoppingCart the shopping cart to be added into the database
+     */
+    public void addOrder(ShoppingCart shoppingCart) {
+        Collection<User> users = userRepository.getAll();
+        User userToUpdate = null;
+        for (User user : users) {
+            if (user.getUserId().equals(shoppingCart.getUserId())) {
+                userToUpdate = user;
+                break;
+            }
+        }
+        if (userToUpdate == null) {
+            userToUpdate = createUser(shoppingCart.getUserId(), shoppingCart.getUsername());
+        }
+        Order newOrder =
+                createNewOrder(shoppingCart.getRestaurantName(), shoppingCart.getOrderItems());
         ArrayList<Order> allOrders = userToUpdate.getOrders();
         allOrders.add(newOrder);
         userToUpdate.setOrders(allOrders);
