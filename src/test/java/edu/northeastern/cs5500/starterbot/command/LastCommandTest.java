@@ -3,6 +3,7 @@ package edu.northeastern.cs5500.starterbot.command;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.northeastern.cs5500.starterbot.model.DishObject;
@@ -101,9 +102,7 @@ public class LastCommandTest {
         processedInputTestOne.clear();
         processedInputTestOne.add("12");
         processedInputTestOne.add("restaurantOne");
-        assertEquals(
-                "foundTargetRestaurant",
-                lastCommand.checkInput(processedInputTestOne, restaurants));
+        assertNull(lastCommand.checkInput(processedInputTestOne, restaurants));
     }
 
     @Test

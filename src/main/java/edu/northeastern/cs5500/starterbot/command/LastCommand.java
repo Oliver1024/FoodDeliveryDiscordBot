@@ -114,7 +114,7 @@ public class LastCommand implements Command {
                         + "'/last num_k' or '/last num_k restaurant_name' to check your history orders.";
             }
         }
-        return "foundTargetRestaurant";
+        return null;
     }
 
     @Override
@@ -149,11 +149,10 @@ public class LastCommand implements Command {
                     "the name of restaurant you typed do not have any order before, you can type /restaurants to check other restaurants");
         } else {
             eb.setTitle("your order history: ");
-            int index = 0;
+            int index = 1;
             for (int i = result.size() - 1; i >= 0; i--) {
                 eb.addField(
                         index
-                                + 1
                                 + ". "
                                 + result.get(i).getRestaurantName()
                                 + ", "
