@@ -64,7 +64,7 @@ public class RestaurantController {
     /**
      * Gets all the names of restaurants in our database
      *
-     * @return the arraylist with all the name of restaurants
+     * @return the arrayList with all the name of restaurants
      */
     @Nonnull
     public ArrayList<String> getAllRestaurantsName() {

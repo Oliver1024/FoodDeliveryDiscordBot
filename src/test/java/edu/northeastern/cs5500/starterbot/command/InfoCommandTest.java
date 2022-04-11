@@ -22,8 +22,9 @@ public class InfoCommandTest {
 
     @Test
     void testGetCommandData() {
-        String expectedDescrption = "/info to check the info of the restaurant you are ordering at";
-        assertEquals(expectedDescrption, infoCommand.getCommandData().getDescription());
+        String expectedDescription =
+                "/info to check the info of the restaurant you are ordering at";
+        assertEquals(expectedDescription, infoCommand.getCommandData().getDescription());
 
         String expectedOptionContent =
                 "'/info restaurant_name' to check the info of the given restaurant";
@@ -38,14 +39,14 @@ public class InfoCommandTest {
         cuisineTypes.add("Asian");
         cuisineTypes.add("Chinese");
         Restaurant restaurant = new Restaurant();
-        restaurant.setName("resaurant1");
+        restaurant.setName("restaurant1");
         restaurant.setContact((long) 2061112222);
         restaurant.setAddress("222 Ave");
         restaurant.setCuisineType(cuisineTypes);
 
         MessageEmbed eb = infoCommand.buildReplyEmbed(restaurant);
 
-        String expectedTitle = "resaurant1's info";
+        String expectedTitle = "restaurant1's info";
         assertEquals(expectedTitle, eb.getTitle());
 
         assertEquals("Contact:", eb.getFields().get(0).getName());

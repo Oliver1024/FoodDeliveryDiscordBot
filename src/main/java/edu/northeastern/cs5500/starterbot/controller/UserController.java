@@ -100,7 +100,7 @@ public class UserController {
      * Helper function which creates a new Order object with the given information
      *
      * @param restaurantName the restaurant that user ordered at
-     * @param orderItems the arraylist of all the ordered dishes
+     * @param orderItems the arrayList of all the ordered dishes
      * @return a new Order object
      */
     private Order createNewOrder(String restaurantName, ArrayList<DishObject> orderItems) {
@@ -117,7 +117,7 @@ public class UserController {
      * Get all orders of the given user that are not delivered yet
      *
      * @param userId the user we will check
-     * @return an arraylist of all the filtered orders
+     * @return an arrayList of all the filtered orders
      */
     @Nullable
     public ArrayList<Order> getUndeliveredOrders(String userId) {
@@ -157,7 +157,7 @@ public class UserController {
     }
 
     /**
-     * Check the order status of the given order based on the order time and curent time
+     * Check the order status of the given order based on the order time and current time
      *
      * @param order the order we will check
      * @return the order status of the given order
@@ -172,39 +172,9 @@ public class UserController {
     }
 
     /**
-     * from userId and k to get a list that only contain the most recent k orders if k bigger than
-     * the number of order in the database return the while orders
-     *
-     * @param userId the discord id of the given user
-     * @param k the limited k number
-     * @return an arrayList of the last k history orders of the given user, or the whole history
-     *     orders when k < numOfOrders"
-     */
-    @Nonnull
-    public ArrayList<Order> getLastKNumsOrders(String userId, int k) {
-        Collection<User> users = userRepository.getAll();
-        ArrayList<Order> targetList = new ArrayList<>();
-        for (User user : users) {
-            if (user.getUserId().equals(userId)) {
-                targetList = user.getOrders();
-                break;
-            }
-        }
-        /* if (targetList.size() > k) {
-              int length = targetList.size()-1;
-            // return  targetList.subList(length-k, length);
-
-        }*/
-        while (targetList.size() > k) {
-            targetList.remove(0);
-        }
-        return targetList;
-    }
-
-    /**
-     * from userId and k to get a list that only contain the most recent k orders also with a limit
-     * condition that all orders with the target restaurant name if k bigger than the number of
-     * order in the database return the whole orders at restaurantName
+     * from userId and processedInput ArrayList to get a list that only contain the most recent k
+     * orders also with a limit condition that all orders with the target restaurant name if
+     * processedInput contains
      *
      * @param userId
      * @param k
@@ -212,29 +182,30 @@ public class UserController {
      * @return
      */
     @Nonnull
-    public ArrayList<Order> getLastKNumsOrders(String userId, int k, String restaurantName) {
+    public ArrayList<Order> getLastKNumsOrders(String userId, ArrayList<String> processedInput) {
         Collection<User> users = userRepository.getAll();
         ArrayList<Order> targetList = new ArrayList<>();
+        int k = Integer.valueOf(processedInput.get(0));
         for (User user : users) {
             if (user.getUserId().equals(userId)) {
-                for (int i = 0; i < user.getOrders().size(); i++) {
-                    if (user.getOrders()
-                            .get(i)
-                            .getRestaurantName()
-                            .equalsIgnoreCase(restaurantName)) {
-                        targetList.add(user.getOrders().get(i));
+                if (processedInput.size() == 2) {
+                    for (int i = 0; i < user.getOrders().size(); i++) {
+                        if (user.getOrders()
+                                .get(i)
+                                .getRestaurantName()
+                                .equalsIgnoreCase(processedInput.get(1))) {
+                            targetList.add(user.getOrders().get(i));
+                        }
                     }
+                } else {
+                    targetList = user.getOrders();
                 }
+                break;
             }
-            break;
         }
-        /* if (targetList.size() > k) {
-              int length = targetList.size()-1;
-            // return  targetList.subList(length-k, length);
-
-        }*/
-        while (targetList.size() > k) {
-            targetList.remove(0);
+        int length = targetList.size() - 1;
+        if (targetList.size() > k) {
+            targetList.subList(length - k, length);
         }
         return targetList;
     }

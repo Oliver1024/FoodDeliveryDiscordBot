@@ -52,10 +52,10 @@ public class LastCommand implements Command {
     public ArrayList<String> processUserInput(String userInput) {
         ArrayList<String> res = new ArrayList<>();
         userInput = userInput.trim();
-        int first_space_index = userInput.indexOf(" ");
-        if (first_space_index != -1) {
-            res.add(userInput.substring(0, first_space_index));
-            res.add(userInput.substring(first_space_index + 1));
+        String[] userInputStrings = userInput.split(" ", 2);
+        if (userInputStrings.length != 1) {
+            res.add(userInputStrings[0]);
+            res.add(userInputStrings[1]);
         } else {
             res.add(userInput);
         }
@@ -91,6 +91,32 @@ public class LastCommand implements Command {
         return s += dishObjects.get(dishObjects.size() - 1).getDish();
     }
 
+    /**
+     * operate user input return different String
+     *
+     * @param processedInput processed ArrayList of user input String
+     * @param restaurantNames contains all the name of restaurants
+     * @return compare each condition, return different String.
+     */
+    public String checkInput(ArrayList<String> processedInput, ArrayList<String> restaurantNames) {
+        boolean foundRestaurant = false;
+        if (!checkIfStringIsNumber(processedInput.get(0))) {
+            return "Invalid number input, please type '/last num_k' or '/last num_k restaurant_name' to check your history orders";
+        } else if (processedInput.size() == 2) {
+            for (String restaurantName : restaurantNames) {
+                if (restaurantName.equalsIgnoreCase(processedInput.get(1))) {
+                    foundRestaurant = true;
+                    break;
+                }
+            }
+            if (!foundRestaurant) {
+                return "The restaurant name you provide doesn't match any restaurants we have. Pease type"
+                        + "'/last num_k' or '/last num_k restaurant_name' to check your history orders.";
+            }
+        }
+        return "foundTargetRestaurant";
+    }
+
     @Override
     public void onEvent(CommandInteraction event) {
         log.info("event: /last");
@@ -98,35 +124,15 @@ public class LastCommand implements Command {
         String userInput = event.getOption("content").getAsString();
         ArrayList<String> processedInput = processUserInput(userInput);
         ArrayList<Order> result = new ArrayList<>();
-        //  check if user input is a invalid number
-        if (!checkIfStringIsNumber(processedInput.get(0))) {
-            event.reply(
-                            "Invalid number input, please type '/last num_k' or '/last num_k restaurant_name' to check your history orders")
-                    .queue();
+        ArrayList<String> restaurantNamesList = restaurantController.getAllRestaurantsName();
+        String userInputAnswer = checkInput(processedInput, restaurantNamesList);
+        if (!userInputAnswer.equalsIgnoreCase("foundTargetRestaurant")) {
+            event.reply(userInputAnswer).queue();
             return;
-        }
-        // if user input only contains numbers
-        else if (processedInput.size() == 1) {
-            result =
-                    userController.getLastKNumsOrders(
-                            user.getId(), Integer.valueOf(processedInput.get(0)));
         } else {
-            // if user input with number and name of restaurant
-            // check if the name of restaurant we have in our database
-            if (restaurantController.getRestaurantName(processedInput.get(1)) == null) {
-                event.reply(
-                                "The restaurant name you provide doesn't match any restaurants we have. Pease type"
-                                        + "'/last num_k' or '/last num_k restaurant_name' to check your history orders.")
-                        .queue();
-                return;
-            }
-            result =
-                    userController.getLastKNumsOrders(
-                            user.getId(),
-                            Integer.valueOf(processedInput.get(0)),
-                            processedInput.get(1));
+            result = userController.getLastKNumsOrders(user.getId(), processedInput);
+            event.replyEmbeds(buildReplyEmbed(result));
         }
-        event.replyEmbeds(buildReplyEmbed(result));
     }
 
     /**
@@ -143,17 +149,19 @@ public class LastCommand implements Command {
                     "the name of restaurant you typed do not have any order before, you can type /restaurants to check other restaurants");
         } else {
             eb.setTitle("your order history: ");
-            for (int index = 0; index < result.size(); index++) {
+            int index = 0;
+            for (int i = result.size() - 1; i >= 0; i--) {
                 eb.addField(
                         index
                                 + 1
                                 + ". "
-                                + result.get(index).getRestaurantName()
+                                + result.get(i).getRestaurantName()
                                 + ", "
-                                + result.get(index).getOrderTime().toString()
+                                + result.get(i).getOrderTime().toString()
                                 + ", ",
-                        buildOrderedDishesString(result.get(index).getOrderItems()),
-                        true);
+                        buildOrderedDishesString(result.get(i).getOrderItems()),
+                        false);
+                index++;
             }
         }
         eb.setColor(Color.BLUE);

@@ -7,7 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.northeastern.cs5500.starterbot.model.DishObject;
 import edu.northeastern.cs5500.starterbot.model.Order;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import org.junit.jupiter.api.Test;
 
@@ -43,10 +46,10 @@ public class LastCommandTest {
     @Test
     void testCheckIfStringIsNumber() {
         String testOne = "5sichuanfood";
-        String testtwo = "12345";
+        String testTwo = "12345";
 
         assertFalse(lastCommand.checkIfStringIsNumber(testOne));
-        assertTrue(lastCommand.checkIfStringIsNumber(testtwo));
+        assertTrue(lastCommand.checkIfStringIsNumber(testTwo));
     }
 
     @Test
@@ -73,7 +76,44 @@ public class LastCommandTest {
     }
 
     @Test
+    void testCheckInput() {
+        ArrayList<String> processedInputTestOne = new ArrayList<>();
+        processedInputTestOne.add("12a");
+        String exceptErrorMessageOne =
+                "Invalid number input, please type '/last num_k' or '/last num_k restaurant_name' to check your history orders";
+        assertEquals(exceptErrorMessageOne, lastCommand.checkInput(processedInputTestOne, null));
+
+        ArrayList<String> restaurants = new ArrayList<>();
+        restaurants.add("restaurantOne");
+        restaurants.add("restaurantTwo");
+
+        processedInputTestOne.clear();
+        processedInputTestOne.add("12");
+        processedInputTestOne.add("restaurant");
+
+        String exceptErrorMessageTwo =
+                "The restaurant name you provide doesn't match any restaurants we have. Pease type"
+                        + "'/last num_k' or '/last num_k restaurant_name' to check your history orders.";
+
+        assertEquals(
+                exceptErrorMessageTwo, lastCommand.checkInput(processedInputTestOne, restaurants));
+
+        processedInputTestOne.clear();
+        processedInputTestOne.add("12");
+        processedInputTestOne.add("restaurantOne");
+        assertEquals(
+                "foundTargetRestaurant",
+                lastCommand.checkInput(processedInputTestOne, restaurants));
+    }
+
+    @Test
     void testMessageEmbed() {
+        ArrayList<Order> testOrders = new ArrayList<>();
+        String errorMessage =
+                "the name of restaurant you typed do not have any order before, you can type /restaurants to check other restaurants";
+        MessageEmbed eb = lastCommand.buildReplyEmbed(testOrders);
+        assertEquals(errorMessage, eb.getTitle());
+
         DishObject dish1 = new DishObject();
         dish1.setDish("dish1");
         dish1.setPrice(9.9);
@@ -90,18 +130,24 @@ public class LastCommandTest {
         orderItems1.add(dish1);
         orderItems1.add(dish2);
         orderItems1.add(dish3);
+        ArrayList<DishObject> orderItems2 = new ArrayList<>();
+        orderItems2.add(dish2);
+        orderItems2.add(dish3);
 
-        String restaurantNameOne = "testOne";
-        String restaurantNameTwo = "testtwo";
         Order orderOne = new Order();
         Order orderTwo = new Order();
-        ArrayList<Order> testOrders = new ArrayList<>();
         orderOne.setOrderItems(orderItems1);
-        orderOne.setRestaurantName(restaurantNameOne);
-        orderItems1.remove(0);
-        orderTwo.setOrderItems(orderItems1);
-        orderTwo.setRestaurantName(restaurantNameTwo);
-        //    need to fix
+        orderTwo.setOrderItems(orderItems2);
+        orderOne.setRestaurantName("testOne");
+        orderTwo.setRestaurantName("testTwo");
+        orderOne.setOrderTime(LocalDateTime.of(2022, Month.MARCH, 8, 20, 44));
+        orderTwo.setOrderTime(LocalDateTime.of(2022, Month.APRIL, 9, 14, 33));
+        testOrders.add(orderOne);
+        testOrders.add(orderTwo);
 
+        eb = lastCommand.buildReplyEmbed(testOrders);
+        assertEquals("2. testOne, 2022-03-08T20:44,", eb.getFields().get(1).getName());
+        assertEquals("dish1, dish2, dish3", eb.getFields().get(1).getValue());
+        assertFalse(eb.getFields().get(1).isInline());
     }
 }
