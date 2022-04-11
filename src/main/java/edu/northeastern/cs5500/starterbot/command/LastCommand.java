@@ -68,9 +68,9 @@ public class LastCommand implements Command {
      * @param digit the String for check if it is digit
      * @return if all character are valid digit return true, else return false
      */
-    public boolean checkIfStringIsNumber(String digit) {
-        for (int i = 0; i < digit.length(); i++) {
-            if (!Character.isDigit(digit.charAt(i))) {
+    public boolean checkIfStringIsNumber(String potentialNumbers) {
+        for (int i = 0; i < potentialNumbers.length(); i++) {
+            if (!Character.isDigit(potentialNumbers.charAt(i))) {
                 return false;
             }
         }
