@@ -64,7 +64,7 @@ public class RestaurantController {
     /**
      * Gets all the names of restaurants in our database
      *
-     * @return the arraylist with all the name of restaurants
+     * @return the arrayList with all the name of restaurants
      */
     @Nonnull
     public ArrayList<String> getAllRestaurantsName() {
@@ -136,7 +136,7 @@ public class RestaurantController {
      * Get all the restaurants whose cuisine type is the input type
      *
      * @param inputCuisineType String the cuisine type we want to used for filtering restaurants
-     * @return the arraylist of all the name of all the filtered restaurants
+     * @return the arrayList of all the name of all the filtered restaurants
      */
     @Nonnull
     public ArrayList<String> filterRestaurantByCuisine(String inputCuisineType) {
@@ -162,7 +162,7 @@ public class RestaurantController {
      * @param restaurantName String the target restaurantName
      * @param targeDishObject DishObject the target dishObject which used for compare the list of
      *     menu
-     * @return get the number of target dish, the number of dishes should add 1 beacause there is no
+     * @return get the number of target dish, the number of dishes should add 1 because there is no
      *     index 0 on the menu, start count menu at index 1
      */
     @Nonnull

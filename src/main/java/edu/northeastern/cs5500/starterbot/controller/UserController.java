@@ -20,7 +20,6 @@ public class UserController {
     UserController(GenericRepository<User> userRepository) {
         this.userRepository = userRepository;
     }
-
     /**
      * add the order into the user's list of history orders in the database
      *
@@ -101,7 +100,7 @@ public class UserController {
      * Helper function which creates a new Order object with the given information
      *
      * @param restaurantName the restaurant that user ordered at
-     * @param orderItems the arraylist of all the ordered dishes
+     * @param orderItems the arrayList of all the ordered dishes
      * @return a new Order object
      */
     private Order createNewOrder(String restaurantName, ArrayList<DishObject> orderItems) {
@@ -118,7 +117,7 @@ public class UserController {
      * Get all orders of the given user that are not delivered yet
      *
      * @param userId the user we will check
-     * @return an arraylist of all the filtered orders
+     * @return an arrayList of all the filtered orders
      */
     @Nullable
     public ArrayList<Order> getUndeliveredOrders(String userId) {
@@ -158,7 +157,7 @@ public class UserController {
     }
 
     /**
-     * Check the order status of the given order based on the order time and curent time
+     * Check the order status of the given order based on the order time and current time
      *
      * @param order the order we will check
      * @return the order status of the given order
@@ -170,5 +169,44 @@ public class UserController {
         long passedMins = Duration.between(order.getOrderTime(), LocalDateTime.now()).toMinutes();
         long prepareTime = order.getOrderItems().size() * TIME_PER_DISH;
         return (passedMins > prepareTime + TIME_FOR_DELIVER);
+    }
+
+    /**
+     * from userId and processedInput ArrayList to get a list that only contain the most recent k
+     * orders also with a limit condition that all orders with the target restaurant name if
+     * processedInput contains
+     *
+     * @param userId
+     * @param k
+     * @param restaurantName
+     * @return
+     */
+    @Nonnull
+    public ArrayList<Order> getLastKNumsOrders(String userId, ArrayList<String> processedInput) {
+        Collection<User> users = userRepository.getAll();
+        ArrayList<Order> targetList = new ArrayList<>();
+        int k = Integer.valueOf(processedInput.get(0));
+        for (User user : users) {
+            if (user.getUserId().equals(userId)) {
+                if (processedInput.size() == 2) {
+                    for (int i = 0; i < user.getOrders().size(); i++) {
+                        if (user.getOrders()
+                                .get(i)
+                                .getRestaurantName()
+                                .equalsIgnoreCase(processedInput.get(1))) {
+                            targetList.add(user.getOrders().get(i));
+                        }
+                    }
+                } else {
+                    targetList = user.getOrders();
+                }
+                break;
+            }
+        }
+        int length = targetList.size() - 1;
+        if (targetList.size() > k) {
+            targetList.subList(length - k, length);
+        }
+        return targetList;
     }
 }

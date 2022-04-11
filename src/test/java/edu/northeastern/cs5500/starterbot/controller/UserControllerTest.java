@@ -129,10 +129,84 @@ public class UserControllerTest {
 
         userController.userRepository.add(user1);
         userController.deliverOrders("user1");
-
         assertFalse(order1.getIsDelivered());
         assertTrue(order2.getIsDelivered());
-
         userController.deliverOrders("user2");
+    }
+
+    @Test
+    void testGetLastKNumsOrders() {
+        DishObject dish1 = new DishObject();
+        dish1.setDish("dish1");
+        dish1.setPrice(9.9);
+
+        DishObject dish2 = new DishObject();
+        dish2.setDish("dish2");
+        dish2.setPrice(19.9);
+
+        DishObject dish3 = new DishObject();
+        dish3.setDish("dish3");
+        dish3.setPrice(7.9);
+
+        DishObject dish4 = new DishObject();
+        dish4.setDish("dish4");
+        dish4.setPrice(22.9);
+
+        ArrayList<DishObject> orderItems1 = new ArrayList<>();
+        orderItems1.add(dish1);
+        orderItems1.add(dish2);
+
+        ArrayList<DishObject> orderItems2 = new ArrayList<>();
+        orderItems2.add(dish3);
+
+        ArrayList<DishObject> orderItems3 = new ArrayList<>();
+        orderItems3.add(dish4);
+
+        Order order1 = new Order();
+        order1.setIsDelivered(false);
+        order1.setOrderTime(LocalDateTime.now().minusMinutes(2));
+        order1.setOrderItems(orderItems1);
+        order1.setRestaurantName("restaurant1");
+
+        Order order2 = new Order();
+        order2.setIsDelivered(false);
+        order2.setOrderTime(LocalDateTime.now().minusMinutes(30));
+        order2.setOrderItems(orderItems2);
+        order2.setRestaurantName("restaurant1");
+
+        Order order3 = new Order();
+        order3.setIsDelivered(true);
+        order3.setOrderTime(LocalDateTime.now().minusMinutes(40));
+        order3.setOrderItems(orderItems3);
+        order3.setRestaurantName("restaurant3");
+
+        ArrayList<Order> orders = new ArrayList<>();
+        orders.add(order1);
+        orders.add(order2);
+        orders.add(order3);
+
+        User user1 = new User();
+        user1.setId(new ObjectId("623fc4508e303b6fce523819"));
+        user1.setUserId("user1");
+        user1.setUsername("Wen");
+        user1.setOrders(orders);
+        ArrayList<String> testStringOne = new ArrayList<>();
+        testStringOne.add("5");
+        testStringOne.add("restaurant1");
+        ArrayList<String> testStringTwo = new ArrayList<>();
+        testStringTwo.add("2");
+        ArrayList<String> testStringThree = new ArrayList<>();
+        testStringThree.add("1");
+        testStringThree.add("restaurant1");
+
+        userController.userRepository.add(user1);
+        ArrayList<Order> testList = userController.getLastKNumsOrders("user1", testStringOne);
+        assertEquals(order2, testList.get(testList.size() - 1));
+        ArrayList<Order> testList1 = userController.getLastKNumsOrders("user1", testStringTwo);
+        assertEquals(order3, testList1.get(testList1.size() - 1));
+        ArrayList<Order> testList2 = userController.getLastKNumsOrders("user1", testStringThree);
+        assertEquals(order2, testList2.get(1));
+        ArrayList<Order> testList3 = userController.getLastKNumsOrders("user2", testStringThree);
+        assertEquals(new ArrayList<>(), testList3);
     }
 }
