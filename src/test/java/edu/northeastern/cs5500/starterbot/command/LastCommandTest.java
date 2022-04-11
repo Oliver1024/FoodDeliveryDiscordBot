@@ -28,11 +28,11 @@ public class LastCommandTest {
     }
 
     @Test
-    void testTreatInput() {
+    void testProcessUserInput() {
         String testOne = "4 sichuan food";
         String testTwo = "5";
-        ArrayList<String> list1 = lastCommand.treatInput(testOne);
-        ArrayList<String> list2 = lastCommand.treatInput(testTwo);
+        ArrayList<String> list1 = lastCommand.processUserInput(testOne);
+        ArrayList<String> list2 = lastCommand.processUserInput(testTwo);
 
         assertEquals("4", list1.get(0));
         assertEquals("sichuan food", list1.get(1));
@@ -41,16 +41,16 @@ public class LastCommandTest {
     }
 
     @Test
-    void testCheckStringisDigit() {
+    void testCheckIfStringIsNumber() {
         String testOne = "5sichuanfood";
         String testtwo = "12345";
 
-        assertFalse(lastCommand.CheckStringisDigit(testOne));
-        assertTrue(lastCommand.CheckStringisDigit(testtwo));
+        assertFalse(lastCommand.checkIfStringIsNumber(testOne));
+        assertTrue(lastCommand.checkIfStringIsNumber(testtwo));
     }
 
     @Test
-    void testCovertoSting() {
+    void testBuildOrderedDishesString() {
         DishObject dish1 = new DishObject();
         dish1.setDish("dish1");
         dish1.setPrice(9.9);
@@ -69,7 +69,7 @@ public class LastCommandTest {
         orderItems1.add(dish3);
 
         String expectedString = "dish1, dish2, dish3";
-        assertEquals(expectedString, lastCommand.covertoSting(orderItems1));
+        assertEquals(expectedString, lastCommand.buildOrderedDishesString(orderItems1));
     }
 
     @Test
@@ -104,7 +104,4 @@ public class LastCommandTest {
         //    need to fix
 
     }
-    // void testCheckIfRestrantInDataBase() {
-    //     // not yet figure out where to test this method.
-    // }
 }

@@ -172,33 +172,39 @@ public class UserController {
     }
 
     /**
-     * from userId and k to get a list that only contain the most recrnt k orders if k bigger than
-     * the number of order in the dabase return the while orders
+     * from userId and k to get a list that only contain the most recent k orders if k bigger than
+     * the number of order in the database return the while orders
      *
-     * @param userId user's id for get the target hishtory
+     * @param userId the discord id of the given user
      * @param k the limited k number
-     * @return a list which contains order information
+     * @return an arrayList of the last k history orders of the given user, or the whole history
+     *     orders when k < numOfOrders"
      */
     @Nonnull
-    public ArrayList<Order> getKnumsOrders(String userId, int k) {
+    public ArrayList<Order> getLastKNumsOrders(String userId, int k) {
         Collection<User> users = userRepository.getAll();
-        ArrayList<Order> targetLIst = new ArrayList<>();
+        ArrayList<Order> targetList = new ArrayList<>();
         for (User user : users) {
             if (user.getUserId().equals(userId)) {
-                targetLIst = user.getOrders();
+                targetList = user.getOrders();
                 break;
             }
         }
-        while (targetLIst.size() > k) {
-            targetLIst.remove(0);
+        /* if (targetList.size() > k) {
+              int length = targetList.size()-1;
+            // return  targetList.subList(length-k, length);
+
+        }*/
+        while (targetList.size() > k) {
+            targetList.remove(0);
         }
-        return targetLIst;
+        return targetList;
     }
 
     /**
-     * from userId and k to get a list that only contain the most recrnt k orders also with a limit
-     * condition that all orders with the target restrant name if k bigger than the number of order
-     * in the dabase return the whole orders at restaurantName
+     * from userId and k to get a list that only contain the most recent k orders also with a limit
+     * condition that all orders with the target restaurant name if k bigger than the number of
+     * order in the database return the whole orders at restaurantName
      *
      * @param userId
      * @param k
@@ -206,7 +212,7 @@ public class UserController {
      * @return
      */
     @Nonnull
-    public ArrayList<Order> getKnumsOrders(String userId, int k, String restaurantName) {
+    public ArrayList<Order> getLastKNumsOrders(String userId, int k, String restaurantName) {
         Collection<User> users = userRepository.getAll();
         ArrayList<Order> targetList = new ArrayList<>();
         for (User user : users) {
@@ -222,6 +228,11 @@ public class UserController {
             }
             break;
         }
+        /* if (targetList.size() > k) {
+              int length = targetList.size()-1;
+            // return  targetList.subList(length-k, length);
+
+        }*/
         while (targetList.size() > k) {
             targetList.remove(0);
         }

@@ -36,42 +36,39 @@ public class LastCommand implements Command {
     public CommandData getCommandData() {
         return new CommandData(getName(), "last")
                 .addOptions(
-                        new OptionData(OptionType.STRING, "content", "show  Last orders User take")
-                                .setRequired(false));
+                        new OptionData(
+                                        OptionType.STRING,
+                                        "content",
+                                        "Show history orders you ordered by following"
+                                                + "'/last num_k' or '/last num_k restaurant_name' patterns")
+                                .setRequired(true));
     }
     /**
-     * we treat the user input string split into 2 parts. he first one we think it is a digit, the
-     * rest part should be combine to the whole together for create our target name of restrant.
-     * Also, it is possible that the user only has number. No matter what situation, only return the
-     * list, and ther method for judging.
+     * divide input String from user into one ot two parts.
      *
      * @param userInput user input content
-     * @return return an arraylist that we treated.
+     * @return return an arrayList after we divided.
      */
-    public ArrayList<String> treatInput(String userInput) {
+    public ArrayList<String> processUserInput(String userInput) {
         ArrayList<String> res = new ArrayList<>();
-        // already checked at On event if userInput is null or not
-        String[] splitedInput = userInput.split(" ");
-        res.add(splitedInput[0]);
-        if (splitedInput.length != 1) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < splitedInput.length - 1; i++) {
-                sb.append(splitedInput[i]);
-                sb.append(" ");
-            }
-            sb.append(splitedInput[splitedInput.length - 1]);
-            res.add(sb.toString());
+        userInput = userInput.trim();
+        int first_space_index = userInput.indexOf(" ");
+        if (first_space_index != -1) {
+            res.add(userInput.substring(0, first_space_index));
+            res.add(userInput.substring(first_space_index + 1));
+        } else {
+            res.add(userInput);
         }
         return res;
     }
 
     /**
-     * check if the first word is digit ot not
+     * check if the every word of target string is a valid number ot not
      *
      * @param digit the String for check if it is digit
-     * @return if all are digit return ture, else return false
+     * @return if all character are valid digit return true, else return false
      */
-    public boolean CheckStringisDigit(String digit) {
+    public boolean checkIfStringIsNumber(String digit) {
         for (int i = 0; i < digit.length(); i++) {
             if (!Character.isDigit(digit.charAt(i))) {
                 return false;
@@ -81,104 +78,83 @@ public class LastCommand implements Command {
     }
 
     /**
-     * conver arraylist of dishObjevt to a single String.
+     * convert dishObject arrayList to a string
      *
-     * @param dishObjects
-     * @return
+     * @param dishObjects the arrayList contains all information about dish
+     * @return a string contain all dish names
      */
-    public String covertoSting(ArrayList<DishObject> dishObjects) {
+    public String buildOrderedDishesString(ArrayList<DishObject> dishObjects) {
         String s = "";
         for (int i = 0; i < dishObjects.size() - 1; i++) {
             s += dishObjects.get(i).getDish() + ", ";
         }
         return s += dishObjects.get(dishObjects.size() - 1).getDish();
     }
-    /**
-     * check if the name of restrauant is really exsit in database
-     *
-     * @param rName the name of restrant we want to check
-     * @return if exsit retrn true, else return false
-     */
-    public boolean checkIfRestrantInDataBase(String rName) {
-        return restaurantController.getRestaurant(rName) != null ? true : false;
-    }
 
     @Override
     public void onEvent(CommandInteraction event) {
         log.info("event: /last");
         User user = event.getUser();
-        String userInput;
-        if (event.getOption("content") == null) {
+        String userInput = event.getOption("content").getAsString();
+        ArrayList<String> processedInput = processUserInput(userInput);
+        ArrayList<Order> result = new ArrayList<>();
+        //  check if user input is a invalid number
+        if (!checkIfStringIsNumber(processedInput.get(0))) {
             event.reply(
-                            "you have to add at lease a number to show your hisory orders or with number and space with your target restaurant name  "
-                                    + " with'/last' with an number '2' or also ' ' and combine with your target restaurant name")
+                            "Invalid number input, please type '/last num_k' or '/last num_k restaurant_name' to check your history orders")
                     .queue();
             return;
+        }
+        // if user input only contains numbers
+        else if (processedInput.size() == 1) {
+            result =
+                    userController.getLastKNumsOrders(
+                            user.getId(), Integer.valueOf(processedInput.get(0)));
         } else {
-            userInput = event.getOption("content").getAsString();
-            ArrayList<String> splitedInput = treatInput(userInput);
-            ArrayList<Order> result = new ArrayList<>();
-            // if user input is not a digit at first splited String
-            if (!CheckStringisDigit(splitedInput.get(0))) {
+            // if user input with number and name of restaurant
+            // check if the name of restaurant we have in our database
+            if (restaurantController.getRestaurantName(processedInput.get(1)) == null) {
                 event.reply(
-                                "you have to add at lease a number to show your hisory orders, any other word is not alowed")
+                                "The restaurant name you provide doesn't match any restaurants we have. Pease type"
+                                        + "'/last num_k' or '/last num_k restaurant_name' to check your history orders.")
                         .queue();
                 return;
             }
-            // if user input only digit
-            else if (splitedInput.size() == 1) {
-                result =
-                        userController.getKnumsOrders(
-                                user.getId(), Integer.valueOf(splitedInput.get(0)));
-            } else {
-                // if user input with digit and name of restraurant
-
-                // check if the name of restaurant we have in our dababase
-
-                if (!checkIfRestrantInDataBase(splitedInput.get(1))) {
-                    event.reply(
-                                    " the name of restaurant you typed do exsit in the databse, you can type /restaurants to find")
-                            .queue();
-                    return;
-                }
-
-                result =
-                        userController.getKnumsOrders(
-                                user.getId(),
-                                Integer.valueOf(splitedInput.get(0)),
-                                splitedInput.get(1));
-                // check if the name of restaurant the user has order
-                if (result.size() == 0) {
-                    event.reply(
-                                    " the name of restaurant you typed do not have any order before, you can type other restaurants name to check")
-                            .queue();
-                    return;
-                }
-            }
-            event.replyEmbeds(buildReplyEmbed(result));
+            result =
+                    userController.getLastKNumsOrders(
+                            user.getId(),
+                            Integer.valueOf(processedInput.get(0)),
+                            processedInput.get(1));
         }
+        event.replyEmbeds(buildReplyEmbed(result));
     }
 
     /**
-     * Return MessageEmbed object with Arrlist of result.
+     * Return MessageEmbed object with ArrayList of result.
      *
-     * @param result the arrylist contains all order history
+     * @param result the arrayList contains all order history
      * @return MessageEmbed object
      */
     protected MessageEmbed buildReplyEmbed(ArrayList<Order> result) {
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("your order history: ");
-        for (int index = 0; index < result.size(); index++) {
-            eb.addField(
-                    index
-                            + 1
-                            + ". "
-                            + result.get(index).getRestaurantName()
-                            + ", "
-                            + result.get(index).getOrderTime().toString()
-                            + ", ",
-                    covertoSting(result.get(index).getOrderItems()),
-                    true);
+        // check if the name of restaurant the user has order
+        if (result.size() == 0) {
+            eb.setTitle(
+                    "the name of restaurant you typed do not have any order before, you can type /restaurants to check other restaurants");
+        } else {
+            eb.setTitle("your order history: ");
+            for (int index = 0; index < result.size(); index++) {
+                eb.addField(
+                        index
+                                + 1
+                                + ". "
+                                + result.get(index).getRestaurantName()
+                                + ", "
+                                + result.get(index).getOrderTime().toString()
+                                + ", ",
+                        buildOrderedDishesString(result.get(index).getOrderItems()),
+                        true);
+            }
         }
         eb.setColor(Color.BLUE);
         return eb.build();

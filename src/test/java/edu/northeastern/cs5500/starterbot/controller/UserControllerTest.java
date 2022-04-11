@@ -135,7 +135,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void testGetKnumsOrders() {
+    void testGetLastKNumsOrders() {
         DishObject dish1 = new DishObject();
         dish1.setDish("dish1");
         dish1.setPrice(9.9);
@@ -192,14 +192,14 @@ public class UserControllerTest {
         user1.setOrders(orders);
 
         userController.userRepository.add(user1);
-        ArrayList<Order> testlist = userController.getKnumsOrders("user1", 5);
-        assertEquals(order3, testlist.get(testlist.size() - 1));
-        ArrayList<Order> testlist1 = userController.getKnumsOrders("user1", 1);
-        assertEquals(order3, testlist1.get(testlist.size() - 1));
+        ArrayList<Order> testList = userController.getLastKNumsOrders("user1", 5);
+        assertEquals(order3, testList.get(testList.size() - 1));
+        ArrayList<Order> testList1 = userController.getLastKNumsOrders("user1", 1);
+        assertEquals(order3, testList1.get(testList1.size() - 1));
     }
 
     @Test
-    void testGetKnumsOrdersWithString() {
+    void testGetLastKNumsOrdersWithName() {
         DishObject dish1 = new DishObject();
         dish1.setDish("dish1");
         dish1.setPrice(9.9);
@@ -256,11 +256,11 @@ public class UserControllerTest {
         user1.setOrders(orders);
 
         userController.userRepository.add(user1);
-        ArrayList<Order> testlist = userController.getKnumsOrders("user1", 5, "restaurant1");
+        ArrayList<Order> testlist = userController.getLastKNumsOrders("user1", 5, "restaurant1");
         assertEquals(order1, testlist.get(testlist.size() - 1));
-        ArrayList<Order> testlist1 = userController.getKnumsOrders("user1", 1, "restaurant3");
+        ArrayList<Order> testlist1 = userController.getLastKNumsOrders("user1", 1, "restaurant3");
         assertEquals(order3, testlist1.get(testlist.size() - 1));
-        ArrayList<Order> testlist2 = userController.getKnumsOrders("user1", 2, "restaurant3");
+        ArrayList<Order> testlist2 = userController.getLastKNumsOrders("user1", 2, "restaurant3");
         assertEquals(order2, testlist2.get(0));
         assertEquals(order3, testlist2.get(1));
     }
