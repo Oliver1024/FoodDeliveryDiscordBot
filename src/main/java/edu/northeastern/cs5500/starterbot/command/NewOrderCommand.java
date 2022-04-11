@@ -59,7 +59,7 @@ public class NewOrderCommand implements Command {
             shoppingCartController.createNewShoppingCart(
                     user.getId(), user.getName(), restaurantName);
 
-            event.replyEmbeds(buildReplyEmbed(restaurantName));
+            event.replyEmbeds(buildReplyEmbed(restaurantName)).queue();
         }
     }
 

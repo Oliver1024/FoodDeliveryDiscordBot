@@ -66,4 +66,10 @@ public class CommandModule {
     public Command provideOrderStatusCommand(OrderStatusCommand orderStatusCommand) {
         return orderStatusCommand;
     }
+
+    @Provides
+    @IntoSet
+    public Command provideLastCommand(LastCommand lastCommand) {
+        return lastCommand;
+    }
 }
