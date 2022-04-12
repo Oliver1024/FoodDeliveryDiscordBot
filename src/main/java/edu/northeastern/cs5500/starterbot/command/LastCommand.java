@@ -131,7 +131,7 @@ public class LastCommand implements Command {
             return;
         } else {
             result = userController.getLastKNumsOrders(user.getId(), processedInput);
-            event.replyEmbeds(buildReplyEmbed(result));
+            event.replyEmbeds(buildReplyEmbed(result)).queue();
         }
     }
 
