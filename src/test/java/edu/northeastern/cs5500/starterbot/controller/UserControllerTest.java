@@ -180,10 +180,17 @@ public class UserControllerTest {
         order3.setOrderItems(orderItems3);
         order3.setRestaurantName("restaurant3");
 
+        Order order4 = new Order();
+        order4.setIsDelivered(true);
+        order4.setOrderTime(LocalDateTime.now().minusMinutes(40));
+        order4.setOrderItems(orderItems3);
+        order4.setRestaurantName("restaurant1");
+
         ArrayList<Order> orders = new ArrayList<>();
         orders.add(order1);
         orders.add(order2);
         orders.add(order3);
+        orders.add(order4);
 
         User user1 = new User();
         user1.setId(new ObjectId("623fc4508e303b6fce523819"));
@@ -201,11 +208,16 @@ public class UserControllerTest {
 
         userController.userRepository.add(user1);
         ArrayList<Order> testList = userController.getLastKNumsOrders("user1", testStringOne);
-        assertEquals(order2, testList.get(testList.size() - 1));
+        assertEquals(order2, testList.get(1));
+        assertEquals(3, testList.size());
+
         ArrayList<Order> testList1 = userController.getLastKNumsOrders("user1", testStringTwo);
-        assertEquals(order3, testList1.get(testList1.size() - 1));
+        assertEquals(order4, testList1.get(testList1.size() - 1));
+        assertEquals(2, testList1.size());
+
         ArrayList<Order> testList2 = userController.getLastKNumsOrders("user1", testStringThree);
-        assertEquals(order2, testList2.get(1));
+        assertEquals(order4, testList2.get(0));
+        assertEquals(1, testList2.size());
         ArrayList<Order> testList3 = userController.getLastKNumsOrders("user2", testStringThree);
         assertEquals(new ArrayList<>(), testList3);
     }
