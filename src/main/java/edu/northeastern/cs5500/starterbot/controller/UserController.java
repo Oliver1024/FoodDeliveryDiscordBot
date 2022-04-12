@@ -203,9 +203,9 @@ public class UserController {
                 break;
             }
         }
-        int length = targetList.size() - 1;
-        if (targetList.size() > k) {
-            targetList.subList(length - k, length);
+        int length = targetList.size();
+        if (length > k) {
+            return new ArrayList<Order>(targetList.subList(length - k, length));
         }
         return targetList;
     }
