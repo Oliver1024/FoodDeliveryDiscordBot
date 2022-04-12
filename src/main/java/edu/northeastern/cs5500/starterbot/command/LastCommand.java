@@ -127,7 +127,7 @@ public class LastCommand implements Command {
         ArrayList<Order> result = new ArrayList<>();
         ArrayList<String> restaurantNamesList = restaurantController.getAllRestaurantsName();
         String userInputAnswer = checkInput(processedInput, restaurantNamesList);
-        if (!userInputAnswer.equalsIgnoreCase("foundTargetRestaurant")) {
+        if (userInputAnswer != null) {
             event.reply(userInputAnswer).queue();
             return;
         } else {
