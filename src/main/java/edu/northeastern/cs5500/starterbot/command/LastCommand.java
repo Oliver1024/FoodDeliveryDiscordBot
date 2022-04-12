@@ -43,6 +43,7 @@ public class LastCommand implements Command {
                                                 + "'/last num_k' or '/last num_k restaurant_name' patterns")
                                 .setRequired(true));
     }
+
     /**
      * divide input String from user into one ot two parts.
      *
