@@ -155,10 +155,10 @@ public class UserControllerTest {
         ArrayList<DishObject> orderItems1 = new ArrayList<>();
         orderItems1.add(dish1);
         orderItems1.add(dish2);
-
+        orderItems1.add(dish3);
         ArrayList<DishObject> orderItems2 = new ArrayList<>();
         orderItems2.add(dish3);
-
+        orderItems1.add(dish4);
         ArrayList<DishObject> orderItems3 = new ArrayList<>();
         orderItems3.add(dish4);
 
@@ -184,12 +184,14 @@ public class UserControllerTest {
         orders.add(order1);
         orders.add(order2);
         orders.add(order3);
+        orders.add(order3);
 
         User user1 = new User();
         user1.setId(new ObjectId("623fc4508e303b6fce523819"));
         user1.setUserId("user1");
         user1.setUsername("Wen");
         user1.setOrders(orders);
+
         ArrayList<String> testStringOne = new ArrayList<>();
         testStringOne.add("5");
         testStringOne.add("restaurant1");
@@ -198,15 +200,30 @@ public class UserControllerTest {
         ArrayList<String> testStringThree = new ArrayList<>();
         testStringThree.add("1");
         testStringThree.add("restaurant1");
+        ArrayList<String> testStringFour = new ArrayList<>();
+        testStringFour.add("3");
 
         userController.userRepository.add(user1);
         ArrayList<Order> testList = userController.getLastKNumsOrders("user1", testStringOne);
         assertEquals(order2, testList.get(testList.size() - 1));
+        assertEquals(2, testList.size());
+        assertEquals(order1, testList.get(0));
+
         ArrayList<Order> testList1 = userController.getLastKNumsOrders("user1", testStringTwo);
         assertEquals(order3, testList1.get(testList1.size() - 1));
+        assertEquals(order3, testList1.get(1));
+        assertEquals(2, testList1.size());
+
         ArrayList<Order> testList2 = userController.getLastKNumsOrders("user1", testStringThree);
-        assertEquals(order2, testList2.get(1));
+        assertEquals(order2, testList2.get(0));
+        assertEquals(1, testList2.size());
+
         ArrayList<Order> testList3 = userController.getLastKNumsOrders("user2", testStringThree);
         assertEquals(new ArrayList<>(), testList3);
+
+        ArrayList<Order> testList4 = userController.getLastKNumsOrders("user1", testStringFour);
+        assertEquals(order2, testList4.get(0));
+        assertEquals(order3, testList4.get(1));
+        assertEquals(3, testList4.size());
     }
 }
