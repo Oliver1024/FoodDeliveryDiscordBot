@@ -5,6 +5,8 @@ import edu.northeastern.cs5500.starterbot.controller.UserController;
 import edu.northeastern.cs5500.starterbot.model.DishObject;
 import edu.northeastern.cs5500.starterbot.model.Order;
 import java.awt.Color;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -118,6 +120,18 @@ public class LastCommand implements Command {
         return null;
     }
 
+    /**
+     * processing the time String from mongo db and formate it to yyyy-MM-dd HH:mm type String
+     *
+     * @param endTime a String get from mongo db.
+     * @return the time processed.
+     */
+    public String processTimeString(LocalDateTime date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formaDatetime = date.format(formatter);
+        return formaDatetime;
+    }
+
     @Override
     public void onEvent(CommandInteraction event) {
         log.info("event: /last");
@@ -157,7 +171,7 @@ public class LastCommand implements Command {
                                 + ". "
                                 + result.get(i).getRestaurantName()
                                 + ", "
-                                + result.get(i).getOrderTime().toString()
+                                + processTimeString(result.get(i).getOrderTime())
                                 + ", ",
                         buildOrderedDishesString(result.get(i).getOrderItems()),
                         false);

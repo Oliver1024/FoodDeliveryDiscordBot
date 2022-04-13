@@ -54,6 +54,15 @@ public class LastCommandTest {
     }
 
     @Test
+    void testProcessTimeString() {
+        LocalDateTime localDateTime = LocalDateTime.of(2022, Month.MARCH, 8, 20, 44, 55, 3);
+        String expectedTimeString = "2022-03-08 20:44";
+        assertEquals(expectedTimeString, lastCommand.processTimeString(localDateTime));
+        LocalDateTime localDateTimeOne = LocalDateTime.of(2022, Month.MARCH, 8, 20, 44);
+        assertEquals(expectedTimeString, lastCommand.processTimeString(localDateTimeOne));
+    }
+
+    @Test
     void testBuildOrderedDishesString() {
         DishObject dish1 = new DishObject();
         dish1.setDish("dish1");
@@ -139,14 +148,19 @@ public class LastCommandTest {
         orderTwo.setOrderItems(orderItems2);
         orderOne.setRestaurantName("testOne");
         orderTwo.setRestaurantName("testTwo");
-        orderOne.setOrderTime(LocalDateTime.of(2022, Month.MARCH, 8, 20, 44));
-        orderTwo.setOrderTime(LocalDateTime.of(2022, Month.APRIL, 9, 14, 33));
+
+        orderOne.setOrderTime(LocalDateTime.of(2022, Month.MARCH, 8, 20, 44, 55, 3));
+        orderTwo.setOrderTime(LocalDateTime.of(2022, Month.APRIL, 9, 05, 33, 55, 3));
+
         testOrders.add(orderOne);
+        testOrders.add(orderTwo);
         testOrders.add(orderTwo);
 
         eb = lastCommand.buildReplyEmbed(testOrders);
-        assertEquals("2. testOne, 2022-03-08T20:44,", eb.getFields().get(1).getName());
-        assertEquals("dish1, dish2, dish3", eb.getFields().get(1).getValue());
+        assertEquals("3. testOne, 2022-03-08 20:44,", eb.getFields().get(2).getName());
+        assertEquals("2. testTwo, 2022-04-09 05:33,", eb.getFields().get(1).getName());
+        assertEquals("dish1, dish2, dish3", eb.getFields().get(2).getValue());
         assertFalse(eb.getFields().get(1).isInline());
+        assertEquals(3, eb.getFields().size());
     }
 }
