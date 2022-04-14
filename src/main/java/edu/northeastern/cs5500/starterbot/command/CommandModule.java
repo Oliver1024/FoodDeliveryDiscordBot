@@ -9,67 +9,80 @@ public class CommandModule {
 
     @Provides
     @IntoSet
-    public Command provideSayCommand(SayCommand sayCommand) {
+    public SlashCommandHandler provideSayCommand(SayCommand sayCommand) {
         return sayCommand;
     }
 
     @Provides
     @IntoSet
-    public Command provideOrderCommand(OrderCommand orderCommand) {
+    public SlashCommandHandler provideNewOrderCommand(NewOrderCommand neworderCommand) {
+        return neworderCommand;
+    }
+
+    @Provides
+    @IntoSet
+    public SelectionMenuHandler provideNewOrderCommandMenuHandler(NewOrderCommand neworderCommand) {
+        return neworderCommand;
+    }
+
+    @Provides
+    @IntoSet
+    public ButtonClickHandler provideNewOrderCommandClickHandler(NewOrderCommand neworderCommand) {
+        return neworderCommand;
+    }
+
+    @Provides
+    @IntoSet
+    public SlashCommandHandler provideOrderCommand(OrderCommand orderCommand) {
         return orderCommand;
     }
 
     @Provides
     @IntoSet
-    public Command provideCheckoutCommand(CheckoutCommand checkoutCommand) {
+    public SlashCommandHandler provideCheckoutCommand(CheckoutCommand checkoutCommand) {
         return checkoutCommand;
     }
 
     @Provides
     @IntoSet
-    public Command provideNewOrderCommand(NewOrderCommand newOrderCommand) {
-        return newOrderCommand;
-    }
-
-    @Provides
-    @IntoSet
-    public Command provideRestaurantsCommand(RestaurantsCommand restaurantsCommand) {
+    public SlashCommandHandler provideRestaurantsCommand(RestaurantsCommand restaurantsCommand) {
         return restaurantsCommand;
     }
 
     @Provides
     @IntoSet
-    public Command providePreferredNameCommand(PreferredNameCommand preferredNameCommand) {
+    public SlashCommandHandler providePreferredNameCommand(
+            PreferredNameCommand preferredNameCommand) {
         return preferredNameCommand;
     }
 
     @Provides
     @IntoSet
-    public Command provideMenuCommand(MenuCommand menuCommand) {
+    public SlashCommandHandler provideMenuCommand(MenuCommand menuCommand) {
         return menuCommand;
     }
 
     @Provides
     @IntoSet
-    public Command provideShowCartCommand(ShowCartCommand showCartCommand) {
+    public SlashCommandHandler provideShowCartCommand(ShowCartCommand showCartCommand) {
         return showCartCommand;
     }
 
     @Provides
     @IntoSet
-    public Command provideInfoCommand(InfoCommand infoCommand) {
+    public SlashCommandHandler provideInfoCommand(InfoCommand infoCommand) {
         return infoCommand;
     }
 
     @Provides
     @IntoSet
-    public Command provideOrderStatusCommand(OrderStatusCommand orderStatusCommand) {
+    public SlashCommandHandler provideOrderStatusCommand(OrderStatusCommand orderStatusCommand) {
         return orderStatusCommand;
     }
 
     @Provides
     @IntoSet
-    public Command provideLastCommand(LastCommand lastCommand) {
+    public SlashCommandHandler provideLastCommand(LastCommand lastCommand) {
         return lastCommand;
     }
 }

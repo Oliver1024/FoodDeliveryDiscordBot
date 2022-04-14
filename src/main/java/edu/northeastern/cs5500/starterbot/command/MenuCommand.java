@@ -11,14 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.interactions.commands.CommandInteraction;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 @Singleton
 @Slf4j
-public class MenuCommand implements Command {
+public class MenuCommand implements SlashCommandHandler {
 
     @Inject RestaurantController restaurantController;
     @Inject ShoppingCartController shoppingCartController;
@@ -40,7 +40,7 @@ public class MenuCommand implements Command {
     }
 
     @Override
-    public void onEvent(CommandInteraction event) {
+    public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /menu");
         User user = event.getUser();
 

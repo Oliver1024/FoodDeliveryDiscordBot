@@ -11,12 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.interactions.commands.CommandInteraction;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 
 @Singleton
 @Slf4j
-public class ShowCartCommand implements Command {
+public class ShowCartCommand implements SlashCommandHandler {
 
     @Inject ShoppingCartController shoppingCartController;
     @Inject UserController userController;
@@ -71,7 +71,7 @@ public class ShowCartCommand implements Command {
     }
 
     @Override
-    public void onEvent(CommandInteraction event) {
+    public void onSlashCommand(SlashCommandEvent event) {
         // check user is start a new order or not
         log.info("event: /showcart");
         User user = event.getUser();
