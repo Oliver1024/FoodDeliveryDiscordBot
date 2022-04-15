@@ -2,8 +2,10 @@ package edu.northeastern.cs5500.starterbot.command;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.components.selections.SelectionMenu;
 import org.junit.jupiter.api.Test;
 
 public class NewOrderCommandTest {
@@ -18,12 +20,31 @@ public class NewOrderCommandTest {
     @Test
     void testGetCommandData() {
         CommandData commandData = newOrderCommand.getCommandData();
-        String expectedDescription = "Input the restaurant name";
-        String expectedOptionDescription =
-                "The bot will start a new order for you at the given restaurant";
+        String expectedDescription = "Start a new order";
         assertEquals(expectedDescription, commandData.getDescription());
-        assertEquals("content", commandData.getOptions().get(0).getName());
-        assertEquals(expectedOptionDescription, commandData.getOptions().get(0).getDescription());
+    }
+
+    @Test
+    void testBuildSelectionMenu() {
+        ArrayList<String> restaurantNames = new ArrayList<>();
+        restaurantNames.add("restaurant1");
+        restaurantNames.add("restaurant2");
+        restaurantNames.add("restaurant3");
+
+        SelectionMenu actual = newOrderCommand.buildSelectionMenu(restaurantNames);
+
+        String expectedId = "neworder";
+        String expectedPlaceHolder = "Choose the restaurant you want to order";
+
+        assertEquals(expectedId, actual.getId());
+        assertEquals(expectedPlaceHolder, actual.getPlaceholder());
+        assertEquals(3, actual.getOptions().size());
+        assertEquals("restaurant1", actual.getOptions().get(0).getLabel());
+        assertEquals("restaurant1", actual.getOptions().get(0).getValue());
+        assertEquals("restaurant2", actual.getOptions().get(1).getLabel());
+        assertEquals("restaurant2", actual.getOptions().get(1).getValue());
+        assertEquals("restaurant3", actual.getOptions().get(2).getLabel());
+        assertEquals("restaurant3", actual.getOptions().get(2).getValue());
     }
 
     @Test
@@ -33,17 +54,15 @@ public class NewOrderCommandTest {
 
         assertEquals("You start a new order at Sichuan Food!", eb.getTitle());
 
-        assertEquals("/order dish_name:", eb.getFields().get(0).getName());
-        assertEquals("to order a particular dish", eb.getFields().get(0).getValue());
-
-        assertEquals("/order dish_num:", eb.getFields().get(1).getName());
-        assertEquals("to order a dish with the given number", eb.getFields().get(1).getValue());
-
-        assertEquals("/menu:", eb.getFields().get(2).getName());
+        assertEquals("/order:", eb.getFields().get(0).getName());
         assertEquals(
-                "to show the menu of the current restaurant", eb.getFields().get(2).getValue());
+                "to order a dish by selecting a dish from menu", eb.getFields().get(0).getValue());
 
-        assertEquals("/showcart:", eb.getFields().get(3).getName());
-        assertEquals("to show the shopping cart", eb.getFields().get(3).getValue());
+        assertEquals("/menu:", eb.getFields().get(1).getName());
+        assertEquals(
+                "to show the menu of the current restaurant", eb.getFields().get(1).getValue());
+
+        assertEquals("/showcart:", eb.getFields().get(2).getName());
+        assertEquals("to show the shopping cart", eb.getFields().get(2).getValue());
     }
 }

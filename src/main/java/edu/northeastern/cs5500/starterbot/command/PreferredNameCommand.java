@@ -4,14 +4,14 @@ import edu.northeastern.cs5500.starterbot.controller.UserPreferenceController;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
-import net.dv8tion.jda.api.interactions.commands.CommandInteraction;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
 @Singleton
 @Slf4j
-public class PreferredNameCommand implements Command {
+public class PreferredNameCommand implements SlashCommandHandler {
 
     @Inject UserPreferenceController userPreferenceController;
 
@@ -35,7 +35,7 @@ public class PreferredNameCommand implements Command {
     }
 
     @Override
-    public void onEvent(CommandInteraction event) {
+    public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /preferredname");
         String preferredName = event.getOption("name").getAsString();
 

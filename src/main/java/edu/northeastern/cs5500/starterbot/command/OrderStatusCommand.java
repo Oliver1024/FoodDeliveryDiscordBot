@@ -13,12 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.interactions.commands.CommandInteraction;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 
 @Singleton
 @Slf4j
-public class OrderStatusCommand implements Command {
+public class OrderStatusCommand implements SlashCommandHandler {
     @Inject UserController userController;
 
     @Inject
@@ -35,7 +35,7 @@ public class OrderStatusCommand implements Command {
     }
 
     @Override
-    public void onEvent(CommandInteraction event) {
+    public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /orderstatus");
         User user = event.getUser();
         ArrayList<Order> undeliveredOrders = userController.getUndeliveredOrders(user.getId());
