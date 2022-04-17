@@ -62,6 +62,29 @@ public class RestaurantController {
     }
 
     /**
+     * get the DishObject in the given restaurant where the dish is equal to the input dishName
+     *
+     * @param dishName the name of the dish
+     * @param restaurantName the name of the restaurant
+     * @return a DishObject object
+     */
+    @Nullable
+    public DishObject getDish(String dishName, String restaurantName) {
+        Collection<Restaurant> AllRestaurants = restaurantRepository.getAll();
+        for (Restaurant restaurant : AllRestaurants) {
+            if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
+                ArrayList<DishObject> menu = restaurant.getMenu();
+                for (DishObject dish : menu) {
+                    if (dish.getDish().equals(dishName)) {
+                        return dish;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Gets all the names of restaurants in our database
      *
      * @return the arrayList with all the name of restaurants
