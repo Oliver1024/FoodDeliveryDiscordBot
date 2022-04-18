@@ -48,7 +48,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
         User user = event.getUser();
         ShoppingCart cart = shoppingCartController.getShoppingCart(user.getId());
         if (cart == null) {
-            event.reply("you need to user '/neworder' to start new order first").queue();
+            event.reply("you need to type '/neworder' to start a new order first").queue();
             return;
         }
 
