@@ -15,20 +15,20 @@ public class CommandModule {
 
     @Provides
     @IntoSet
-    public SlashCommandHandler provideNewOrderCommand(NewOrderCommand neworderCommand) {
-        return neworderCommand;
+    public SlashCommandHandler provideNewOrderCommand(NewOrderCommand newOrderCommand) {
+        return newOrderCommand;
     }
 
     @Provides
     @IntoSet
-    public SelectionMenuHandler provideNewOrderCommandMenuHandler(NewOrderCommand neworderCommand) {
-        return neworderCommand;
+    public SelectionMenuHandler provideNewOrderCommandMenuHandler(NewOrderCommand newOrderCommand) {
+        return newOrderCommand;
     }
 
     @Provides
     @IntoSet
-    public ButtonClickHandler provideNewOrderCommandClickHandler(NewOrderCommand neworderCommand) {
-        return neworderCommand;
+    public ButtonClickHandler provideNewOrderCommandClickHandler(NewOrderCommand newOrderCommand) {
+        return newOrderCommand;
     }
 
     @Provides
@@ -96,5 +96,23 @@ public class CommandModule {
     @IntoSet
     public SlashCommandHandler provideLastCommand(LastCommand lastCommand) {
         return lastCommand;
+    }
+
+    @Provides
+    @IntoSet
+    public SlashCommandHandler provideDeleteCommand(DeleteCommand deleteCommand) {
+        return deleteCommand;
+    }
+
+    @Provides
+    @IntoSet
+    public SelectionMenuHandler provideDeleteCommandMenuHandler(DeleteCommand deleteCommand) {
+        return deleteCommand;
+    }
+
+    @Provides
+    @IntoSet
+    public ButtonClickHandler provideDeleteCommandClickHandler(DeleteCommand deleteCommand) {
+        return deleteCommand;
     }
 }

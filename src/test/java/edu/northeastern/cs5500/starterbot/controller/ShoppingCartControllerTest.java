@@ -2,6 +2,7 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -189,5 +190,42 @@ public class ShoppingCartControllerTest {
 
         assertEquals(cart1, shoppingCartController.getShoppingCart("user1"));
         assertNull(shoppingCartController.getShoppingCart("user2"));
+    }
+
+    @Test
+    void testRemoveDish() {
+        ShoppingCart cart1 = new ShoppingCart();
+        cart1.setId(new ObjectId("6227b0779744ecb0c23a772e"));
+        cart1.setUserId("user1");
+        cart1.setUsername("Wen");
+        cart1.setRestaurantName("restaruant 1");
+        DishObject dish1 = new DishObject();
+        dish1.setDish("dish1");
+        dish1.setPrice(1.11);
+
+        DishObject dish2 = new DishObject();
+        dish2.setDish("dish2");
+        dish2.setPrice(1.11);
+
+        DishObject dish3 = new DishObject();
+        dish3.setDish("dish3");
+        dish3.setPrice(1.11);
+
+        ArrayList<DishObject> orderDishes = new ArrayList<>();
+        orderDishes.add(dish1);
+        orderDishes.add(dish2);
+        orderDishes.add(dish3);
+
+        cart1.setOrderItems(orderDishes);
+
+        shoppingCartController.shoppingCartRepository.add(cart1);
+
+        assertEquals(3, shoppingCartController.getOrderedDishes("user1").size());
+        assertEquals(dish2, shoppingCartController.getOrderedDishes("user1").get(1));
+        shoppingCartController.removeDish(dish2.getDish(), "user1");
+
+        assertEquals(2, shoppingCartController.getOrderedDishes("user1").size());
+        assertNotEquals(dish2, shoppingCartController.getOrderedDishes("user1").get(0));
+        assertNotEquals(dish2, shoppingCartController.getOrderedDishes("user1").get(1));
     }
 }
