@@ -39,6 +39,18 @@ public class CommandModule {
 
     @Provides
     @IntoSet
+    public SelectionMenuHandler provideOrderCommandMenuHandler(OrderCommand orderCommand) {
+        return orderCommand;
+    }
+
+    @Provides
+    @IntoSet
+    public ButtonClickHandler provideOrderCommandClickHandler(OrderCommand orderCommand) {
+        return orderCommand;
+    }
+
+    @Provides
+    @IntoSet
     public SlashCommandHandler provideCheckoutCommand(CheckoutCommand checkoutCommand) {
         return checkoutCommand;
     }
