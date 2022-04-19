@@ -140,4 +140,24 @@ public class ShoppingCartController {
         }
         return null;
     }
+
+    /**
+     * from the dish and userId, remove the target dish from recent shopping cart
+     *
+     * @param dishTarget the name of target dish that we want to remove
+     * @param userId user's id for getting the List of dishes.
+     */
+    public ArrayList<DishObject> removeDish(String dishTarget, String userId) {
+        ArrayList<DishObject> orderDishes = getOrderedDishes(userId);
+        ShoppingCart userShoppingCart = getShoppingCart(userId);
+        for (int i = 0; i < orderDishes.size(); i++) {
+            if (orderDishes.get(i).getDish().equalsIgnoreCase(dishTarget)) {
+                orderDishes.remove(i);
+                break;
+            }
+        }
+        userShoppingCart.setOrderItems(orderDishes);
+        shoppingCartRepository.update(userShoppingCart);
+        return orderDishes;
+    }
 }
