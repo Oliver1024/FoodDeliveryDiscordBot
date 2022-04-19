@@ -147,7 +147,7 @@ public class ShoppingCartController {
      * @param dishTarget the name of target dish that we want to remove
      * @param userId user's id for getting the List of dishes.
      */
-    public void removeDish(String dishTarget, String userId) {
+    public ArrayList<DishObject> removeDish(String dishTarget, String userId) {
         ArrayList<DishObject> orderDishes = getOrderedDishes(userId);
         ShoppingCart userShoppingCart = getShoppingCart(userId);
         for (int i = 0; i < orderDishes.size(); i++) {
@@ -158,5 +158,6 @@ public class ShoppingCartController {
         }
         userShoppingCart.setOrderItems(orderDishes);
         shoppingCartRepository.update(userShoppingCart);
+        return orderDishes;
     }
 }

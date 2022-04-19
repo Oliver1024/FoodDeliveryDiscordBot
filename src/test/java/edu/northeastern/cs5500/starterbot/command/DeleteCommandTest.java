@@ -83,7 +83,9 @@ public class DeleteCommandTest {
 
         SelectionMenu actual = deleteCommand.buildSelectionMenu(dishes);
         assertEquals("delete", actual.getId());
-        assertEquals("Choose the dish you want to remove", actual.getPlaceholder());
+        assertEquals(
+                "Choose the dish you want to remove from your shopping cart",
+                actual.getPlaceholder());
 
         assertEquals(3, actual.getOptions().size());
         assertEquals("dish1: $9.9", actual.getOptions().get(0).getLabel());

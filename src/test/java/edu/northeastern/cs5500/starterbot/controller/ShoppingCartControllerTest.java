@@ -222,10 +222,11 @@ public class ShoppingCartControllerTest {
 
         assertEquals(3, shoppingCartController.getOrderedDishes("user1").size());
         assertEquals(dish2, shoppingCartController.getOrderedDishes("user1").get(1));
-        shoppingCartController.removeDish(dish2.getDish(), "user1");
+        ArrayList<DishObject> removedList =
+                shoppingCartController.removeDish(dish2.getDish(), "user1");
 
         assertEquals(2, shoppingCartController.getOrderedDishes("user1").size());
-        assertNotEquals(dish2, shoppingCartController.getOrderedDishes("user1").get(0));
-        assertNotEquals(dish2, shoppingCartController.getOrderedDishes("user1").get(1));
+        assertNotEquals(dish2, removedList.get(1));
+        assertNotEquals(dish2, removedList.get(0));
     }
 }

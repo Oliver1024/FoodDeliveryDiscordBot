@@ -46,8 +46,7 @@ public class DeleteCommand
         User user = event.getUser();
         ShoppingCart cart = shoppingCartController.getShoppingCart(user.getId());
         if (cart == null) {
-            event.reply(
-                            "You do not have an unfinished shopping cart, please type /neworder to begin order")
+            event.reply("You don't have an order, please type '/neworder' to begin a new order.")
                     .queue();
             return;
         }
@@ -78,7 +77,8 @@ public class DeleteCommand
         }
         SelectionMenu dishesList =
                 SelectionMenu.create("delete")
-                        .setPlaceholder("Choose the dish you want to remove")
+                        .setPlaceholder(
+                                "Choose the dish you want to remove from your shopping cart")
                         .addOptions(options)
                         .build();
 
@@ -99,10 +99,10 @@ public class DeleteCommand
         if (dishName == null) {
             event.reply("You should select the dish you want to remove").queue();
         } else {
-            shoppingCartController.removeDish(dishName, user.getId());
-            userAndSelectDish.remove(user.getId());
             ArrayList<DishObject> totalDishes =
-                    shoppingCartController.getOrderedDishes(user.getId());
+                    shoppingCartController.removeDish(dishName, user.getId());
+            ;
+            userAndSelectDish.remove(user.getId());
             String restaurantName = shoppingCartController.getRestaurantName(user.getId());
             event.replyEmbeds(buildReplyEmbed(dishName, totalDishes, restaurantName)).queue();
         }
