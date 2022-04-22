@@ -115,4 +115,17 @@ public class CommandModule {
     public ButtonClickHandler provideDeleteCommandClickHandler(DeleteCommand deleteCommand) {
         return deleteCommand;
     }
+
+    @Provides
+    @IntoSet
+    public SlashCommandHandler provideDeleteOrderCommand(DeleteOrderCommand deleteOrderCommand) {
+        return deleteOrderCommand;
+    }
+
+    @Provides
+    @IntoSet
+    public ButtonClickHandler provideDeleteOrderCommandClickHandler(
+            DeleteOrderCommand deleteOrderCommand) {
+        return deleteOrderCommand;
+    }
 }
