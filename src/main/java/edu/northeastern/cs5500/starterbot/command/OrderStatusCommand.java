@@ -98,11 +98,11 @@ public class OrderStatusCommand implements SlashCommandHandler {
         long passedMins = Duration.between(order.getOrderTime(), LocalDateTime.now()).toMinutes();
         long prepareTime = order.getOrderItems().size() * TIME_PER_DISH;
         if (passedMins <= prepareTime) {
-            return "is preparing";
+            return "is preparing🧑‍🍳";
         } else if (passedMins <= prepareTime + TIME_FOR_DELIVER) {
-            return "is being delivered by a driver";
+            return "is being delivered by a driver🚗";
         } else {
-            return "is delivered";
+            return "is delivered👍";
         }
     }
 }

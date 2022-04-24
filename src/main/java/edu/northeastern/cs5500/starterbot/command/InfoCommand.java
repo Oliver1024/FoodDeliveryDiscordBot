@@ -76,8 +76,8 @@ public class InfoCommand implements SlashCommandHandler {
     protected MessageEmbed buildReplyEmbed(Restaurant restaurant) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle(restaurant.getName() + "'s info");
-        eb.addField("Contact:", restaurant.getContact().toString(), false);
-        eb.addField("Address:", restaurant.getAddress(), false);
+        eb.addField("☎️Contact:", restaurant.getContact().toString(), false);
+        eb.addField("🏠Address:", restaurant.getAddress(), false);
         String cuisine = "";
 
         for (int i = 0; i < restaurant.getCuisineType().size(); i++) {
@@ -86,7 +86,7 @@ public class InfoCommand implements SlashCommandHandler {
                 cuisine += ", ";
             }
         }
-        eb.addField("Cuisine Type:", cuisine, false);
+        eb.addField("🥘Cuisine Type:", cuisine, false);
         eb.setColor(Color.ORANGE);
         return eb.build();
     }

@@ -39,7 +39,7 @@ public class CheckoutCommandTest {
 
         MessageEmbed eb = checkoutCommand.buildEB("restaurant1", orderedDishes);
 
-        String expectedTitle = "Thanks for ordering!";
+        String expectedTitle = "Thanks for ordering!😄";
         assertEquals(expectedTitle, eb.getTitle());
 
         String expectedDescrption = "Your order at **" + "restaurant1" + "** includes:";
@@ -48,16 +48,16 @@ public class CheckoutCommandTest {
         assertTrue(eb.getFields().size() == 3);
 
         String expectedFieldName1 = "1. dish1";
-        String expectedFieldValue1 = "$9.9";
+        String expectedFieldValue1 = "💲9.9";
         String expectedFieldName2 = "2. dish2";
-        String expectedFieldValue2 = "$19.9";
-        String expectedFieldValue3 = "$29.8";
+        String expectedFieldValue2 = "💲19.9";
+        String expectedFieldValue3 = "💲29.8";
 
         assertEquals(expectedFieldName1, eb.getFields().get(0).getName());
         assertEquals(expectedFieldValue1, eb.getFields().get(0).getValue());
         assertEquals(expectedFieldName2, eb.getFields().get(1).getName());
         assertEquals(expectedFieldValue2, eb.getFields().get(1).getValue());
-        assertEquals("Total:", eb.getFields().get(2).getName());
+        assertEquals("🧾Total:", eb.getFields().get(2).getName());
         assertEquals(expectedFieldValue3, eb.getFields().get(2).getValue());
     }
 }

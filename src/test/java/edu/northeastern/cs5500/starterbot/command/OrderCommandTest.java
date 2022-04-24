@@ -41,7 +41,7 @@ public class OrderCommandTest {
 
         MessageEmbed actual = orderCommand.buildReplyEmbed(dishes, "restaurant1");
 
-        String expectedTitle = "Shopping cart:";
+        String expectedTitle = "Shopping cart🛒:";
         String expectedDescription =
                 "**dish2** has been added! Your cart at **restaurant1** include:";
 
@@ -50,10 +50,10 @@ public class OrderCommandTest {
         assertEquals(3, actual.getFields().size());
 
         assertEquals("1. dish1:", actual.getFields().get(0).getName());
-        assertEquals("$9.9", actual.getFields().get(0).getValue());
+        assertEquals("💲9.9", actual.getFields().get(0).getValue());
 
         assertEquals("2. dish2:", actual.getFields().get(1).getName());
-        assertEquals("$19.9", actual.getFields().get(1).getValue());
+        assertEquals("💲19.9", actual.getFields().get(1).getValue());
     }
 
     @Test
@@ -79,10 +79,10 @@ public class OrderCommandTest {
         assertEquals("Random dish", actual.getOptions().get(0).getLabel());
         assertEquals("random", actual.getOptions().get(0).getValue());
 
-        assertEquals("dish1: $9.9", actual.getOptions().get(1).getLabel());
+        assertEquals("dish1: 💲9.9", actual.getOptions().get(1).getLabel());
         assertEquals("dish1", actual.getOptions().get(1).getValue());
 
-        assertEquals("dish2: $19.9", actual.getOptions().get(2).getLabel());
+        assertEquals("dish2: 💲19.9", actual.getOptions().get(2).getLabel());
         assertEquals("dish2", actual.getOptions().get(2).getValue());
     }
 }

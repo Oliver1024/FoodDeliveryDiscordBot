@@ -18,7 +18,7 @@ public class ShowCartCommandTest {
 
     @Test
     void testGetCommandData() {
-        String expected = "Press enter to show your shopping cart";
+        String expected = "Press enter to show your shopping cart🛒";
         assertEquals(expected, showCartCommand.getCommandData().getDescription());
     }
 
@@ -26,14 +26,14 @@ public class ShowCartCommandTest {
     void testOrderDishIsEmpty() {
         ArrayList<DishObject> testOrderDishes = new ArrayList<>();
         String testRestaurantName = "restaurant1";
-        String expectedTitle = "Shopping cart:";
+        String expectedTitle = "Shopping cart🛒:";
         String expectedDescription = "Your order at **restaurant1** includes:";
         MessageEmbed embed = showCartCommand.buildEB(testRestaurantName, testOrderDishes);
         assertEquals(expectedTitle, embed.getTitle());
         assertEquals(expectedDescription, embed.getDescription());
-        String expectedName = "Your shopping cart is empty. Total:";
+        String expectedName = "🧾Your shopping cart🛒 is empty. Total:";
         assertEquals(expectedName, embed.getFields().get(0).getName());
-        String expectedValue = "$0.0";
+        String expectedValue = "💲0.0";
         assertEquals(expectedValue, embed.getFields().get(0).getValue());
         Boolean expectedBoolean = false;
         assertEquals(expectedBoolean, embed.getFields().get(0).isInline());
@@ -48,9 +48,9 @@ public class ShowCartCommandTest {
         expectedDish.setPrice(29.9);
         testOrderDishes.add(expectedDish);
         MessageEmbed embed = showCartCommand.buildEB(testRestaurantName, testOrderDishes);
-        String expectedName = "1. hotpot";
+        String expectedName = "1. hotpot:";
         assertEquals(expectedName, embed.getFields().get(0).getName());
-        String expectedValue = "29.9";
+        String expectedValue = "💲29.9";
         assertEquals(expectedValue, embed.getFields().get(0).getValue());
         Boolean expectedBoolean = false;
         assertEquals(expectedBoolean, embed.getFields().get(0).isInline());

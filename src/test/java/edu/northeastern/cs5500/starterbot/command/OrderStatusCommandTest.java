@@ -92,11 +92,11 @@ public class OrderStatusCommandTest {
         orders.add(order3);
 
         MessageEmbed actual = orderStatusCommand.buildReplyEmbed(orders);
-        String expectedFieldName1 = "Your order at restaurant1 is preparing";
+        String expectedFieldName1 = "Your order at restaurant1 is preparing🧑‍🍳";
         String expectedFiledValue1 = "Ordered dishes: dish1, dish2";
-        String expectedFieldName2 = "Your order at restaurant2 is being delivered by a driver";
+        String expectedFieldName2 = "Your order at restaurant2 is being delivered by a driver🚗";
         String expectedFiledValue2 = "Ordered dishes: dish3";
-        String expectedFieldName3 = "Your order at restaurant3 is delivered";
+        String expectedFieldName3 = "Your order at restaurant3 is delivered👍";
         String expectedFiledValue3 = "Ordered dishes: dish4";
 
         assertTrue(actual.getFields().size() == 3);
