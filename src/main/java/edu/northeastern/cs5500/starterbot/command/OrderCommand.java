@@ -102,7 +102,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
             ArrayList<DishObject> totalDishes, String restaurantName) {
         EmbedBuilder eb = new EmbedBuilder();
         DishObject newDish = totalDishes.get(totalDishes.size() - 1);
-        eb.setTitle("Shopping cart:");
+        eb.setTitle("Shopping cart🛒:");
         eb.setDescription(
                 "**"
                         + newDish.getDish()
@@ -116,9 +116,9 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
             String dish = curDish.getDish();
             Double price = curDish.getPrice();
             totalPrice += price;
-            eb.addField((i + 1) + ". " + dish + ":", "$" + price.toString(), false);
+            eb.addField((i + 1) + ". " + dish + ":", "💲" + price.toString(), false);
         }
-        eb.addField("Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
+        eb.addField("🧾Total:", "💲" + Math.round(totalPrice * 100.0) / 100.0, false);
 
         eb.setColor(Color.GREEN);
         return eb.build();
@@ -137,7 +137,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
 
         for (DishObject dish : menu) {
             SelectOption option =
-                    SelectOption.of(dish.getDish() + ": $" + dish.getPrice(), dish.getDish());
+                    SelectOption.of(dish.getDish() + ": 💲" + dish.getPrice(), dish.getDish());
             options.add(option);
         }
 

@@ -49,15 +49,15 @@ public class InfoCommandTest {
         String expectedTitle = "restaurant1's info";
         assertEquals(expectedTitle, eb.getTitle());
 
-        assertEquals("Contact:", eb.getFields().get(0).getName());
+        assertEquals("☎️Contact:", eb.getFields().get(0).getName());
         assertEquals("2061112222", eb.getFields().get(0).getValue());
         assertFalse(eb.getFields().get(0).isInline());
 
-        assertEquals("Address:", eb.getFields().get(1).getName());
+        assertEquals("🏠Address:", eb.getFields().get(1).getName());
         assertEquals("222 Ave", eb.getFields().get(1).getValue());
         assertFalse(eb.getFields().get(1).isInline());
 
-        assertEquals("Cuisine Type:", eb.getFields().get(2).getName());
+        assertEquals("🥘Cuisine Type:", eb.getFields().get(2).getName());
         assertEquals("Asian, Chinese", eb.getFields().get(2).getValue());
         assertFalse(eb.getFields().get(2).isInline());
     }

@@ -63,6 +63,6 @@ public class NewOrderCommandTest {
                 "to show the menu of the current restaurant", eb.getFields().get(1).getValue());
 
         assertEquals("/showcart:", eb.getFields().get(2).getName());
-        assertEquals("to show the shopping cart", eb.getFields().get(2).getValue());
+        assertEquals("to show the shopping cart🛒", eb.getFields().get(2).getValue());
     }
 }

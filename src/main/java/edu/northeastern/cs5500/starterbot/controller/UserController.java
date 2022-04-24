@@ -20,38 +20,38 @@ public class UserController {
     UserController(GenericRepository<User> userRepository) {
         this.userRepository = userRepository;
     }
-    /**
-     * add the order into the user's list of history orders in the database
-     *
-     * @param userId the user's discord id
-     * @param username the user's discord username
-     * @param restaurantName the restaurant that the user ordered at
-     * @param orderItems all the ordered dishes
-     */
-    public void addOrder(
-            String userId,
-            String username,
-            String restaurantName,
-            ArrayList<DishObject> orderItems) {
-        Collection<User> users = userRepository.getAll();
-        User userToUpdate = null;
-        for (User user : users) {
-            if (user.getUserId().equals(userId)) {
-                userToUpdate = user;
-                break;
-            }
-        }
-        if (userToUpdate == null) {
-            userToUpdate = createUser(userId, username);
-        }
+    // /**
+    //  * add the order into the user's list of history orders in the database
+    //  *
+    //  * @param userId the user's discord id
+    //  * @param username the user's discord username
+    //  * @param restaurantName the restaurant that the user ordered at
+    //  * @param orderItems all the ordered dishes
+    //  */
+    // public void addOrder(
+    //         String userId,
+    //         String username,
+    //         String restaurantName,
+    //         ArrayList<DishObject> orderItems) {
+    //     Collection<User> users = userRepository.getAll();
+    //     User userToUpdate = null;
+    //     for (User user : users) {
+    //         if (user.getUserId().equals(userId)) {
+    //             userToUpdate = user;
+    //             break;
+    //         }
+    //     }
+    //     if (userToUpdate == null) {
+    //         userToUpdate = createUser(userId, username);
+    //     }
 
-        Order newOrder = createNewOrder(restaurantName, orderItems);
-        ArrayList<Order> allOrders = userToUpdate.getOrders();
-        allOrders.add(newOrder);
-        userToUpdate.setOrders(allOrders);
+    //     Order newOrder = createNewOrder(restaurantName, orderItems);
+    //     ArrayList<Order> allOrders = userToUpdate.getOrders();
+    //     allOrders.add(newOrder);
+    //     userToUpdate.setOrders(allOrders);
 
-        this.userRepository.update(userToUpdate);
-    }
+    //     this.userRepository.update(userToUpdate);
+    // }
 
     /**
      * add the order into the user's list of history orders in the database
