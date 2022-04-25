@@ -16,7 +16,7 @@ public class DeleteOrderCommandTest {
 
     @Test
     void testGetCommandData() {
-        String expectedDescrption = "delete your current shopping cart :shopping_cart:";
+        String expectedDescrption = "delete your current shopping cart";
         assertEquals(expectedDescrption, deleteOrderCommand.getCommandData().getDescription());
     }
 
@@ -26,7 +26,7 @@ public class DeleteOrderCommandTest {
         Message actual = deleteOrderCommand.buildButton(restaurantName);
 
         String expectedContent =
-                "Do you really want to delete the current shopping cart :shopping_cart: at **restaurant1**?";
+                "Do you really want to delete the current shopping cart at **restaurant1**?";
         assertEquals(expectedContent, actual.getContentRaw());
 
         assertEquals(2, actual.getActionRows().get(0).getButtons().size());

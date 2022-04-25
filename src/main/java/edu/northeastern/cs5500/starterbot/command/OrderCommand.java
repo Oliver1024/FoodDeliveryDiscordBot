@@ -141,9 +141,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
 
         for (DishObject dish : menu) {
             SelectOption option =
-                    SelectOption.of(
-                            dish.getDish() + ": :heavy_dollar_sign:" + dish.getPrice(),
-                            dish.getDish());
+                    SelectOption.of(dish.getDish() + ": $" + dish.getPrice(), dish.getDish());
             options.add(option);
         }
 
