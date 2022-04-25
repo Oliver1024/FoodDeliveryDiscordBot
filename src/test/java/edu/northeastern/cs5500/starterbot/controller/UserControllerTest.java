@@ -7,75 +7,57 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.northeastern.cs5500.starterbot.model.DishObject;
 import edu.northeastern.cs5500.starterbot.model.Order;
+import edu.northeastern.cs5500.starterbot.model.ShoppingCart;
 import edu.northeastern.cs5500.starterbot.model.User;
 import edu.northeastern.cs5500.starterbot.repository.InMemoryRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 
 public class UserControllerTest {
     UserController userController = new UserController(new InMemoryRepository<>());
 
-    // @Test
-    // void testAddOrder() {
-    //     ShoppingCartController shoppingCartController =
-    //             new ShoppingCartController(new InMemoryRepository<>());
-    //     ShoppingCart shoppingCart1 = new ShoppingCart();
-    //     shoppingCart1.setId(new ObjectId("6227b0779744ecb0c23a772e"));
-    //     shoppingCart1.setUserId("user1");
-    //     shoppingCart1.setUsername("Wen");
-    //     shoppingCart1.setRestaurantName("restaruant 1");
-    //     shoppingCart1.setOrderItems(new ArrayList<DishObject>());
-    //     shoppingCartController.shoppingCartRepository.add(shoppingCart1);
-    //     // userController.addOrder(shoppingCart1);
+    @Test
+    void testAddOrder() {
+        DishObject dish1 = new DishObject();
+        dish1.setDish("dish1");
+        dish1.setPrice(9.9);
 
-    //     DishObject dish1 = new DishObject();
-    //     dish1.setDish("dish1");
-    //     dish1.setPrice(9.9);
+        DishObject dish2 = new DishObject();
+        dish2.setDish("dish2");
+        dish2.setPrice(19.9);
 
-    //     DishObject dish2 = new DishObject();
-    //     dish2.setDish("dish2");
-    //     dish2.setPrice(19.9);
+        ArrayList<DishObject> orderItems1 = new ArrayList<>();
+        orderItems1.add(dish1);
+        orderItems1.add(dish2);
 
-    //     ArrayList<DishObject> orderItems1 = new ArrayList<>();
-    //     orderItems1.add(dish1);
-    //     orderItems1.add(dish2);
+        ShoppingCart shoppingCart1 = new ShoppingCart();
+        shoppingCart1.setId(new ObjectId("6227b0779744ecb0c23a772e"));
+        shoppingCart1.setUserId("user1");
+        shoppingCart1.setUsername("Wen");
+        shoppingCart1.setRestaurantName("restaruant 1");
+        shoppingCart1.setOrderItems(orderItems1);
 
-    //     Order order1 = new Order();
-    //     order1.setIsDelivered(false);
-    //     order1.setOrderTime(LocalDateTime.now().minusMinutes(2));
-    //     order1.setOrderItems(orderItems1);
-    //     order1.setRestaurantName("restaurant1");
+        assertEquals(0, userController.userRepository.getAll().size());
+        userController.addOrder(shoppingCart1);
 
-    //     ArrayList<Order> orders = new ArrayList<>();
-    //     orders.add(order1);
+        assertEquals(1, userController.userRepository.getAll().size());
+        Collection<User> users = userController.userRepository.getAll();
+        ArrayList<User> usersList = new ArrayList<>(users);
 
-    //     User user1 = new User();
-    //     user1.setId(new ObjectId("6227b0779744ecb0c23a772e"));
-    //     user1.setUserId("user1");
-    //     user1.setUsername("Wen");
-    //     user1.setOrders(orders);
-
-    //     User user2 = new User();
-    //     user1.setId(new ObjectId("623fc4508e303b6fce523819"));
-    //     user1.setUserId("user3");
-    //     user1.setUsername("a");
-    //     user1.setOrders(orders);
-
-    //     ShoppingCart shoppingCart2 = new ShoppingCart();
-    //     shoppingCart2.setId(new ObjectId("623fc4508e303b6fce523819"));
-    //     shoppingCart2.setUserId("user2");
-    //     shoppingCart2.setUsername("A");
-    //     shoppingCart2.setRestaurantName("restaruant 2");
-    //     shoppingCart2.setOrderItems(new ArrayList<DishObject>());
-    //     shoppingCartController.shoppingCartRepository.add(shoppingCart2);
-
-    //     userController.userRepository.add(user1);
-    //     userController.addOrder(shoppingCart1);
-    //     assertTrue(user1.getUserId().equals(shoppingCart1.getUserId()));
-    //     assertFalse(user2.getUserId().equals(shoppingCart2.getUserId()));
-    // }
+        assertEquals("user1", usersList.get(0).getUserId());
+        assertEquals("Wen", usersList.get(0).getUsername());
+        assertEquals(1, usersList.get(0).getOrders().size());
+        assertEquals(false, usersList.get(0).getOrders().get(0).getIsDelivered());
+        assertEquals("restaruant 1", usersList.get(0).getOrders().get(0).getRestaurantName());
+        assertEquals(2, usersList.get(0).getOrders().get(0).getOrderItems().size());
+        assertEquals("dish1", usersList.get(0).getOrders().get(0).getOrderItems().get(0).getDish());
+        assertEquals(9.9, usersList.get(0).getOrders().get(0).getOrderItems().get(0).getPrice());
+        assertEquals("dish2", usersList.get(0).getOrders().get(0).getOrderItems().get(1).getDish());
+        assertEquals(19.9, usersList.get(0).getOrders().get(0).getOrderItems().get(1).getPrice());
+    }
 
     @Test
     void testGetUndeliveredOrders() {
