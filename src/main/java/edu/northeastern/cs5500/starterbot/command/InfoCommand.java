@@ -88,6 +88,7 @@ public class InfoCommand implements SlashCommandHandler {
         }
         eb.addField("🥘Cuisine Type:", cuisine, false);
         eb.setColor(Color.ORANGE);
+        eb.setImage(restaurant.getImage());
         return eb.build();
     }
 }
