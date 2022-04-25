@@ -76,7 +76,7 @@ public class InfoCommand implements SlashCommandHandler {
     protected MessageEmbed buildReplyEmbed(Restaurant restaurant) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle(restaurant.getName() + "'s info");
-        eb.addField("☎️Contact:", restaurant.getContact().toString(), false);
+        eb.addField(":telephone: Contact:", restaurant.getContact().toString(), false);
         eb.addField("🏠Address:", restaurant.getAddress(), false);
         String cuisine = "";
 
