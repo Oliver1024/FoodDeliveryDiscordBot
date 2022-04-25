@@ -12,4 +12,5 @@ public class Restaurant implements Model {
     Long contact;
     ArrayList<String> cuisineType;
     ArrayList<DishObject> menu;
+    String image;
 }
