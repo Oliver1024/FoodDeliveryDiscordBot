@@ -113,7 +113,7 @@ public class NewOrderCommand
         eb.setTitle("You start a new order at " + restaurantName + "!");
         eb.addField("/order:", "to order a dish by selecting a dish from menu", false);
         eb.addField("/menu:", "to show the menu of the current restaurant", false);
-        eb.addField("/showcart:", "to show the shopping cart🛒", false);
+        eb.addField("/showcart:", "to show the shopping cart :shopping_cart:", false);
         eb.setColor(Color.BLUE);
         return eb.build();
     }

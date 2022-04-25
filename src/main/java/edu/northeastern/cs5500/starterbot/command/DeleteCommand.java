@@ -37,7 +37,8 @@ public class DeleteCommand
 
     @Override
     public CommandData getCommandData() {
-        return new CommandData(getName(), "Delete a dish from current shopping cart🛒");
+        return new CommandData(
+                getName(), "Delete a dish from current shopping cart :shopping_cart:");
     }
 
     @Override
@@ -72,13 +73,15 @@ public class DeleteCommand
 
         for (DishObject dish : shoppingCartDishes) {
             SelectOption option =
-                    SelectOption.of(dish.getDish() + ": 💲" + dish.getPrice(), dish.getDish());
+                    SelectOption.of(
+                            dish.getDish() + ": :heavy_dollar_sign:" + dish.getPrice(),
+                            dish.getDish());
             options.add(option);
         }
         SelectionMenu dishesList =
                 SelectionMenu.create("delete")
                         .setPlaceholder(
-                                "Choose the dish you want to remove from your shopping cart🛒")
+                                "Choose the dish you want to remove from your shopping cart :shopping_cart:")
                         .addOptions(options)
                         .build();
 
@@ -117,7 +120,7 @@ public class DeleteCommand
     protected MessageEmbed buildReplyEmbed(
             String dishName, ArrayList<DishObject> totalDishes, String restaurantName) {
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("Shopping cart🛒:");
+        eb.setTitle("Shopping cart :shopping_cart: :");
         eb.setDescription(
                 "**"
                         + dishName
@@ -131,9 +134,13 @@ public class DeleteCommand
             String dish = curDish.getDish();
             Double price = curDish.getPrice();
             totalPrice += price;
-            eb.addField((i + 1) + ". " + dish + ":", "💲" + price.toString(), false);
+            eb.addField(
+                    (i + 1) + ". " + dish + ":", ":heavy_dollar_sign:" + price.toString(), false);
         }
-        eb.addField("🧾Total:", "💲" + Math.round(totalPrice * 100.0) / 100.0, false);
+        eb.addField(
+                ":receipt: Total:",
+                ":heavy_dollar_sign:" + Math.round(totalPrice * 100.0) / 100.0,
+                false);
 
         eb.setColor(Color.GREEN);
         return eb.build();

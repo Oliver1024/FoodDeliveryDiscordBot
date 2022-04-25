@@ -22,12 +22,14 @@ public class SayCommand implements SlashCommandHandler {
 
     @Override
     public CommandData getCommandData() {
-        return new CommandData(getName(), "Ask the bot🤖 to reply with the provided text💬")
+        return new CommandData(
+                        getName(),
+                        "Ask the bot :robot: to reply with the provided text :speech_balloon:")
                 .addOptions(
                         new OptionData(
                                         OptionType.STRING,
                                         "content",
-                                        "The bot🤖 will reply to your command with the provided text💬")
+                                        "The bot :robot: will reply to your command with the provided text :speech_balloon:")
                                 .setRequired(true));
     }
 

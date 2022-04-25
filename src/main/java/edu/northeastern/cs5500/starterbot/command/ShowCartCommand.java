@@ -31,7 +31,7 @@ public class ShowCartCommand implements SlashCommandHandler {
 
     @Override
     public CommandData getCommandData() {
-        return new CommandData(getName(), "Press enter to show your shopping cart🛒");
+        return new CommandData(getName(), "Press enter to show your shopping cart :shopping_cart:");
     }
 
     /**
@@ -46,25 +46,31 @@ public class ShowCartCommand implements SlashCommandHandler {
      */
     protected MessageEmbed buildEB(String restaurantName, ArrayList<DishObject> orderedDishes) {
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("Shopping cart🛒:");
+        eb.setTitle("Shopping cart :shopping_cart::");
         eb.setDescription("Your order at **" + restaurantName + "** includes:");
 
         Double totalPrice = 0.0;
         // check orderedDishes is empty or not
         // if orderedDishes is emprty return 0.0 price
         if (orderedDishes.isEmpty()) {
-            eb.addField("🧾Your shopping cart🛒 is empty. Total:", "💲0.0", false);
+            eb.addField(
+                    ":receipt: Your shopping cart :shopping_cart: is empty. Total:",
+                    ":heavy_dollar_sign: 0.0",
+                    false);
         }
         // if orderedDishes is not empty return dish and price
         else {
             for (int i = 0; i < orderedDishes.size(); i++) {
                 eb.addField(
                         (i + 1) + ". " + orderedDishes.get(i).getDish() + ":",
-                        "💲" + orderedDishes.get(i).getPrice().toString(),
+                        ":heavy_dollar_sign:" + orderedDishes.get(i).getPrice().toString(),
                         false);
                 totalPrice += orderedDishes.get(i).getPrice();
             }
-            eb.addField("🧾Total:", "💲" + Math.round(totalPrice * 100.0) / 100.0, false);
+            eb.addField(
+                    ":receipt: Total:",
+                    ":heavy_dollar_sign:" + Math.round(totalPrice * 100.0) / 100.0,
+                    false);
         }
         eb.setColor(Color.GREEN);
         return eb.build();
@@ -79,7 +85,8 @@ public class ShowCartCommand implements SlashCommandHandler {
 
         // user is not in shopping cart
         if (restaurantName == null) {
-            event.reply("You haven't started an order. There is no shopping cart🛒 for you!")
+            event.reply(
+                            "You haven't started an order. There is no shopping cart :shopping_cart: for you!")
                     .queue();
         }
         // user in shipping cart

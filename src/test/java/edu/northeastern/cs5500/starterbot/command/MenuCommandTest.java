@@ -41,7 +41,7 @@ class MenuCommandTest {
         assertTrue(eb.getFields().size() == 1);
         assertEquals(expectedTitle, eb.getTitle());
         assertEquals("1. dish1:", eb.getFields().get(0).getName());
-        assertEquals("$11.99", eb.getFields().get(0).getValue());
+        assertEquals(":heavy_dollar_sign:11.99", eb.getFields().get(0).getValue());
         assertTrue(eb.getFields().get(0).isInline());
     }
 }

@@ -53,11 +53,11 @@ public class InfoCommandTest {
         assertEquals("2061112222", eb.getFields().get(0).getValue());
         assertFalse(eb.getFields().get(0).isInline());
 
-        assertEquals("🏠Address:", eb.getFields().get(1).getName());
+        assertEquals(":house: Address:", eb.getFields().get(1).getName());
         assertEquals("222 Ave", eb.getFields().get(1).getValue());
         assertFalse(eb.getFields().get(1).isInline());
 
-        assertEquals("🥘Cuisine Type:", eb.getFields().get(2).getName());
+        assertEquals(":shallow_pan_of_food: Cuisine Type:", eb.getFields().get(2).getName());
         assertEquals("Asian, Chinese", eb.getFields().get(2).getValue());
         assertFalse(eb.getFields().get(2).isInline());
     }
