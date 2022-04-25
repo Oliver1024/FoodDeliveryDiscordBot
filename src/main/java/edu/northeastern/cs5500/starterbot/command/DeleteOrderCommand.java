@@ -29,7 +29,7 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
 
     @Override
     public CommandData getCommandData() {
-        return new CommandData(getName(), "delete your current shopping cart🛒");
+        return new CommandData(getName(), "delete your current shopping cart :shopping_cart:");
     }
 
     @Override
@@ -50,12 +50,12 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
         User user = event.getUser();
         Boolean isUserInShoppingCart = shoppingCartController.isUserInShoppingCart(user.getId());
         if (!isUserInShoppingCart) {
-            event.reply("You already deleted your shopping cart🛒!").queue();
+            event.reply("You already deleted your shopping cart :shopping_cart: !").queue();
         } else if (choice.equals("Yes")) {
             shoppingCartController.deleteCart(user.getId());
-            event.reply("Deleted your shopping cart🛒").queue();
+            event.reply("Deleted your shopping cart :shopping_cart: ").queue();
         } else {
-            event.reply("🆗, won't delete your shopping cart🛒").queue();
+            event.reply(":ok:, won't delete your shopping cart :shopping_cart: ").queue();
         }
     }
 
@@ -75,7 +75,7 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
                                 Button.danger(this.getName() + ":no", "No")));
         messageBuilder =
                 messageBuilder.setContent(
-                        "Do you really want to delete the current shopping cart🛒 at **"
+                        "Do you really want to delete the current shopping cart :shopping_cart: at **"
                                 + restaurantName
                                 + "**?");
 

@@ -80,7 +80,7 @@ public class MenuCommand implements SlashCommandHandler {
         for (int index = 0; index < resultMenu.size(); index++) {
             eb.addField(
                     index + 1 + ". " + resultMenu.get(index).getDish() + ": ",
-                    "$" + resultMenu.get(index).getPrice().toString(),
+                    ":heavy_dollar_sign:" + resultMenu.get(index).getPrice().toString(),
                     true);
         }
         eb.setColor(Color.BLUE);

@@ -37,7 +37,7 @@ public class CheckoutCommand implements SlashCommandHandler {
 
     protected MessageEmbed buildEB(String restaurantName, ArrayList<DishObject> orderedDishes) {
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("Thanks for ordering!😄");
+        eb.setTitle("Thanks for ordering! :grin:");
         eb.setDescription("Your order at **" + restaurantName + "** includes:");
 
         Double totalPrice = 0.0;
@@ -45,11 +45,14 @@ public class CheckoutCommand implements SlashCommandHandler {
         for (int i = 0; i < orderedDishes.size(); i++) {
             eb.addField(
                     (i + 1) + ". " + orderedDishes.get(i).getDish(),
-                    "💲" + orderedDishes.get(i).getPrice().toString(),
+                    ":heavy_dollar_sign:" + orderedDishes.get(i).getPrice().toString(),
                     false);
             totalPrice += orderedDishes.get(i).getPrice();
         }
-        eb.addField("🧾Total:", "💲" + Math.round(totalPrice * 100.0) / 100.0, false);
+        eb.addField(
+                ":receipt: Total:",
+                ":heavy_dollar_sign:" + Math.round(totalPrice * 100.0) / 100.0,
+                false);
         eb.setColor(Color.PINK);
         return eb.build();
     }
