@@ -37,8 +37,7 @@ public class DeleteCommand
 
     @Override
     public CommandData getCommandData() {
-        return new CommandData(
-                getName(), "Delete a dish from current shopping cart :shopping_cart:");
+        return new CommandData(getName(), "Delete a dish from current shopping cart");
     }
 
     @Override
@@ -73,15 +72,13 @@ public class DeleteCommand
 
         for (DishObject dish : shoppingCartDishes) {
             SelectOption option =
-                    SelectOption.of(
-                            dish.getDish() + ": :heavy_dollar_sign:" + dish.getPrice(),
-                            dish.getDish());
+                    SelectOption.of(dish.getDish() + ": $" + dish.getPrice(), dish.getDish());
             options.add(option);
         }
         SelectionMenu dishesList =
                 SelectionMenu.create("delete")
                         .setPlaceholder(
-                                "Choose the dish you want to remove from your shopping cart :shopping_cart:")
+                                "Choose the dish you want to remove from your shopping cart")
                         .addOptions(options)
                         .build();
 

@@ -79,10 +79,10 @@ public class OrderCommandTest {
         assertEquals("Random dish", actual.getOptions().get(0).getLabel());
         assertEquals("random", actual.getOptions().get(0).getValue());
 
-        assertEquals("dish1: :heavy_dollar_sign:9.9", actual.getOptions().get(1).getLabel());
+        assertEquals("dish1: $9.9", actual.getOptions().get(1).getLabel());
         assertEquals("dish1", actual.getOptions().get(1).getValue());
 
-        assertEquals("dish2: :heavy_dollar_sign:19.9", actual.getOptions().get(2).getLabel());
+        assertEquals("dish2: $19.9", actual.getOptions().get(2).getLabel());
         assertEquals("dish2", actual.getOptions().get(2).getValue());
     }
 }

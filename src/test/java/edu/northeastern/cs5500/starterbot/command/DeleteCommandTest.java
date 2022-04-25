@@ -21,7 +21,7 @@ public class DeleteCommandTest {
     @Test
     void testGetCommandData() {
         CommandData commandData = deleteCommand.getCommandData();
-        String expectedDescription = "Delete a dish from current shopping cart :shopping_cart:";
+        String expectedDescription = "Delete a dish from current shopping cart";
         assertEquals(expectedDescription, commandData.getDescription());
     }
 
@@ -84,17 +84,17 @@ public class DeleteCommandTest {
         SelectionMenu actual = deleteCommand.buildSelectionMenu(dishes);
         assertEquals("delete", actual.getId());
         assertEquals(
-                "Choose the dish you want to remove from your shopping cart :shopping_cart:",
+                "Choose the dish you want to remove from your shopping cart",
                 actual.getPlaceholder());
 
         assertEquals(3, actual.getOptions().size());
-        assertEquals("dish1: :heavy_dollar_sign:9.9", actual.getOptions().get(0).getLabel());
+        assertEquals("dish1: $9.9", actual.getOptions().get(0).getLabel());
         assertEquals("dish1", actual.getOptions().get(0).getValue());
 
-        assertEquals("dish2: :heavy_dollar_sign:19.9", actual.getOptions().get(1).getLabel());
+        assertEquals("dish2: $19.9", actual.getOptions().get(1).getLabel());
         assertEquals("dish2", actual.getOptions().get(1).getValue());
 
-        assertEquals("dish3: :heavy_dollar_sign:29.9", actual.getOptions().get(2).getLabel());
+        assertEquals("dish3: $29.9", actual.getOptions().get(2).getLabel());
         assertEquals("dish3", actual.getOptions().get(2).getValue());
     }
 }

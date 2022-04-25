@@ -18,7 +18,7 @@ public class ShowCartCommandTest {
 
     @Test
     void testGetCommandData() {
-        String expected = "Press enter to show your shopping cart :shopping_cart:";
+        String expected = "Press enter to show your shopping cart";
         assertEquals(expected, showCartCommand.getCommandData().getDescription());
     }
 

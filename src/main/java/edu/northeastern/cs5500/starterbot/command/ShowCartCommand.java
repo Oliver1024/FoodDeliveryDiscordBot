@@ -31,7 +31,7 @@ public class ShowCartCommand implements SlashCommandHandler {
 
     @Override
     public CommandData getCommandData() {
-        return new CommandData(getName(), "Press enter to show your shopping cart :shopping_cart:");
+        return new CommandData(getName(), "Press enter to show your shopping cart");
     }
 
     /**
@@ -85,9 +85,7 @@ public class ShowCartCommand implements SlashCommandHandler {
 
         // user is not in shopping cart
         if (restaurantName == null) {
-            event.reply(
-                            "You haven't started an order. There is no shopping cart :shopping_cart: for you!")
-                    .queue();
+            event.reply("You haven't started an order. There is no shopping cart for you!").queue();
         }
         // user in shipping cart
         else {
