@@ -49,7 +49,7 @@ public class InfoCommandTest {
         String expectedTitle = "restaurant1's info";
         assertEquals(expectedTitle, eb.getTitle());
 
-        assertEquals("☎️Contact:", eb.getFields().get(0).getName());
+        assertEquals(":telephone: Contact:", eb.getFields().get(0).getName());
         assertEquals("2061112222", eb.getFields().get(0).getValue());
         assertFalse(eb.getFields().get(0).isInline());
 

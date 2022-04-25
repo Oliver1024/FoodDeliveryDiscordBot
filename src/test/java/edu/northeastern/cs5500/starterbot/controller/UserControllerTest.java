@@ -17,6 +17,66 @@ import org.junit.jupiter.api.Test;
 public class UserControllerTest {
     UserController userController = new UserController(new InMemoryRepository<>());
 
+    // @Test
+    // void testAddOrder() {
+    //     ShoppingCartController shoppingCartController =
+    //             new ShoppingCartController(new InMemoryRepository<>());
+    //     ShoppingCart shoppingCart1 = new ShoppingCart();
+    //     shoppingCart1.setId(new ObjectId("6227b0779744ecb0c23a772e"));
+    //     shoppingCart1.setUserId("user1");
+    //     shoppingCart1.setUsername("Wen");
+    //     shoppingCart1.setRestaurantName("restaruant 1");
+    //     shoppingCart1.setOrderItems(new ArrayList<DishObject>());
+    //     shoppingCartController.shoppingCartRepository.add(shoppingCart1);
+    //     // userController.addOrder(shoppingCart1);
+
+    //     DishObject dish1 = new DishObject();
+    //     dish1.setDish("dish1");
+    //     dish1.setPrice(9.9);
+
+    //     DishObject dish2 = new DishObject();
+    //     dish2.setDish("dish2");
+    //     dish2.setPrice(19.9);
+
+    //     ArrayList<DishObject> orderItems1 = new ArrayList<>();
+    //     orderItems1.add(dish1);
+    //     orderItems1.add(dish2);
+
+    //     Order order1 = new Order();
+    //     order1.setIsDelivered(false);
+    //     order1.setOrderTime(LocalDateTime.now().minusMinutes(2));
+    //     order1.setOrderItems(orderItems1);
+    //     order1.setRestaurantName("restaurant1");
+
+    //     ArrayList<Order> orders = new ArrayList<>();
+    //     orders.add(order1);
+
+    //     User user1 = new User();
+    //     user1.setId(new ObjectId("6227b0779744ecb0c23a772e"));
+    //     user1.setUserId("user1");
+    //     user1.setUsername("Wen");
+    //     user1.setOrders(orders);
+
+    //     User user2 = new User();
+    //     user1.setId(new ObjectId("623fc4508e303b6fce523819"));
+    //     user1.setUserId("user3");
+    //     user1.setUsername("a");
+    //     user1.setOrders(orders);
+
+    //     ShoppingCart shoppingCart2 = new ShoppingCart();
+    //     shoppingCart2.setId(new ObjectId("623fc4508e303b6fce523819"));
+    //     shoppingCart2.setUserId("user2");
+    //     shoppingCart2.setUsername("A");
+    //     shoppingCart2.setRestaurantName("restaruant 2");
+    //     shoppingCart2.setOrderItems(new ArrayList<DishObject>());
+    //     shoppingCartController.shoppingCartRepository.add(shoppingCart2);
+
+    //     userController.userRepository.add(user1);
+    //     userController.addOrder(shoppingCart1);
+    //     assertTrue(user1.getUserId().equals(shoppingCart1.getUserId()));
+    //     assertFalse(user2.getUserId().equals(shoppingCart2.getUserId()));
+    // }
+
     @Test
     void testGetUndeliveredOrders() {
         DishObject dish1 = new DishObject();
