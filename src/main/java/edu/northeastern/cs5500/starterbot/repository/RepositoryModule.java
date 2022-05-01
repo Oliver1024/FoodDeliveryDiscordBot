@@ -2,6 +2,8 @@ package edu.northeastern.cs5500.starterbot.repository;
 
 import dagger.Module;
 import dagger.Provides;
+import edu.northeastern.cs5500.starterbot.model.DiscordGuild;
+import edu.northeastern.cs5500.starterbot.model.GuildShoppingCart;
 import edu.northeastern.cs5500.starterbot.model.Restaurant;
 import edu.northeastern.cs5500.starterbot.model.ShoppingCart;
 import edu.northeastern.cs5500.starterbot.model.User;
@@ -50,5 +52,27 @@ public class RepositoryModule {
     @Provides
     public Class<ShoppingCart> provideShoppingCart() {
         return ShoppingCart.class;
+    }
+
+    @Provides
+    public GenericRepository<DiscordGuild> provideDiscordGuildRepository(
+            MongoDBRepository<DiscordGuild> repository) {
+        return repository;
+    }
+
+    @Provides
+    public Class<DiscordGuild> provideDiscordGuild() {
+        return DiscordGuild.class;
+    }
+
+    @Provides
+    public GenericRepository<GuildShoppingCart> provideGuildShoppingCartRepository(
+            MongoDBRepository<GuildShoppingCart> repository) {
+        return repository;
+    }
+
+    @Provides
+    public Class<GuildShoppingCart> provideGuildShoppingCart() {
+        return GuildShoppingCart.class;
     }
 }
