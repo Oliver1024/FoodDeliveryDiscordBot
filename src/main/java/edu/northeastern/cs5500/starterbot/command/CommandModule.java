@@ -128,4 +128,24 @@ public class CommandModule {
             DeleteOrderCommand deleteOrderCommand) {
         return deleteOrderCommand;
     }
+
+    @Provides
+    @IntoSet
+    public SlashCommandHandler provideGroupOrderCommand(GroupOrderCommand groupOrderCommand) {
+        return groupOrderCommand;
+    }
+
+    @Provides
+    @IntoSet
+    public SelectionMenuHandler provideGroupOrderCommandMenuHandler(
+            GroupOrderCommand groupOrderCommand) {
+        return groupOrderCommand;
+    }
+
+    @Provides
+    @IntoSet
+    public ButtonClickHandler provideGroupOrderCommandClickHandler(
+            GroupOrderCommand groupOrderCommand) {
+        return groupOrderCommand;
+    }
 }
