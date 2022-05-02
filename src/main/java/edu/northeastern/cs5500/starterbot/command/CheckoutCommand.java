@@ -43,7 +43,7 @@ public class CheckoutCommand implements SlashCommandHandler {
 
         if (shoppingCart == null) {
             event.reply(
-                            ":slight_frown: You don't have an order! Please user /neworder restaurant_name")
+                            ":slight_frown: You don't have an ongoing order! Please use '/neworder' to start an order")
                     .setEphemeral(true)
                     .queue();
             return;

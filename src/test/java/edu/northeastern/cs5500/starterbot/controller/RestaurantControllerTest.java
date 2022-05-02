@@ -117,4 +117,29 @@ class RestaurantControllerTest {
                 restaurant_name_one,
                 restaurantController.filterRestaurantByCuisine(inputCuisineTypeOne).get(0));
     }
+
+    @Test
+    void testGetDish() {
+        Restaurant restaurantTest = new Restaurant();
+        restaurantTest.setName(restaurant_name_one);
+        DishObject testDishOne = new DishObject();
+        testDishOne.setDish("testOne");
+        testDishOne.setPrice(1.11);
+        ArrayList<DishObject> menus = new ArrayList<DishObject>();
+        menus.add(testDishOne);
+        restaurantTest.setMenu(menus);
+
+        RestaurantController restaurantController = getRestaurantController();
+        restaurantController.restaurantRepository.add(restaurantTest);
+
+        assertTrue(
+                restaurantController
+                        .getDish("testOne", restaurant_name_one)
+                        .getDish()
+                        .equals("testOne"));
+        assertFalse(
+                restaurantController.getDish("testOne", restaurant_name_one).getPrice() == 1.12);
+        assertNull(restaurantController.getDish("testTwo", restaurant_name_one));
+        assertNull(restaurantController.getDish("testOne", restaurant_name_two));
+    }
 }

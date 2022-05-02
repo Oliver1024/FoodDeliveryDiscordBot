@@ -56,7 +56,7 @@ public class MenuCommand implements SlashCommandHandler {
 
         if (restaurantName == null) {
             event.reply(
-                            ":slight_frown: cannot find restaurant you want to check. Please type in "
+                            ":slight_frown: cannot find the restaurant you want to check. Please type in "
                                     + "'/menu' to check the restaurant you are ordering at or '/menu restaurant_name' to check the given restaurant")
                     .setEphemeral(true)
                     .queue();
