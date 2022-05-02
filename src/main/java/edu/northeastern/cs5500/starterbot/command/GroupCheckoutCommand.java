@@ -34,11 +34,10 @@ public class GroupCheckoutCommand implements SlashCommandHandler {
         return new CommandData(getName(), "press enter to groupcheckout");
     }
 
-    protected MessageEmbed buildEB(
-            String restaurantName, ArrayList<DishUserPair> orderedDishes, String createUserId) {
+    protected MessageEmbed buildEB(String restaurantName, ArrayList<DishUserPair> orderedDishes) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle("Thanks for ordering! :grin:");
-        eb.setDescription(createUserId + "'s order at **" + restaurantName + "** includes:");
+        eb.setDescription("Your guild order at **" + restaurantName + "** includes:");
 
         Double totalPrice = 0.0;
 
@@ -76,11 +75,7 @@ public class GroupCheckoutCommand implements SlashCommandHandler {
                             "you are not allowed to checkout the order, please wait the order creator finish order")
                     .queue();
         } else {
-            MessageEmbed eb =
-                    buildEB(
-                            shoppingCart.getRestaurantName(),
-                            shoppingCart.getDishes(),
-                            shoppingCart.getCreatedUserId());
+            MessageEmbed eb = buildEB(shoppingCart.getRestaurantName(), shoppingCart.getDishes());
             discordGuildController.addOrder(shoppingCart);
             guildShoppingCartController.deleteCart(guildId);
             event.replyEmbeds(eb).queue();
