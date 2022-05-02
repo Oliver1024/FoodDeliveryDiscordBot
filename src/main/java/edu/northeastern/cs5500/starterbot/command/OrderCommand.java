@@ -43,7 +43,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
     }
 
     /**
-     * Provide general command feature
+     * Respond to user's command input
      *
      * @param event, SlashCommandEvent
      */
@@ -70,7 +70,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
     }
 
     /**
-     * Provide a dropdown feature to users that can choose one of the menu
+     * Provide a dropdown selection menu for users
      *
      * @param event, SelectionMenuEvent
      */
@@ -88,7 +88,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
     }
 
     /**
-     * Provide a button feature to users that can click
+     * Respond to user's button hitting action
      *
      * @param event, ButtonClickEvent
      */

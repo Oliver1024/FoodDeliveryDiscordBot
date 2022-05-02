@@ -7,15 +7,15 @@ import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 public interface SlashCommandHandler {
 
     /**
-     * Get name
+     * Get the name of the command
      *
-     * @return String, name
+     * @return String, the name of the command
      */
     @Nonnull
     public String getName();
 
     /**
-     * Get the data that the users input corresponded command
+     * Get the command data for users input
      *
      * @return CommandData
      */
@@ -23,7 +23,7 @@ public interface SlashCommandHandler {
     public CommandData getCommandData();
 
     /**
-     * Provide general command feature
+     * Respond to user's command input
      *
      * @param event, SlashCommandEvent
      */

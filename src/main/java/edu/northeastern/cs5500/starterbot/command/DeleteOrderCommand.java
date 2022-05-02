@@ -33,7 +33,7 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
     }
 
     /**
-     * Provide general command feature
+     * Respond to user's command input
      *
      * @param event, SlashCommandEvent
      */
@@ -52,7 +52,7 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
     }
 
     /**
-     * Provide a button feature that user can on click
+     * Respond to user's button hitting action
      *
      * @param event, ButtonClickEvent
      */

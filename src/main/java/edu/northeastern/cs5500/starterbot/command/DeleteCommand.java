@@ -41,7 +41,7 @@ public class DeleteCommand
     }
 
     /**
-     * Provide general command feature
+     * Respond to user's command input
      *
      * @param event, SlashCommandEvent
      */

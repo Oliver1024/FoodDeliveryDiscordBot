@@ -42,7 +42,7 @@ public class NewOrderCommand
     }
 
     /**
-     * Provide general command feature
+     * Respond to user's command input
      *
      * @param event, SlashCommandEvent
      */
@@ -69,7 +69,7 @@ public class NewOrderCommand
     }
 
     /**
-     * Provide a dropdown feature to users that can choose one of the menu
+     * Provide a dropdown selection menu for users
      *
      * @param event, SelectionMenuEvent
      */
@@ -84,7 +84,7 @@ public class NewOrderCommand
     }
 
     /**
-     * Provide a button feature that user can on click
+     * Respond to user's button hitting action
      *
      * @param event, ButtonClickEvent
      */

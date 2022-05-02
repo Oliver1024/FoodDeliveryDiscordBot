@@ -6,15 +6,15 @@ import net.dv8tion.jda.api.events.interaction.SelectionMenuEvent;
 public interface SelectionMenuHandler {
 
     /**
-     * Get name
+     * Get the name of the command
      *
-     * @return String, name
+     * @return String, the name of the command
      */
     @Nonnull
     public String getName();
 
     /**
-     * Provide a dropdown feature to users that can choose one of the menu
+     * Provide a dropdown selection menu for users
      *
      * @param event, SelectionMenuEvent
      */

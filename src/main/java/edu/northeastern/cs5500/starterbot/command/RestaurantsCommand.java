@@ -38,6 +38,23 @@ public class RestaurantsCommand implements SlashCommandHandler {
     }
 
     /**
+     * Respond to user's command input
+     *
+     * @param event, SlashCommandEvent
+     */
+    @Override
+    public void onSlashCommand(SlashCommandEvent event) {
+        log.info("event: /restaurants");
+        String userInput = null;
+        if (event.getOption("content") != null) {
+            userInput = event.getOption("content").getAsString();
+        }
+        ArrayList<String> restaurantsName =
+                restaurantController.filterRestaurantByCuisine(userInput);
+        event.reply(buildReplyMessage(restaurantsName, userInput)).queue();
+    }
+
+    /**
      * Helper function which returns the message for replying user
      *
      * @param restaurantsName the ArrayList of all the names of restaurants in the database
@@ -66,22 +83,5 @@ public class RestaurantsCommand implements SlashCommandHandler {
             content = content + name + "\n";
         }
         return "```" + title + content + "```";
-    }
-
-    /**
-     * Provide general command feature
-     *
-     * @param event, SlashCommandEvent
-     */
-    @Override
-    public void onSlashCommand(SlashCommandEvent event) {
-        log.info("event: /restaurants");
-        String userInput = null;
-        if (event.getOption("content") != null) {
-            userInput = event.getOption("content").getAsString();
-        }
-        ArrayList<String> restaurantsName =
-                restaurantController.filterRestaurantByCuisine(userInput);
-        event.reply(buildReplyMessage(restaurantsName, userInput)).queue();
     }
 }

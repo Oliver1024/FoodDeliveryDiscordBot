@@ -42,7 +42,7 @@ public class InfoCommand implements SlashCommandHandler {
     }
 
     /**
-     * Provide general command feature
+     * Respond to user's command input
      *
      * @param event, SlashCommandEvent
      */

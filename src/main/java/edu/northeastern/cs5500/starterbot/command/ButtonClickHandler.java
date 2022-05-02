@@ -6,15 +6,15 @@ import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 public interface ButtonClickHandler {
 
     /**
-     * Get name
+     * Get the name of the command
      *
-     * @return
+     * @return String, the name of the command
      */
     @Nonnull
     public String getName();
 
     /**
-     * Provide a button feature that user can on click
+     * Respond to user's button hitting action
      *
      * @param event, ButtonClickEvent
      */
