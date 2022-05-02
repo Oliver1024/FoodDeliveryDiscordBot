@@ -95,4 +95,34 @@ public class GuildShoppingCartController {
         }
         return null;
     }
+
+    /**
+     * match if the input userId match with the cart creator's userId
+     *
+     * @param potentialUserId the String of UserId that we want to match
+     * @param guildId the id of the guild
+     * @return through target guildId , return true or false whether the UserId match with the
+     *     guild's cart.
+     */
+    public boolean matchCreateUserId(String potentialUserId, String guildId) {
+        GuildShoppingCart cart = getCart(guildId);
+        if (cart != null && cart.getCreatedUserId().equalsIgnoreCase(potentialUserId)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * remove target cart from the ArrayList of all carts
+     *
+     * @param guildId the id of the guild
+     */
+    public void deleteCart(String guildId) {
+        Collection<GuildShoppingCart> carts = guildShoppingCartRepository.getAll();
+        for (GuildShoppingCart shoppingCart : carts) {
+            if (shoppingCart.getGuildId().equalsIgnoreCase(guildId)) {
+                guildShoppingCartRepository.delete(shoppingCart.getId());
+            }
+        }
+    }
 }

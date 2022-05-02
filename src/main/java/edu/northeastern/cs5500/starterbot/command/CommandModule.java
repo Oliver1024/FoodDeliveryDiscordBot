@@ -148,4 +148,11 @@ public class CommandModule {
             GroupOrderCommand groupOrderCommand) {
         return groupOrderCommand;
     }
+
+    @Provides
+    @IntoSet
+    public SlashCommandHandler provideGroupCheckoutCommand(
+            GroupCheckoutCommand groupCheckoutCommand) {
+        return groupCheckoutCommand;
+    }
 }

@@ -148,7 +148,7 @@ public class GroupOrderCommand
     /**
      * Build restaurant selection for replying to discord user
      *
-     * @param restaurantNames the arraylist of all restaurant names
+     * @param restaurantNames the arrayList of all restaurant names
      * @return a SelectionMenu object
      */
     protected SelectionMenu buildRestaurantSelection(ArrayList<String> restaurantNames) {
@@ -191,7 +191,7 @@ public class GroupOrderCommand
     }
 
     /**
-     * Build a reply embed to show the curent shopping cart for user after they ordered a dish.
+     * Build a reply embed to show the current shopping cart for user after they ordered a dish.
      *
      * @param dishes the dishes the users in the discord guild have ordered
      * @param restaurantName the restaurant the guild is ordering at
