@@ -33,7 +33,7 @@ public class ShowCartCommandTest {
         assertEquals(expectedDescription, embed.getDescription());
         String expectedName = ":receipt: Your shopping cart :shopping_cart: is empty. Total:";
         assertEquals(expectedName, embed.getFields().get(0).getName());
-        String expectedValue = ":heavy_dollar_sign: 0.0";
+        String expectedValue = "$0.0";
         assertEquals(expectedValue, embed.getFields().get(0).getValue());
         Boolean expectedBoolean = false;
         assertEquals(expectedBoolean, embed.getFields().get(0).isInline());
@@ -50,7 +50,7 @@ public class ShowCartCommandTest {
         MessageEmbed embed = showCartCommand.buildEB(testRestaurantName, testOrderDishes);
         String expectedName = "1. hotpot:";
         assertEquals(expectedName, embed.getFields().get(0).getName());
-        String expectedValue = ":heavy_dollar_sign:29.9";
+        String expectedValue = "$29.9";
         assertEquals(expectedValue, embed.getFields().get(0).getValue());
         Boolean expectedBoolean = false;
         assertEquals(expectedBoolean, embed.getFields().get(0).isInline());

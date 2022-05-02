@@ -59,6 +59,13 @@ public class CheckoutCommand implements SlashCommandHandler {
         event.replyEmbeds(eb).queue();
     }
 
+    /**
+     * Build a reply embed to show the order after the user check out the order.
+     *
+     * @param restaurantName the restaurant the guild is ordering at
+     * @param orderedDishes the dishes the users have ordered
+     * @return a MessageEmbed object
+     */
     protected MessageEmbed buildEB(String restaurantName, ArrayList<DishObject> orderedDishes) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle(":grin: Thanks for ordering!");
@@ -69,14 +76,11 @@ public class CheckoutCommand implements SlashCommandHandler {
         for (int i = 0; i < orderedDishes.size(); i++) {
             eb.addField(
                     (i + 1) + ". " + orderedDishes.get(i).getDish(),
-                    ":heavy_dollar_sign:" + orderedDishes.get(i).getPrice().toString(),
+                    "$" + orderedDishes.get(i).getPrice().toString(),
                     false);
             totalPrice += orderedDishes.get(i).getPrice();
         }
-        eb.addField(
-                ":receipt: Total:",
-                ":heavy_dollar_sign:" + Math.round(totalPrice * 100.0) / 100.0,
-                false);
+        eb.addField(":receipt: Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
         eb.setColor(Color.PINK);
         return eb.build();
     }

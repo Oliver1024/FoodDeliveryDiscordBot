@@ -31,7 +31,7 @@ public class GroupCheckoutCommand implements SlashCommandHandler {
 
     @Override
     public CommandData getCommandData() {
-        return new CommandData(getName(), "press enter to groupcheckout");
+        return new CommandData(getName(), "check out your guild's group order");
     }
 
     /**
@@ -47,23 +47,32 @@ public class GroupCheckoutCommand implements SlashCommandHandler {
         GuildShoppingCart shoppingCart = guildShoppingCartController.getCart(guildId);
 
         if (shoppingCart == null) {
-            event.reply("You don't have an order! Please user /grouporder to begin group order")
+            event.reply("You don't have an order! Please user '/grouporder' to begin group order")
+                    .setEphemeral(true)
                     .queue();
         } else if (!guildShoppingCartController.matchCreateUserId(user.getId(), guildId)) {
             event.reply(
                             "you are not allowed to checkout the order, please wait the order creator finish order")
+                    .setEphemeral(true)
                     .queue();
         } else {
-            MessageEmbed eb = buildEB(shoppingCart.getRestaurantName(), shoppingCart.getDishes());
+            MessageEmbed eb = buildEB(shoppingCart.getDishes(), shoppingCart.getRestaurantName());
             discordGuildController.addOrder(shoppingCart);
             guildShoppingCartController.deleteCart(guildId);
             event.replyEmbeds(eb).queue();
         }
     }
 
-    protected MessageEmbed buildEB(String restaurantName, ArrayList<DishUserPair> orderedDishes) {
+    /**
+     * Build a reply embed to show the order after the user check out the current group order.
+     *
+     * @param dishes the dishes the users in the discord guild have ordered
+     * @param restaurantName the restaurant the guild is ordering at
+     * @return a MessageEmbed object
+     */
+    protected MessageEmbed buildEB(ArrayList<DishUserPair> orderedDishes, String restaurantName) {
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("Thanks for ordering! :grin:");
+        eb.setTitle(":grin: Thanks for ordering!");
         eb.setDescription("Your guild order at **" + restaurantName + "** includes:");
 
         Double totalPrice = 0.0;
@@ -73,16 +82,13 @@ public class GroupCheckoutCommand implements SlashCommandHandler {
                     (i + 1)
                             + ". "
                             + orderedDishes.get(i).getDish().getDish()
-                            + ":heavy_dollar_sign:"
+                            + ": $"
                             + orderedDishes.get(i).getDish().getPrice().toString(),
                     " add by " + orderedDishes.get(i).getUsername(),
                     false);
             totalPrice += orderedDishes.get(i).getDish().getPrice();
         }
-        eb.addField(
-                ":receipt: Total:",
-                ":heavy_dollar_sign:" + Math.round(totalPrice * 100.0) / 100.0,
-                false);
+        eb.addField(":receipt: Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
         eb.setColor(Color.PINK);
         return eb.build();
     }

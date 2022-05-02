@@ -83,8 +83,7 @@ public class GroupOrderCommandTest {
         SelectionMenu actual = groupOrderCommand.buildDishSelection(dishes);
 
         assertEquals("grouporder", actual.getId());
-        assertEquals(
-                "Group Order! Please Choose the dish you want to order", actual.getPlaceholder());
+        assertEquals("Choose the dish you want to order", actual.getPlaceholder());
 
         assertEquals(2, actual.getOptions().size());
         assertEquals("dish1: $9.9", actual.getOptions().get(0).getLabel());
@@ -128,13 +127,13 @@ public class GroupOrderCommandTest {
         assertEquals(expectedDescription, actual.getDescription());
         assertEquals(3, actual.getFields().size());
 
-        assertEquals("1. dish1: :heavy_dollar_sign:9.9", actual.getFields().get(0).getName());
+        assertEquals("1. dish1: $9.9", actual.getFields().get(0).getName());
         assertEquals("add by username1", actual.getFields().get(0).getValue());
 
-        assertEquals("2. dish2: :heavy_dollar_sign:19.9", actual.getFields().get(1).getName());
+        assertEquals("2. dish2: $19.9", actual.getFields().get(1).getName());
         assertEquals("add by username2", actual.getFields().get(1).getValue());
 
         assertEquals(":receipt: Total:", actual.getFields().get(2).getName());
-        assertEquals(":heavy_dollar_sign:29.8", actual.getFields().get(2).getValue());
+        assertEquals("$29.8", actual.getFields().get(2).getValue());
     }
 }

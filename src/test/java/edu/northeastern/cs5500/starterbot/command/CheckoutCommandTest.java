@@ -48,10 +48,10 @@ public class CheckoutCommandTest {
         assertTrue(eb.getFields().size() == 3);
 
         String expectedFieldName1 = "1. dish1";
-        String expectedFieldValue1 = ":heavy_dollar_sign:9.9";
+        String expectedFieldValue1 = "$9.9";
         String expectedFieldName2 = "2. dish2";
-        String expectedFieldValue2 = ":heavy_dollar_sign:19.9";
-        String expectedFieldValue3 = ":heavy_dollar_sign:29.8";
+        String expectedFieldValue2 = "$19.9";
+        String expectedFieldValue3 = "$29.8";
 
         assertEquals(expectedFieldName1, eb.getFields().get(0).getName());
         assertEquals(expectedFieldValue1, eb.getFields().get(0).getValue());

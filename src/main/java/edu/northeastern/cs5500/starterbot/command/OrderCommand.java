@@ -62,7 +62,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
         ArrayList<DishObject> menu = restaurantController.getMenu(cart.getRestaurantName());
         SelectionMenu dishSelectionMenu = buildSelectionMenu(menu);
 
-        event.reply("Choose the dish you want to order")
+        event.reply(":point_down: Choose the dish you want to order")
                 .setEphemeral(true)
                 .addActionRow(dishSelectionMenu)
                 .addActionRow(Button.success(this.getName() + ":submit", "Submit"))

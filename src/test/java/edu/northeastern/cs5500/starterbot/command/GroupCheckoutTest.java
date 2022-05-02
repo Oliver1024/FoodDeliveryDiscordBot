@@ -20,7 +20,7 @@ public class GroupCheckoutTest {
 
     @Test
     void TestGetCommandData() {
-        String expectedDescription = "press enter to groupcheckout";
+        String expectedDescription = "check out your guild's group order";
         assertEquals(expectedDescription, groupCheckoutCommand.getCommandData().getDescription());
     }
 
@@ -48,16 +48,16 @@ public class GroupCheckoutTest {
         dishes.add(pair1);
         dishes.add(pair2);
 
-        MessageEmbed actual = groupCheckoutCommand.buildEB("restaurant1", dishes);
-        String expectedTitle = "Thanks for ordering! :grin:";
+        MessageEmbed actual = groupCheckoutCommand.buildEB(dishes, "restaurant1");
+        String expectedTitle = ":grin: Thanks for ordering!";
         String expectedDescription = "Your guild order at **restaurant1** includes:";
 
         assertEquals(expectedTitle, actual.getTitle());
         assertEquals(expectedDescription, actual.getDescription());
         assertTrue(actual.getFields().size() == 3);
-        assertEquals("1. dish1:heavy_dollar_sign:9.9", actual.getFields().get(0).getName());
+        assertEquals("1. dish1: $9.9", actual.getFields().get(0).getName());
         assertEquals("add by username1", actual.getFields().get(0).getValue());
         assertEquals(":receipt: Total:", actual.getFields().get(2).getName());
-        assertEquals(":heavy_dollar_sign:29.8", actual.getFields().get(2).getValue());
+        assertEquals("$29.8", actual.getFields().get(2).getValue());
     }
 }

@@ -35,7 +35,7 @@ public class MenuCommand implements SlashCommandHandler {
     public CommandData getCommandData() {
         return new CommandData(getName(), "menu")
                 .addOptions(
-                        new OptionData(OptionType.STRING, "content", "show  menu")
+                        new OptionData(OptionType.STRING, "content", "show menu")
                                 .setRequired(false));
     }
 
@@ -81,12 +81,12 @@ public class MenuCommand implements SlashCommandHandler {
     protected MessageEmbed buildReplyEmbed(
             ArrayList<DishObject> resultMenu, String restaurantName) {
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle(":slight_frown: " + restaurantName + "'s menu: ");
+        eb.setTitle(":scroll: " + restaurantName + "'s menu: ");
 
         for (int index = 0; index < resultMenu.size(); index++) {
             eb.addField(
                     index + 1 + ". " + resultMenu.get(index).getDish() + ": ",
-                    ":heavy_dollar_sign:" + resultMenu.get(index).getPrice().toString(),
+                    "$" + resultMenu.get(index).getPrice().toString(),
                     true);
         }
         eb.setColor(Color.BLUE);

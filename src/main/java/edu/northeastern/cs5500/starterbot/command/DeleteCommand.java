@@ -61,35 +61,11 @@ public class DeleteCommand
                 shoppingCartController.getOrderedDishes(user.getId());
         SelectionMenu dishes = buildSelectionMenu(shoppingCartDishes);
 
-        event.reply("Choose the dish you want to delete")
+        event.reply(":point_down: Choose the dish you want to remove from your shopping cart")
                 .setEphemeral(true)
                 .addActionRow(dishes)
                 .addActionRow(Button.primary(this.getName() + ":submit", "Submit"))
                 .queue();
-    }
-
-    /**
-     * Build selection menu for replying to discord user
-     *
-     * @param shoppingCartDishes the arrayList of all dishes the user have
-     * @return a SelectionMenu object
-     */
-    protected SelectionMenu buildSelectionMenu(ArrayList<DishObject> shoppingCartDishes) {
-        ArrayList<SelectOption> options = new ArrayList<>();
-
-        for (DishObject dish : shoppingCartDishes) {
-            SelectOption option =
-                    SelectOption.of(dish.getDish() + ": $" + dish.getPrice(), dish.getDish());
-            options.add(option);
-        }
-        SelectionMenu dishesList =
-                SelectionMenu.create("delete")
-                        .setPlaceholder(
-                                "Choose the dish you want to remove from your shopping cart")
-                        .addOptions(options)
-                        .build();
-
-        return dishesList;
     }
 
     /**
@@ -128,6 +104,29 @@ public class DeleteCommand
     }
 
     /**
+     * Build selection menu for replying to discord user
+     *
+     * @param shoppingCartDishes the arrayList of all dishes the user have
+     * @return a SelectionMenu object
+     */
+    protected SelectionMenu buildSelectionMenu(ArrayList<DishObject> shoppingCartDishes) {
+        ArrayList<SelectOption> options = new ArrayList<>();
+
+        for (DishObject dish : shoppingCartDishes) {
+            SelectOption option =
+                    SelectOption.of(dish.getDish() + ": $" + dish.getPrice(), dish.getDish());
+            options.add(option);
+        }
+        SelectionMenu dishesList =
+                SelectionMenu.create("delete")
+                        .setPlaceholder("Choose the dish you want to remove")
+                        .addOptions(options)
+                        .build();
+
+        return dishesList;
+    }
+
+    /**
      * Return MessageEmbed object with dishTarget name
      *
      * @param dishName String, dish name which is the input where user want to delete
@@ -150,13 +149,9 @@ public class DeleteCommand
             String dish = curDish.getDish();
             Double price = curDish.getPrice();
             totalPrice += price;
-            eb.addField(
-                    (i + 1) + ". " + dish + ":", ":heavy_dollar_sign:" + price.toString(), false);
+            eb.addField((i + 1) + ". " + dish + ":", "$" + price.toString(), false);
         }
-        eb.addField(
-                ":receipt: Total:",
-                ":heavy_dollar_sign:" + Math.round(totalPrice * 100.0) / 100.0,
-                false);
+        eb.addField(":receipt: Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
 
         eb.setColor(Color.GREEN);
         return eb.build();

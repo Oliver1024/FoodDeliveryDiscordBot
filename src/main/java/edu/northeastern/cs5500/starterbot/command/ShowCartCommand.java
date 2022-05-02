@@ -78,23 +78,18 @@ public class ShowCartCommand implements SlashCommandHandler {
         // if orderedDishes is empty return 0.0 price
         if (orderedDishes.isEmpty()) {
             eb.addField(
-                    ":receipt: Your shopping cart :shopping_cart: is empty. Total:",
-                    ":heavy_dollar_sign: 0.0",
-                    false);
+                    ":receipt: Your shopping cart :shopping_cart: is empty. Total:", "$0.0", false);
         }
         // if orderedDishes is not empty return dish and price
         else {
             for (int i = 0; i < orderedDishes.size(); i++) {
                 eb.addField(
                         (i + 1) + ". " + orderedDishes.get(i).getDish() + ":",
-                        ":heavy_dollar_sign:" + orderedDishes.get(i).getPrice().toString(),
+                        "$" + orderedDishes.get(i).getPrice().toString(),
                         false);
                 totalPrice += orderedDishes.get(i).getPrice();
             }
-            eb.addField(
-                    ":receipt: Total:",
-                    ":heavy_dollar_sign:" + Math.round(totalPrice * 100.0) / 100.0,
-                    false);
+            eb.addField(":receipt: Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
         }
         eb.setColor(Color.GREEN);
         return eb.build();
