@@ -111,7 +111,7 @@ public class ShoppingCartController {
     }
 
     /**
-     * delete shopping cart
+     * delete the shopping cart that the given user opened
      *
      * @param userId String user ID
      */

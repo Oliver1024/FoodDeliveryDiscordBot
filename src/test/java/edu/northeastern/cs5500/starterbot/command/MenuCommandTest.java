@@ -34,14 +34,14 @@ class MenuCommandTest {
         dishObject.setPrice(11.99);
         menu.add(dishObject);
         String restaurantName = "Sichuan Food";
-        String expectedTitle = ":slight_frown: Sichuan Food's menu: ";
+        String expectedTitle = ":scroll: Sichuan Food's menu: ";
 
         MessageEmbed eb = menuCommands.buildReplyEmbed(menu, restaurantName);
 
         assertTrue(eb.getFields().size() == 1);
         assertEquals(expectedTitle, eb.getTitle());
         assertEquals("1. dish1:", eb.getFields().get(0).getName());
-        assertEquals(":heavy_dollar_sign:11.99", eb.getFields().get(0).getValue());
+        assertEquals("$11.99", eb.getFields().get(0).getValue());
         assertTrue(eb.getFields().get(0).isInline());
     }
 }

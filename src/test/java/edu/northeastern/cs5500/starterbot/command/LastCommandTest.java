@@ -90,7 +90,7 @@ public class LastCommandTest {
         ArrayList<String> processedInputTestOne = new ArrayList<>();
         processedInputTestOne.add("12a");
         String exceptErrorMessageOne =
-                "Invalid number input, please type '/last num_k' or '/last num_k restaurant_name' to check your history orders";
+                ":slight_frown: Invalid number input, please type '/last num_k' or '/last num_k restaurant_name' to check your history orders";
         assertEquals(exceptErrorMessageOne, lastCommand.checkInput(processedInputTestOne, null));
 
         ArrayList<String> restaurants = new ArrayList<>();
@@ -102,7 +102,7 @@ public class LastCommandTest {
         processedInputTestOne.add("restaurant");
 
         String exceptErrorMessageTwo =
-                "The restaurant name you provide doesn't match any restaurants we have. Pease type"
+                ":slight_frown: The restaurant name you provide doesn't match any restaurants we have. Pease type"
                         + "'/last num_k' or '/last num_k restaurant_name' to check your history orders.";
 
         assertEquals(
@@ -159,7 +159,7 @@ public class LastCommandTest {
         eb = lastCommand.buildReplyEmbed(testOrders);
         assertEquals("3. testOne, :timer: 2022-03-08 20:44", eb.getFields().get(2).getName());
         assertEquals("2. testTwo, :timer: 2022-04-09 05:33", eb.getFields().get(1).getName());
-        assertEquals(":stew: dish1, dish2, dish3", eb.getFields().get(2).getValue());
+        assertEquals(":stew: order dishes: dish1, dish2, dish3", eb.getFields().get(2).getValue());
         assertFalse(eb.getFields().get(1).isInline());
         assertEquals(3, eb.getFields().size());
     }

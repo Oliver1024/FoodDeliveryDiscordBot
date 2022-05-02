@@ -9,12 +9,6 @@ public class CommandModule {
 
     @Provides
     @IntoSet
-    public SlashCommandHandler provideSayCommand(SayCommand sayCommand) {
-        return sayCommand;
-    }
-
-    @Provides
-    @IntoSet
     public SlashCommandHandler provideNewOrderCommand(NewOrderCommand newOrderCommand) {
         return newOrderCommand;
     }
@@ -59,13 +53,6 @@ public class CommandModule {
     @IntoSet
     public SlashCommandHandler provideRestaurantsCommand(RestaurantsCommand restaurantsCommand) {
         return restaurantsCommand;
-    }
-
-    @Provides
-    @IntoSet
-    public SlashCommandHandler providePreferredNameCommand(
-            PreferredNameCommand preferredNameCommand) {
-        return preferredNameCommand;
     }
 
     @Provides

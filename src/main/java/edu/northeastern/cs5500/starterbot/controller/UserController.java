@@ -144,10 +144,10 @@ public class UserController {
      * orders also with a limit condition that all orders with the target restaurant name if
      * processedInput contains
      *
-     * @param userId
-     * @param k
-     * @param restaurantName
-     * @return
+     * @param userId the discord id of the user
+     * @param k the number of last k orders
+     * @param restaurantName the name of the restaurant
+     * @return the ArrayList of last k orders
      */
     @Nonnull
     public ArrayList<Order> getLastKNumsOrders(String userId, ArrayList<String> processedInput) {

@@ -127,7 +127,7 @@ public class LastCommand implements SlashCommandHandler {
     public String checkInput(ArrayList<String> processedInput, ArrayList<String> restaurantNames) {
         boolean foundRestaurant = false;
         if (!checkIfStringIsNumber(processedInput.get(0))) {
-            return "Invalid number input, please type '/last num_k' or '/last num_k restaurant_name' to check your history orders";
+            return ":slight_frown: Invalid number input, please type '/last num_k' or '/last num_k restaurant_name' to check your history orders";
         } else if (processedInput.size() == 2) {
             for (String restaurantName : restaurantNames) {
                 if (restaurantName.equalsIgnoreCase(processedInput.get(1))) {
@@ -136,7 +136,7 @@ public class LastCommand implements SlashCommandHandler {
                 }
             }
             if (!foundRestaurant) {
-                return "The restaurant name you provide doesn't match any restaurants we have. Pease type"
+                return ":slight_frown: The restaurant name you provide doesn't match any restaurants we have. Pease type"
                         + "'/last num_k' or '/last num_k restaurant_name' to check your history orders.";
             }
         }
@@ -177,7 +177,8 @@ public class LastCommand implements SlashCommandHandler {
                                 + result.get(i).getRestaurantName()
                                 + ", :timer: "
                                 + processTimeString(result.get(i).getOrderTime()),
-                        ":stew: " + buildOrderedDishesString(result.get(i).getOrderItems()),
+                        ":stew: order dishes: "
+                                + buildOrderedDishesString(result.get(i).getOrderItems()),
                         false);
                 index++;
             }

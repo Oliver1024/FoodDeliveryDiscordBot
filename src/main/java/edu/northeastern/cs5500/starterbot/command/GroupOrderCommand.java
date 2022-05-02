@@ -102,7 +102,7 @@ public class GroupOrderCommand
             ArrayList<DishObject> menu = restaurantController.getMenu(restaurantName);
             SelectionMenu dishSelectionMenu = buildDishSelection(menu);
 
-            event.reply("Choose the dish you want to order")
+            event.reply(":point_down: Choose the dish you want to order")
                     .addActionRow(dishSelectionMenu)
                     .addActionRow(Button.success(this.getName() + ":submit", "Submit"))
                     .queue();
@@ -110,7 +110,9 @@ public class GroupOrderCommand
             String dishString = userAndDish.get(user.getId());
 
             if (dishString == null) {
-                event.reply("Please select dish you want to order").setEphemeral(true).queue();
+                event.reply(":exclamation: Please select dish you want to order")
+                        .setEphemeral(true)
+                        .queue();
                 return;
             }
 
@@ -204,7 +206,7 @@ public class GroupOrderCommand
 
         SelectionMenu dishSelectionMenu =
                 SelectionMenu.create("grouporder")
-                        .setPlaceholder("Group Order! Please Choose the dish you want to order")
+                        .setPlaceholder("Choose the dish you want to order")
                         .addOptions(options)
                         .build();
 
@@ -238,14 +240,9 @@ public class GroupOrderCommand
             String username = curPair.getUsername();
             totalPrice += price;
             eb.addField(
-                    (i + 1) + ". " + dish + ": :heavy_dollar_sign:" + price.toString(),
-                    "add by " + username,
-                    false);
+                    (i + 1) + ". " + dish + ": $" + price.toString(), "add by " + username, false);
         }
-        eb.addField(
-                ":receipt: Total:",
-                ":heavy_dollar_sign:" + Math.round(totalPrice * 100.0) / 100.0,
-                false);
+        eb.addField(":receipt: Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
 
         eb.setColor(Color.GREEN);
         return eb.build();
