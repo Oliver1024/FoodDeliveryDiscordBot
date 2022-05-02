@@ -35,9 +35,28 @@ public class CheckoutCommand implements SlashCommandHandler {
         return new CommandData(getName(), "press enter to checkout");
     }
 
+    @Override
+    public void onSlashCommand(SlashCommandEvent event) {
+        log.info("event: /checkout");
+        User user = event.getUser();
+        ShoppingCart shoppingCart = shoppingCartController.getShoppingCart(user.getId());
+
+        if (shoppingCart == null) {
+            event.reply(
+                            ":slight_frown: You don't have an ongoing order! Please use '/neworder' to start an order")
+                    .setEphemeral(true)
+                    .queue();
+            return;
+        }
+        MessageEmbed eb = buildEB(shoppingCart.getRestaurantName(), shoppingCart.getOrderItems());
+        userController.addOrder(shoppingCart);
+        shoppingCartController.deleteCart(user.getId());
+        event.replyEmbeds(eb).queue();
+    }
+
     protected MessageEmbed buildEB(String restaurantName, ArrayList<DishObject> orderedDishes) {
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("Thanks for ordering! :grin:");
+        eb.setTitle(":grin: Thanks for ordering!");
         eb.setDescription("Your order at **" + restaurantName + "** includes:");
 
         Double totalPrice = 0.0;
@@ -55,22 +74,5 @@ public class CheckoutCommand implements SlashCommandHandler {
                 false);
         eb.setColor(Color.PINK);
         return eb.build();
-    }
-
-    @Override
-    public void onSlashCommand(SlashCommandEvent event) {
-        log.info("event: /checkout");
-        User user = event.getUser();
-        ShoppingCart shoppingCart = shoppingCartController.getShoppingCart(user.getId());
-
-        if (shoppingCart == null) {
-            event.reply("You don't have an order! Please user /neworder restaurant_name").queue();
-        } else {
-            MessageEmbed eb =
-                    buildEB(shoppingCart.getRestaurantName(), shoppingCart.getOrderItems());
-            userController.addOrder(shoppingCart);
-            shoppingCartController.deleteCart(user.getId());
-            event.replyEmbeds(eb).queue();
-        }
     }
 }

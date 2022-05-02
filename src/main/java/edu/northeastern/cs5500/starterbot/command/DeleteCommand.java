@@ -46,7 +46,9 @@ public class DeleteCommand
         User user = event.getUser();
         ShoppingCart cart = shoppingCartController.getShoppingCart(user.getId());
         if (cart == null) {
-            event.reply("You don't have an order, please type '/neworder' to begin a new order.")
+            event.reply(
+                            ":slight_frown: You don't have an order, please type '/neworder' to begin a new order.")
+                    .setEphemeral(true)
                     .queue();
             return;
         }
@@ -89,7 +91,9 @@ public class DeleteCommand
     public void onSelectionMenu(SelectionMenuEvent event) {
         String dishString = event.getInteraction().getValues().get(0);
         userAndSelectDish.put(event.getUser().getId(), dishString);
-        event.reply("Click submit to delete dish **" + dishString + "**.").queue();
+        event.reply("Click submit to delete dish **" + dishString + "**.")
+                .setEphemeral(true)
+                .queue();
     }
 
     @Override
@@ -117,7 +121,7 @@ public class DeleteCommand
     protected MessageEmbed buildReplyEmbed(
             String dishName, ArrayList<DishObject> totalDishes, String restaurantName) {
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("Shopping cart :shopping_cart: :");
+        eb.setTitle(":shopping_cart: Shopping cart:");
         eb.setDescription(
                 "**"
                         + dishName

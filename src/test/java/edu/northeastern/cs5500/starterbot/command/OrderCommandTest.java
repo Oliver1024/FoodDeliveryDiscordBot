@@ -41,7 +41,7 @@ public class OrderCommandTest {
 
         MessageEmbed actual = orderCommand.buildReplyEmbed(dishes, "restaurant1");
 
-        String expectedTitle = "Shopping cart :shopping_cart: :";
+        String expectedTitle = ":shopping_cart: Shopping cart:";
         String expectedDescription =
                 "**dish2** has been added! Your cart at **restaurant1** include:";
 

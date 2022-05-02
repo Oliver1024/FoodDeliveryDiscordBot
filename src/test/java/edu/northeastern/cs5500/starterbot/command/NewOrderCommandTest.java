@@ -52,17 +52,17 @@ public class NewOrderCommandTest {
         String restaurantName = "Sichuan Food";
         MessageEmbed eb = newOrderCommand.buildReplyEmbed(restaurantName);
 
-        assertEquals("You start a new order at Sichuan Food!", eb.getTitle());
+        assertEquals(":clap: You start a new order at Sichuan Food!", eb.getTitle());
 
-        assertEquals("/order:", eb.getFields().get(0).getName());
+        assertEquals(":point_right: /order:", eb.getFields().get(0).getName());
         assertEquals(
                 "to order a dish by selecting a dish from menu", eb.getFields().get(0).getValue());
 
-        assertEquals("/menu:", eb.getFields().get(1).getName());
+        assertEquals(":point_right: /menu:", eb.getFields().get(1).getName());
         assertEquals(
                 "to show the menu of the current restaurant", eb.getFields().get(1).getValue());
 
-        assertEquals("/showcart:", eb.getFields().get(2).getName());
+        assertEquals(":point_right: /showcart:", eb.getFields().get(2).getName());
         assertEquals("to show the shopping cart", eb.getFields().get(2).getValue());
     }
 }

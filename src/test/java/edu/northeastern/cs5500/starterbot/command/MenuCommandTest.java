@@ -34,7 +34,7 @@ class MenuCommandTest {
         dishObject.setPrice(11.99);
         menu.add(dishObject);
         String restaurantName = "Sichuan Food";
-        String expectedTitle = "Sichuan Food's menu: ";
+        String expectedTitle = ":slight_frown: Sichuan Food's menu: ";
 
         MessageEmbed eb = menuCommands.buildReplyEmbed(menu, restaurantName);
 

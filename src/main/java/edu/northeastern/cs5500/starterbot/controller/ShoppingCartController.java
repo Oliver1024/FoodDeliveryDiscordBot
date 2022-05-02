@@ -75,7 +75,7 @@ public class ShoppingCartController {
      * add new order dishes into shopping cart
      *
      * @param userId String user ID
-     * @param newDish DishOjbect ArrayList of dishes
+     * @param newDish DishObject ArrayList of dishes
      * @return ArrayList contains all dishes in the shopping cart, otherwise return null
      */
     @Nullable

@@ -157,9 +157,9 @@ public class LastCommandTest {
         testOrders.add(orderTwo);
 
         eb = lastCommand.buildReplyEmbed(testOrders);
-        assertEquals("3. testOne, 2022-03-08 20:44,", eb.getFields().get(2).getName());
-        assertEquals("2. testTwo, 2022-04-09 05:33,", eb.getFields().get(1).getName());
-        assertEquals("dish1, dish2, dish3", eb.getFields().get(2).getValue());
+        assertEquals("3. testOne, :timer: 2022-03-08 20:44", eb.getFields().get(2).getName());
+        assertEquals("2. testTwo, :timer: 2022-04-09 05:33", eb.getFields().get(1).getName());
+        assertEquals(":stew: dish1, dish2, dish3", eb.getFields().get(2).getValue());
         assertFalse(eb.getFields().get(1).isInline());
         assertEquals(3, eb.getFields().size());
     }

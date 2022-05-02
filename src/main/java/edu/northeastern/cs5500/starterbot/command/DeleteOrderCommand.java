@@ -38,7 +38,9 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
         User user = event.getUser();
         String restaurantName = shoppingCartController.getRestaurantName(user.getId());
         if (restaurantName == null) {
-            event.reply("Your don't have an order, please type '/neworder' to start a new order");
+            event.reply("Your don't have an order, please type '/neworder' to start a new order")
+                    .setEphemeral(true)
+                    .queue();
             return;
         }
         event.reply(buildButton(restaurantName)).setEphemeral(true).queue();
@@ -50,12 +52,12 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
         User user = event.getUser();
         Boolean isUserInShoppingCart = shoppingCartController.isUserInShoppingCart(user.getId());
         if (!isUserInShoppingCart) {
-            event.reply("You already deleted your shopping cart!").queue();
+            event.reply("You already deleted your shopping cart!").setEphemeral(true).queue();
         } else if (choice.equals("Yes")) {
             shoppingCartController.deleteCart(user.getId());
-            event.reply("Deleted your shopping cart").queue();
+            event.reply("Deleted your shopping cart").setEphemeral(true).queue();
         } else {
-            event.reply("OK, won't delete your shopping cart").queue();
+            event.reply("OK, won't delete your shopping cart").setEphemeral(true).queue();
         }
     }
 

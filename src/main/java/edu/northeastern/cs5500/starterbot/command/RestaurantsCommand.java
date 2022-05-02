@@ -40,7 +40,7 @@ public class RestaurantsCommand implements SlashCommandHandler {
     /**
      * Helper function which returns the message for replying user
      *
-     * @param restaurantsName the arraylist of all the names of restaurants in the database
+     * @param restaurantsName the ArrayList of all the names of restaurants in the database
      * @return the string for replying user
      */
     protected String buildReplyMessage(ArrayList<String> restaurantsName, String cuisineType) {
@@ -75,8 +75,8 @@ public class RestaurantsCommand implements SlashCommandHandler {
         if (event.getOption("content") != null) {
             userInput = event.getOption("content").getAsString();
         }
-        ArrayList<String> resturantsName =
+        ArrayList<String> restaurantsName =
                 restaurantController.filterRestaurantByCuisine(userInput);
-        event.reply(buildReplyMessage(resturantsName, userInput)).queue();
+        event.reply(buildReplyMessage(restaurantsName, userInput)).queue();
     }
 }
