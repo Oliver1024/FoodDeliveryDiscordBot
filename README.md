@@ -7,18 +7,18 @@
 
 **Bot Invitation:**   [link](https://www.discord.com/api/oauth2/authorize?client_id=942640033666580550&permissions=8&scope=bot%20applications.commands)
 
-**Bot Design Documentation:**    [link](https://www.docs.google.com/document/d/1bOdwu1bHmWbQuZFGMOB2F5kCT1mINrbw/edit#)
+**Bot Design Documentation:**    [link](https://docs.google.com/document/d/1bOdwu1bHmWbQuZFGMOB2F5kCT1mINrbw/edit)
 
-**Group Shared Folder:** [link](https://www.drive.google.com/drive/folders/1Jjf900uefhaXrXVbYwHZmeIfLFwHTrH5)
+**Group Shared Folder:** [link](https://drive.google.com/drive/folders/1Jjf900uefhaXrXVbYwHZmeIfLFwHTrH5)
 
-  _________
+_________
 
 
 ## **Bot Description:**
 
 DashBot is a discord online food ordering bot for users to order foods from different restaurants. It provides several functions such as ordering food, recommending dishes from restaurants, checking order status, checking history orders, and ordering together with other discord members.
 
-  **Features Involved:**
+**Features Involved:**
 Embed Replying Format, Button, Dropdown Selection, Multiple User Interaction
 
 ## **Commands:**
