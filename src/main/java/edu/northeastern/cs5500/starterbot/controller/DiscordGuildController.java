@@ -32,7 +32,7 @@ public class DiscordGuildController {
             }
         }
         if (discordGuild == null) {
-            discordGuild = createGuild(guildShoppingCart);
+            discordGuild = createGuild(guildShoppingCart.getGuildId());
         }
         GuildOrder newGuildOrder = createNewGuildOrder(guildShoppingCart);
 
@@ -63,12 +63,12 @@ public class DiscordGuildController {
     /**
      * Helper function which creates a new Discord guild object with the given information
      *
-     * @param guildShoppingCart the target the shopping cart that user need to add
+     * @param GuildId the target the groupId that user need to add
      * @return a new discord guild
      */
-    private DiscordGuild createGuild(GuildShoppingCart guildShoppingCart) {
+    private DiscordGuild createGuild(String guildId) {
         DiscordGuild guild = new DiscordGuild();
-        guild.setGuildId(guildShoppingCart.getGuildId());
+        guild.setGuildId(guildId);
         guild.setGuildOrders(new ArrayList<GuildOrder>());
         return guild;
     }
