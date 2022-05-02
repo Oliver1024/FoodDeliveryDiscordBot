@@ -56,7 +56,6 @@ public class DiscordGuildController {
         newGuildOrder.setRestaurantName(guildShoppingCart.getRestaurantName());
         newGuildOrder.setOrderTime(curTime);
         newGuildOrder.setIsDelivered(false);
-
         return newGuildOrder;
     }
 
@@ -70,6 +69,7 @@ public class DiscordGuildController {
         DiscordGuild guild = new DiscordGuild();
         guild.setGuildId(guildId);
         guild.setGuildOrders(new ArrayList<GuildOrder>());
+        this.discordGuildRepository.add(guild);
         return guild;
     }
 }

@@ -55,7 +55,7 @@ public class GroupCheckoutTest {
         assertEquals(expectedTitle, actual.getTitle());
         assertEquals(expectedDescription, actual.getDescription());
         assertTrue(actual.getFields().size() == 3);
-        assertEquals("1. dish1. username1", actual.getFields().get(0).getName());
+        assertEquals("1. dish1. Order by username1", actual.getFields().get(0).getName());
         assertEquals(":heavy_dollar_sign:9.9", actual.getFields().get(0).getValue());
         assertEquals(":receipt: Total:", actual.getFields().get(2).getName());
         assertEquals(":heavy_dollar_sign:29.8", actual.getFields().get(2).getValue());
