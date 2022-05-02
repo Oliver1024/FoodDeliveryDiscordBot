@@ -85,7 +85,7 @@ jacocoTestReport {
     reports {
         xml.enabled true
         // Change html.enabled to true if you want html reports
-        html.enabled false
+        html.enabled true
         csv.enabled false
         xml.destination file("${buildDir}/reports/jacoco.xml")
     }
@@ -93,6 +93,40 @@ jacocoTestReport {
 
 // Check coverage after each test run
 check.dependsOn jacocoTestCoverageVerification
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+            excludes = ['**.command.**', '**.Bot', '**.App', '**CommandModule', '**.listener.**', '**.RepositoryModule', '**.DaggerBotComponent.**', '**.InMemoryRepository**', '**.MongoDBService**', '**.MongoDBRepository**']
+
+            limit {
+                counter = 'LINE'
+                minimum = 0.8
+            }
+
+            limit {
+                counter = 'BRANCH'
+                minimum = 0.8
+            }
+        }
+
+        rule {
+            element = 'CLASS'
+            excludes = ['**.controller.**', '**.Bot', '**.App', '**CommandModule', '**.listener.**', '**.RepositoryModule', '**.DaggerBotComponent.**', '**.InMemoryRepository**', '**.MongoDBService**', '**.MongoDBRepository**']
+
+            limit {
+                counter = 'LINE'
+                minimum = 0.4
+            }
+
+            limit {
+                counter = 'BRANCH'
+                minimum = 0.2
+            }
+        }
+    }
+}
 
 // Target Java 11 - make sure system.properties matches this as well
 sourceCompatibility = 1.11

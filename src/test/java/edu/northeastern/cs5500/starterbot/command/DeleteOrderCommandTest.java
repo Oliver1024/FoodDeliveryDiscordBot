@@ -37,4 +37,20 @@ public class DeleteOrderCommandTest {
         assertEquals("deleteorder:no", actual.getActionRows().get(0).getButtons().get(1).getId());
         assertEquals("No", actual.getActionRows().get(0).getButtons().get(1).getLabel());
     }
+
+    @Test
+    void testReplyMessForButton() {
+        String test1 = deleteOrderCommand.replyMessForButton(true, "Yes");
+        String expected1 = ":ballot_box_with_check: Deleted your shopping cart";
+
+        String test2 = deleteOrderCommand.replyMessForButton(false, "Yes");
+        String expected2 = ":exclamation: You already deleted your shopping cart!";
+
+        String test3 = deleteOrderCommand.replyMessForButton(true, "No");
+        String expected3 = ":ok_hand: OK, won't delete your shopping cart";
+
+        assertEquals(expected1, test1);
+        assertEquals(expected2, test2);
+        assertEquals(expected3, test3);
+    }
 }
