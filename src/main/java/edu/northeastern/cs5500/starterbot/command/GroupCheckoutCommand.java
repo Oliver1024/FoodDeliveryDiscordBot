@@ -47,9 +47,9 @@ public class GroupCheckoutCommand implements SlashCommandHandler {
                     (i + 1)
                             + ". "
                             + orderedDishes.get(i).getDish().getDish()
-                            + ". Order by "
-                            + orderedDishes.get(i).getUsername(),
-                    ":heavy_dollar_sign:" + orderedDishes.get(i).getDish().getPrice().toString(),
+                            + ":heavy_dollar_sign:"
+                            + orderedDishes.get(i).getDish().getPrice().toString(),
+                    " add by " + orderedDishes.get(i).getUsername(),
                     false);
             totalPrice += orderedDishes.get(i).getDish().getPrice();
         }
