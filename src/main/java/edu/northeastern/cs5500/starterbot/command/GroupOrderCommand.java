@@ -49,6 +49,11 @@ public class GroupOrderCommand
         return new CommandData(getName(), "Start a group order at the current discord guild");
     }
 
+    /**
+     * Provide general command feature
+     *
+     * @param event, SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /grouporder");
@@ -70,6 +75,11 @@ public class GroupOrderCommand
                 .queue();
     }
 
+    /**
+     * Provide a button feature that user can on click
+     *
+     * @param event, ButtonClickEvent
+     */
     @Override
     public void onButtonClick(ButtonClickEvent event) {
         String guildId = event.getGuild().getId();
@@ -117,6 +127,11 @@ public class GroupOrderCommand
         }
     }
 
+    /**
+     * Provide a dropdown feature to users that can choose one of the menu
+     *
+     * @param event, SelectionMenuEvent
+     */
     @Override
     public void onSelectionMenu(SelectionMenuEvent event) {
         String guildId = event.getGuild().getId();
@@ -146,7 +161,11 @@ public class GroupOrderCommand
         userAndDish.put(userId, selection);
         return "click 'Submit' to order " + selection;
     }
-
+    /**
+     * Provide general command feature
+     *
+     * @param event, SlashCommandEvent
+     */
     /**
      * Build restaurant selection for replying to discord user
      *

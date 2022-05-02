@@ -35,6 +35,11 @@ public class CheckoutCommand implements SlashCommandHandler {
         return new CommandData(getName(), "press enter to checkout");
     }
 
+    /**
+     * Provide general command feature
+     *
+     * @param event, SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /checkout");

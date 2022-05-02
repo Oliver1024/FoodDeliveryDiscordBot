@@ -68,6 +68,11 @@ public class RestaurantsCommand implements SlashCommandHandler {
         return "```" + title + content + "```";
     }
 
+    /**
+     * Provide general command feature
+     *
+     * @param event, SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /restaurants");

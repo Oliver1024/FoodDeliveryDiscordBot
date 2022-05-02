@@ -34,6 +34,11 @@ public class OrderStatusCommand implements SlashCommandHandler {
         return new CommandData(getName(), "Check your order status");
     }
 
+    /**
+     * Provide general command feature
+     *
+     * @param event, SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /orderstatus");
