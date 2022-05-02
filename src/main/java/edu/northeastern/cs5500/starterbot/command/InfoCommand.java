@@ -57,8 +57,9 @@ public class InfoCommand implements SlashCommandHandler {
 
         if (restaurantName == null) {
             event.reply(
-                            "No any restaurant in shopping cart! "
+                            ":slight_frown: No any restaurant in shopping cart! "
                                     + "'/info' to check the restaurant you are ordering at or '/info restaurant_name' to check the given restaurant")
+                    .setEphemeral(true)
                     .queue();
             return;
         }

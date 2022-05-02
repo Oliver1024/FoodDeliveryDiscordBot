@@ -56,8 +56,9 @@ public class MenuCommand implements SlashCommandHandler {
 
         if (restaurantName == null) {
             event.reply(
-                            "cannot find restaurant you want to check. Please type in "
+                            ":slight_frown: cannot find the restaurant you want to check. Please type in "
                                     + "'/menu' to check the restaurant you are ordering at or '/menu restaurant_name' to check the given restaurant")
+                    .setEphemeral(true)
                     .queue();
             return;
         }
@@ -75,7 +76,7 @@ public class MenuCommand implements SlashCommandHandler {
     protected MessageEmbed buildReplyEmbed(
             ArrayList<DishObject> resultMenu, String restaurantName) {
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle(restaurantName + "'s menu: ");
+        eb.setTitle(":slight_frown: " + restaurantName + "'s menu: ");
 
         for (int index = 0; index < resultMenu.size(); index++) {
             eb.addField(

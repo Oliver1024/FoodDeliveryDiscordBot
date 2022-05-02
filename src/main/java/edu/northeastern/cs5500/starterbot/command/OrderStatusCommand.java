@@ -72,7 +72,7 @@ public class OrderStatusCommand implements SlashCommandHandler {
     /**
      * Helper function which builds a string with all the name of dishes
      *
-     * @param orderItems an arraylist of ordered items.
+     * @param orderItems an ArrayList of ordered items.
      * @return a string
      */
     private String buildDishesString(ArrayList<DishObject> orderItems) {

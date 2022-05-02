@@ -39,7 +39,7 @@ public class CheckoutCommandTest {
 
         MessageEmbed eb = checkoutCommand.buildEB("restaurant1", orderedDishes);
 
-        String expectedTitle = "Thanks for ordering! :grin:";
+        String expectedTitle = ":grin: Thanks for ordering!";
         assertEquals(expectedTitle, eb.getTitle());
 
         String expectedDescrption = "Your order at **" + "restaurant1" + "** includes:";

@@ -46,6 +46,24 @@ public class LastCommand implements SlashCommandHandler {
                                 .setRequired(true));
     }
 
+    @Override
+    public void onSlashCommand(SlashCommandEvent event) {
+        log.info("event: /last");
+        User user = event.getUser();
+        String userInput = event.getOption("content").getAsString();
+        ArrayList<String> processedInput = processUserInput(userInput);
+        ArrayList<Order> result = new ArrayList<>();
+        ArrayList<String> restaurantNamesList = restaurantController.getAllRestaurantsName();
+        String userInputAnswer = checkInput(processedInput, restaurantNamesList);
+        if (userInputAnswer != null) {
+            event.reply(userInputAnswer).queue();
+            return;
+        } else {
+            result = userController.getLastKNumsOrders(user.getId(), processedInput);
+            event.replyEmbeds(buildReplyEmbed(result)).queue();
+        }
+    }
+
     /**
      * divide input String from user into one ot two parts.
      *
@@ -132,24 +150,6 @@ public class LastCommand implements SlashCommandHandler {
         return formaDatetime;
     }
 
-    @Override
-    public void onSlashCommand(SlashCommandEvent event) {
-        log.info("event: /last");
-        User user = event.getUser();
-        String userInput = event.getOption("content").getAsString();
-        ArrayList<String> processedInput = processUserInput(userInput);
-        ArrayList<Order> result = new ArrayList<>();
-        ArrayList<String> restaurantNamesList = restaurantController.getAllRestaurantsName();
-        String userInputAnswer = checkInput(processedInput, restaurantNamesList);
-        if (userInputAnswer != null) {
-            event.reply(userInputAnswer).queue();
-            return;
-        } else {
-            result = userController.getLastKNumsOrders(user.getId(), processedInput);
-            event.replyEmbeds(buildReplyEmbed(result)).queue();
-        }
-    }
-
     /**
      * Return MessageEmbed object with ArrayList of result.
      *
@@ -163,17 +163,16 @@ public class LastCommand implements SlashCommandHandler {
             eb.setTitle(
                     "the name of restaurant you typed do not have any order before, you can type /restaurants to check other restaurants");
         } else {
-            eb.setTitle("your order history: ");
+            eb.setTitle(":page_with_curl: Your last " + result.size() + " orders:");
             int index = 1;
             for (int i = result.size() - 1; i >= 0; i--) {
                 eb.addField(
                         index
                                 + ". "
                                 + result.get(i).getRestaurantName()
-                                + ", "
-                                + processTimeString(result.get(i).getOrderTime())
-                                + ", ",
-                        buildOrderedDishesString(result.get(i).getOrderItems()),
+                                + ", :timer: "
+                                + processTimeString(result.get(i).getOrderTime()),
+                        ":stew: " + buildOrderedDishesString(result.get(i).getOrderItems()),
                         false);
                 index++;
             }
