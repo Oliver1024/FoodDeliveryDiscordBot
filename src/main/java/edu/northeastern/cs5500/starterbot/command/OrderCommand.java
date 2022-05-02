@@ -48,14 +48,16 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
         User user = event.getUser();
         ShoppingCart cart = shoppingCartController.getShoppingCart(user.getId());
         if (cart == null) {
-            event.reply("you need to type '/neworder' to start a new order first").queue();
+            event.reply(":slight_frown: you need to type '/neworder' to start a new order first")
+                    .setEphemeral(true)
+                    .queue();
             return;
         }
 
         ArrayList<DishObject> menu = restaurantController.getMenu(cart.getRestaurantName());
         SelectionMenu dishSelectionMenu = buildSelectionMenu(menu);
 
-        event.reply("Choose the restaurant you want to order")
+        event.reply("Choose the dish you want to order")
                 .setEphemeral(true)
                 .addActionRow(dishSelectionMenu)
                 .addActionRow(Button.success(this.getName() + ":submit", "Submit"))
@@ -72,7 +74,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
             dishString = randomDish.getDish();
         }
         userAndSelectDish.put(user.getId(), dishString);
-        event.reply("click 'Submit' to order " + dishString).queue();
+        event.reply("click 'Submit' to order " + dishString).setEphemeral(true).queue();
     }
 
     @Override
@@ -81,7 +83,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
         String restaurantName = shoppingCartController.getRestaurantName(user.getId());
         String dishString = userAndSelectDish.get(user.getId());
         if (dishString == null) {
-            event.reply("You should select the dish you want to order").queue();
+            event.reply("You should select the dish you want to order").setEphemeral(true).queue();
         } else {
             DishObject dish = restaurantController.getDish(dishString, restaurantName);
             ArrayList<DishObject> orderedDishes =
@@ -102,7 +104,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
             ArrayList<DishObject> totalDishes, String restaurantName) {
         EmbedBuilder eb = new EmbedBuilder();
         DishObject newDish = totalDishes.get(totalDishes.size() - 1);
-        eb.setTitle("Shopping cart :shopping_cart: :");
+        eb.setTitle(":shopping_cart: Shopping cart:");
         eb.setDescription(
                 "**"
                         + newDish.getDish()

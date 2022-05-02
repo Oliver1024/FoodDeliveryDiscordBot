@@ -56,6 +56,7 @@ public class GroupOrderCommand
         if (guildShoppingCartController.isGuildInShoppingCart(guildId)) {
             event.reply(
                             "Your guild has an ongoing order! Please use /groupcheckout to check out first.")
+                    .setEphemeral(true)
                     .queue();
             return;
         }
@@ -79,7 +80,9 @@ public class GroupOrderCommand
             String restaurantName = guildAndRestaurant.get(guildId);
 
             if (restaurantName == null) {
-                event.reply("Please select restaurant you want to order at").queue();
+                event.reply("Please select restaurant you want to order at")
+                        .setEphemeral(true)
+                        .queue();
                 return;
             }
 
@@ -97,7 +100,7 @@ public class GroupOrderCommand
             String dishString = userAndDish.get(user.getId());
 
             if (dishString == null) {
-                event.reply("Please select dish you want to order").queue();
+                event.reply("Please select dish you want to order").setEphemeral(true).queue();
                 return;
             }
 
@@ -139,16 +142,15 @@ public class GroupOrderCommand
         if (!isStartOrdering) {
             guildAndRestaurant.put(guildId, selection);
             return "click 'Submit' to order at " + selection;
-        } else {
-            userAndDish.put(userId, selection);
-            return "click 'Submit' to order " + selection;
         }
+        userAndDish.put(userId, selection);
+        return "click 'Submit' to order " + selection;
     }
 
     /**
      * Build restaurant selection for replying to discord user
      *
-     * @param restaurantNames the arraylist of all restaurant names
+     * @param restaurantNames the ArrayList of all restaurant names
      * @return a SelectionMenu object
      */
     protected SelectionMenu buildRestaurantSelection(ArrayList<String> restaurantNames) {
@@ -177,7 +179,7 @@ public class GroupOrderCommand
         ArrayList<SelectOption> options = new ArrayList<>();
         for (DishObject dish : menu) {
             SelectOption option =
-                    SelectOption.of(dish.getDish() + ": 💲" + dish.getPrice(), dish.getDish());
+                    SelectOption.of(dish.getDish() + ": $" + dish.getPrice(), dish.getDish());
             options.add(option);
         }
 
@@ -191,7 +193,7 @@ public class GroupOrderCommand
     }
 
     /**
-     * Build a reply embed to show the curent shopping cart for user after they ordered a dish.
+     * Build a reply embed to show the current shopping cart for user after they ordered a dish.
      *
      * @param dishes the dishes the users in the discord guild have ordered
      * @param restaurantName the restaurant the guild is ordering at
@@ -200,7 +202,7 @@ public class GroupOrderCommand
     protected MessageEmbed buildReplyEmbed(ArrayList<DishUserPair> dishes, String restaurantName) {
         EmbedBuilder eb = new EmbedBuilder();
         DishUserPair dishUserPair = dishes.get(dishes.size() - 1);
-        eb.setTitle("🛒 Guild shopping cart:");
+        eb.setTitle(":shopping_cart: Guild shopping cart:");
         eb.setDescription(
                 "**"
                         + dishUserPair.getUsername()
@@ -217,9 +219,14 @@ public class GroupOrderCommand
             String username = curPair.getUsername();
             totalPrice += price;
             eb.addField(
-                    (i + 1) + ". " + dish + ": 💲" + price.toString(), "add by " + username, false);
+                    (i + 1) + ". " + dish + ": :heavy_dollar_sign:" + price.toString(),
+                    "add by " + username,
+                    false);
         }
-        eb.addField("🧾 Total:", "💲" + Math.round(totalPrice * 100.0) / 100.0, false);
+        eb.addField(
+                ":receipt: Total:",
+                ":heavy_dollar_sign:" + Math.round(totalPrice * 100.0) / 100.0,
+                false);
 
         eb.setColor(Color.GREEN);
         return eb.build();

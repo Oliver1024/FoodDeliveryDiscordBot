@@ -4,6 +4,7 @@ import edu.northeastern.cs5500.starterbot.controller.RestaurantController;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +26,7 @@ public class NewOrderCommand
 
     @Inject RestaurantController restaurantController;
     @Inject ShoppingCartController shoppingCartController;
-    User user;
-    String restaurantName;
+    HashMap<String, String> userAndRestaurantName = new HashMap<>();
 
     @Inject
     public NewOrderCommand() {}
@@ -44,18 +44,19 @@ public class NewOrderCommand
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /neworder");
-        user = event.getUser();
+        User user = event.getUser();
         Boolean isUserInShoppingCart = shoppingCartController.isUserInShoppingCart(user.getId());
         if (isUserInShoppingCart) {
             event.reply(
-                            "You still have an unfinished order, please check out that one first to start a new order.")
+                            ":slight_frown: You still have an unfinished order, please check out that one first to start a new order.")
+                    .setEphemeral(true)
                     .queue();
             return;
         }
         ArrayList<String> restaurantNames = restaurantController.getAllRestaurantsName();
         SelectionMenu restaurants = buildSelectionMenu(restaurantNames);
 
-        event.reply("Choose the restaurant you want to order")
+        event.reply(":point_down: Choose the restaurant you want to order")
                 .setEphemeral(true)
                 .addActionRow(restaurants)
                 .addActionRow(Button.primary(this.getName() + ":submit", "Submit"))
@@ -64,26 +65,34 @@ public class NewOrderCommand
 
     @Override
     public void onSelectionMenu(SelectionMenuEvent event) {
-        restaurantName = event.getInteraction().getValues().get(0);
-        event.reply("Click submit to start ordering at **" + restaurantName + "**.").queue();
+        User user = event.getUser();
+        String restaurantName = event.getInteraction().getValues().get(0);
+        userAndRestaurantName.put(user.getId(), restaurantName);
+        event.reply("Click submit to start ordering at **" + restaurantName + "**.")
+                .setEphemeral(true)
+                .queue();
     }
 
     @Override
     public void onButtonClick(ButtonClickEvent event) {
+        User user = event.getUser();
+        String restaurantName = userAndRestaurantName.get(user.getId());
         if (restaurantName != null) {
             shoppingCartController.createNewShoppingCart(
                     user.getId(), user.getName(), restaurantName);
             event.replyEmbeds(buildReplyEmbed(restaurantName)).queue();
-            restaurantName = null;
+            userAndRestaurantName.remove(user.getId());
         } else {
-            event.reply("You have to type '/order' again to start a new order").queue();
+            event.reply("You have to type '/order' again to start a new order")
+                    .setEphemeral(true)
+                    .queue();
         }
     }
 
     /**
      * Build selection menu for replying to discord user
      *
-     * @param restaurantNames the arraylist of all restaurant names
+     * @param restaurantNames the ArrayList of all restaurant names
      * @return a SelectionMenu object
      */
     protected SelectionMenu buildSelectionMenu(ArrayList<String> restaurantNames) {
@@ -110,10 +119,11 @@ public class NewOrderCommand
      */
     protected MessageEmbed buildReplyEmbed(String restaurantName) {
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("You start a new order at " + restaurantName + "!");
-        eb.addField("/order:", "to order a dish by selecting a dish from menu", false);
-        eb.addField("/menu:", "to show the menu of the current restaurant", false);
-        eb.addField("/showcart:", "to show the shopping cart", false);
+        eb.setTitle(":clap: You start a new order at " + restaurantName + "!");
+        eb.addField(
+                ":point_right: /order:", "to order a dish by selecting a dish from menu", false);
+        eb.addField(":point_right: /menu:", "to show the menu of the current restaurant", false);
+        eb.addField(":point_right: /showcart:", "to show the shopping cart", false);
         eb.setColor(Color.BLUE);
         return eb.build();
     }

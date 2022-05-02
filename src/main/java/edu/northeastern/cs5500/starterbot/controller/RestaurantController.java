@@ -40,28 +40,6 @@ public class RestaurantController {
     }
 
     /**
-     * Check dish number is included in restaurant menu
-     *
-     * @param dishNumber Integer the dish number that user input
-     * @param restaurantName String the restaurant that the user are ordering at
-     * @return HashMap containing dish names and their corresponding dish prices if it exists in the
-     *     database, otherwise, return null
-     */
-    @Nullable
-    public DishObject getDish(Integer dishNumber, String restaurantName) {
-        Collection<Restaurant> AllRestaurants = restaurantRepository.getAll();
-        for (Restaurant restaurant : AllRestaurants) {
-            if (restaurant.getName().equalsIgnoreCase(restaurantName)) {
-                ArrayList<DishObject> menu = restaurant.getMenu();
-                if (dishNumber > 0 && dishNumber <= menu.size()) {
-                    return menu.get(dishNumber - 1);
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
      * get the DishObject in the given restaurant where the dish is equal to the input dishName
      *
      * @param dishName the name of the dish
@@ -177,26 +155,5 @@ public class RestaurantController {
             }
         }
         return restaurantsName;
-    }
-
-    /**
-     * find the number of dishes in the menu
-     *
-     * @param restaurantName String the target restaurantName
-     * @param targeDishObject DishObject the target dishObject which used for compare the list of
-     *     menu
-     * @return get the number of target dish, the number of dishes should add 1 because there is no
-     *     index 0 on the menu, start count menu at index 1
-     */
-    @Nonnull
-    public int findDishNumber(String restaurantName, DishObject targeDishObject) {
-        int dishNumber = -1;
-        ArrayList<DishObject> menu = getMenu(restaurantName);
-        for (int i = 0; i < menu.size(); i++) {
-            if (menu.get(i).getDish().equals(targeDishObject.getDish())) {
-                dishNumber = i + 1;
-            }
-        }
-        return dishNumber;
     }
 }

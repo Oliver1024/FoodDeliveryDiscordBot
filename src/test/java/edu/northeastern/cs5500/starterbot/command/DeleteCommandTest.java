@@ -45,7 +45,7 @@ public class DeleteCommandTest {
         dishes.add(dish3);
 
         MessageEmbed actual = deleteCommand.buildReplyEmbed("dish4", dishes, "restaurant1");
-        String expectedTitle = "Shopping cart :shopping_cart: :";
+        String expectedTitle = ":shopping_cart: Shopping cart:";
         String expectedDescription =
                 "**dish4** has been removed! Your cart at **restaurant1** include:";
 

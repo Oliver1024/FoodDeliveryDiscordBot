@@ -26,7 +26,7 @@ public class ShowCartCommandTest {
     void testOrderDishIsEmpty() {
         ArrayList<DishObject> testOrderDishes = new ArrayList<>();
         String testRestaurantName = "restaurant1";
-        String expectedTitle = "Shopping cart :shopping_cart::";
+        String expectedTitle = ":shopping_cart: Shopping cart:";
         String expectedDescription = "Your order at **restaurant1** includes:";
         MessageEmbed embed = showCartCommand.buildEB(testRestaurantName, testOrderDishes);
         assertEquals(expectedTitle, embed.getTitle());
