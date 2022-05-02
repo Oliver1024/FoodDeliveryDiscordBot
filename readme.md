@@ -1,5 +1,3 @@
-
-
 # DashBot
 ## Team Orca for 2022 Spring CS5500
 
