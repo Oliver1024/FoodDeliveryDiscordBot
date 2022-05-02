@@ -64,7 +64,7 @@ public class GroupCheckoutCommand implements SlashCommandHandler {
     protected MessageEmbed buildEB(String restaurantName, ArrayList<DishUserPair> orderedDishes) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle("Thanks for ordering! :grin:");
-        eb.setDescription("Your order at **" + restaurantName + "** includes:");
+        eb.setDescription("Your guild order at **" + restaurantName + "** includes:");
 
         Double totalPrice = 0.0;
 
@@ -73,9 +73,9 @@ public class GroupCheckoutCommand implements SlashCommandHandler {
                     (i + 1)
                             + ". "
                             + orderedDishes.get(i).getDish().getDish()
-                            + ". "
-                            + orderedDishes.get(i).getUsername(),
-                    ":heavy_dollar_sign:" + orderedDishes.get(i).getDish().getPrice().toString(),
+                            + ":heavy_dollar_sign:"
+                            + orderedDishes.get(i).getDish().getPrice().toString(),
+                    " add by " + orderedDishes.get(i).getUsername(),
                     false);
             totalPrice += orderedDishes.get(i).getDish().getPrice();
         }
