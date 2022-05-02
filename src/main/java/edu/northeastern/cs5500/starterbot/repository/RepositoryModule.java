@@ -7,21 +7,9 @@ import edu.northeastern.cs5500.starterbot.model.GuildShoppingCart;
 import edu.northeastern.cs5500.starterbot.model.Restaurant;
 import edu.northeastern.cs5500.starterbot.model.ShoppingCart;
 import edu.northeastern.cs5500.starterbot.model.User;
-import edu.northeastern.cs5500.starterbot.model.UserPreference;
 
 @Module
 public class RepositoryModule {
-    @Provides
-    public GenericRepository<UserPreference> provideUserPreferencesRepository(
-            MongoDBRepository<UserPreference> repository) {
-        return repository;
-    }
-
-    @Provides
-    public Class<UserPreference> provideUserPreference() {
-        return UserPreference.class;
-    }
-
     @Provides
     public GenericRepository<Restaurant> provideRestaurantRepository(
             MongoDBRepository<Restaurant> repository) {

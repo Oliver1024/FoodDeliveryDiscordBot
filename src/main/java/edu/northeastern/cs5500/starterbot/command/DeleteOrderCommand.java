@@ -61,17 +61,26 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
         String choice = event.getButton().getLabel();
         User user = event.getUser();
         Boolean isUserInShoppingCart = shoppingCartController.isUserInShoppingCart(user.getId());
-        if (!isUserInShoppingCart) {
-            event.reply(":exclamation: You already deleted your shopping cart!")
-                    .setEphemeral(true)
-                    .queue();
-        } else if (choice.equals("Yes")) {
+        if (choice.equals("Yes")) {
             shoppingCartController.deleteCart(user.getId());
-            event.reply(":ballot_box_with_check: Deleted your shopping cart")
-                    .setEphemeral(true)
-                    .queue();
+        }
+        event.reply(replyMessForButton(isUserInShoppingCart, choice)).setEphemeral(true).queue();
+    }
+
+    /**
+     * Helper function for onButtonClick
+     *
+     * @param isUserInShoppingCart whether the user has an ongoing order
+     * @param choice which button the user hit
+     * @return a string for replying to user
+     */
+    protected String replyMessForButton(Boolean isUserInShoppingCart, String choice) {
+        if (!isUserInShoppingCart) {
+            return ":exclamation: You already deleted your shopping cart!";
+        } else if (choice.equals("Yes")) {
+            return ":ballot_box_with_check: Deleted your shopping cart";
         } else {
-            event.reply(":ok_hand: OK, won't delete your shopping cart").setEphemeral(true).queue();
+            return ":ok_hand: OK, won't delete your shopping cart";
         }
     }
 
