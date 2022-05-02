@@ -2,6 +2,7 @@ package edu.northeastern.cs5500.starterbot.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -74,5 +75,36 @@ public class GuildShoppingCartControllerTest {
         ArrayList<DishUserPair> actual2 =
                 guildShoppingCartController.addDish(dish1, "123", orderUserId, orderUsername);
         assertNull(actual2);
+    }
+
+    @Test
+    void testMatchCreateUserId() {
+        DishObject dish1 = new DishObject();
+        dish1.setDish("dish1");
+        dish1.setPrice(9.9);
+
+        String guildId = "guild12345";
+        String restaurantName = "restaurant1";
+        String createdUserId = "user1234";
+        guildShoppingCartController.createCart(guildId, restaurantName, createdUserId);
+        String createdUserId2 = "user12344";
+
+        assertTrue(guildShoppingCartController.matchCreateUserId(createdUserId, guildId));
+        assertFalse(guildShoppingCartController.matchCreateUserId(createdUserId2, guildId));
+    }
+
+    @Test
+    void testDeleteCart() {
+        DishObject dish1 = new DishObject();
+        dish1.setDish("dish1");
+        dish1.setPrice(9.9);
+
+        String guildId = "guild12345";
+        String restaurantName = "restaurant1";
+        String createdUserId = "user1234";
+        guildShoppingCartController.createCart(guildId, restaurantName, createdUserId);
+        assertNotNull(guildShoppingCartController.getCart(guildId));
+        guildShoppingCartController.deleteCart(guildId);
+        assertNull(guildShoppingCartController.getCart(guildId));
     }
 }
