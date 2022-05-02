@@ -5,11 +5,11 @@
 
 **Video Presentation:**  _____
 
-**Bot Invitation:**   [link](https://discord.com/api/oauth2/authorize?client_id=942640033666580550&permissions=8&scope=bot%20applications.commands)
+**Bot Invitation:**   [link](https://www.discord.com/api/oauth2/authorize?client_id=942640033666580550&permissions=8&scope=bot%20applications.commands)
 
-**Bot Design Documentation:**    [link](https://docs.google.com/document/d/1bOdwu1bHmWbQuZFGMOB2F5kCT1mINrbw/edit#)
+**Bot Design Documentation:**    [link](https://www.docs.google.com/document/d/1bOdwu1bHmWbQuZFGMOB2F5kCT1mINrbw/edit#)
 
-**Group Shared Folder:** [link](https://drive.google.com/drive/folders/1Jjf900uefhaXrXVbYwHZmeIfLFwHTrH5)
+**Group Shared Folder:** [link](https://www.drive.google.com/drive/folders/1Jjf900uefhaXrXVbYwHZmeIfLFwHTrH5)
 
   _________
 
