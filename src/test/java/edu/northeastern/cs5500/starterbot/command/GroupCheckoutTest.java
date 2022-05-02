@@ -48,9 +48,9 @@ public class GroupCheckoutTest {
         dishes.add(pair1);
         dishes.add(pair2);
 
-        MessageEmbed actual = groupCheckoutCommand.buildEB("restaurant1", dishes);
+        MessageEmbed actual = groupCheckoutCommand.buildEB("restaurant1", dishes, "alan");
         String expectedTitle = "Thanks for ordering! :grin:";
-        String expectedDescription = "Your order at **restaurant1** includes:";
+        String expectedDescription = "alan's order at **restaurant1** includes:";
 
         assertEquals(expectedTitle, actual.getTitle());
         assertEquals(expectedDescription, actual.getDescription());
