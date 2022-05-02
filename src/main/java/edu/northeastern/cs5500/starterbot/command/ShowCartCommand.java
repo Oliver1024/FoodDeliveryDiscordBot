@@ -34,6 +34,11 @@ public class ShowCartCommand implements SlashCommandHandler {
         return new CommandData(getName(), "Press enter to show your shopping cart");
     }
 
+    /**
+     * Respond to user's command input
+     *
+     * @param event, SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         // check user is start a new order or not

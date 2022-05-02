@@ -42,6 +42,11 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
         return new CommandData(getName(), "Add a new dish into your cart");
     }
 
+    /**
+     * Respond to user's command input
+     *
+     * @param event, SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /order");
@@ -64,6 +69,11 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
                 .queue();
     }
 
+    /**
+     * Provide a dropdown selection menu for users
+     *
+     * @param event, SelectionMenuEvent
+     */
     @Override
     public void onSelectionMenu(SelectionMenuEvent event) {
         User user = event.getUser();
@@ -77,6 +87,11 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
         event.reply("click 'Submit' to order " + dishString).setEphemeral(true).queue();
     }
 
+    /**
+     * Respond to user's button hitting action
+     *
+     * @param event, ButtonClickEvent
+     */
     @Override
     public void onButtonClick(ButtonClickEvent event) {
         User user = event.getUser();

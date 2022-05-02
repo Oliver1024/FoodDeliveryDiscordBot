@@ -40,6 +40,11 @@ public class DeleteCommand
         return new CommandData(getName(), "Delete a dish from current shopping cart");
     }
 
+    /**
+     * Respond to user's command input
+     *
+     * @param event, SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /delete");
@@ -87,6 +92,11 @@ public class DeleteCommand
         return dishesList;
     }
 
+    /**
+     * Provide a dropdown feature to users that can choose one of the menu
+     *
+     * @param event, SelectionMenuEvent
+     */
     @Override
     public void onSelectionMenu(SelectionMenuEvent event) {
         String dishString = event.getInteraction().getValues().get(0);
@@ -96,6 +106,11 @@ public class DeleteCommand
                 .queue();
     }
 
+    /**
+     * Provide a button feature that user can on click
+     *
+     * @param event, ButtonClickEvent
+     */
     @Override
     public void onButtonClick(ButtonClickEvent event) {
         User user = event.getUser();

@@ -39,6 +39,11 @@ public class MenuCommand implements SlashCommandHandler {
                                 .setRequired(false));
     }
 
+    /**
+     * Respond to user's command input
+     *
+     * @param event, SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /menu");

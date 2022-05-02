@@ -34,6 +34,11 @@ public class PreferredNameCommand implements SlashCommandHandler {
                                 .setRequired(true));
     }
 
+    /**
+     * Provide general command feature
+     *
+     * @param event, SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /preferredname");

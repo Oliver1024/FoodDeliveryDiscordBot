@@ -46,6 +46,11 @@ public class LastCommand implements SlashCommandHandler {
                                 .setRequired(true));
     }
 
+    /**
+     * Respond to user's command input
+     *
+     * @param event, SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /last");

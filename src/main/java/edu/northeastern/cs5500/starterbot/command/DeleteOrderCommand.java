@@ -32,6 +32,11 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
         return new CommandData(getName(), "delete your current shopping cart");
     }
 
+    /**
+     * Respond to user's command input
+     *
+     * @param event, SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /deleteorder");
@@ -46,6 +51,11 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
         event.reply(buildButton(restaurantName)).setEphemeral(true).queue();
     }
 
+    /**
+     * Respond to user's button hitting action
+     *
+     * @param event, ButtonClickEvent
+     */
     @Override
     public void onButtonClick(ButtonClickEvent event) {
         String choice = event.getButton().getLabel();

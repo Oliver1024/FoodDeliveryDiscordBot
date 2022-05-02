@@ -41,6 +41,11 @@ public class NewOrderCommand
         return new CommandData(getName(), "Start a new order");
     }
 
+    /**
+     * Respond to user's command input
+     *
+     * @param event, SlashCommandEvent
+     */
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /neworder");
@@ -63,6 +68,11 @@ public class NewOrderCommand
                 .queue();
     }
 
+    /**
+     * Provide a dropdown selection menu for users
+     *
+     * @param event, SelectionMenuEvent
+     */
     @Override
     public void onSelectionMenu(SelectionMenuEvent event) {
         User user = event.getUser();
@@ -73,6 +83,11 @@ public class NewOrderCommand
                 .queue();
     }
 
+    /**
+     * Respond to user's button hitting action
+     *
+     * @param event, ButtonClickEvent
+     */
     @Override
     public void onButtonClick(ButtonClickEvent event) {
         User user = event.getUser();
