@@ -19,9 +19,9 @@ public class GuildShoppingCartController {
     }
 
     /**
-     * Check if the given guild already has on going order
+     * Check if the given guild already has ongoing order
      *
-     * @param String the id of the given guild
+     * @param guildId String the id of the given guild
      * @return true or false whether the guild has an ongoing shopping cart
      */
     @Nonnull

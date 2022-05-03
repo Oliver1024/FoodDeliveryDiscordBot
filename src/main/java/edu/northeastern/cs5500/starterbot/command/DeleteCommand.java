@@ -130,6 +130,8 @@ public class DeleteCommand
      * Return MessageEmbed object with dishTarget name
      *
      * @param dishName String, dish name which is the input where user want to delete
+     * @param totalDishes ArrayList, all dishes on the current shopping cart
+     * @param restaurantName String, the restaurant name of the current order
      * @return MessageEmbed object
      */
     protected MessageEmbed buildReplyEmbed(

@@ -163,11 +163,7 @@ public class GroupOrderCommand
         userAndDish.put(userId, selection);
         return "click 'Submit' to order " + selection;
     }
-    /**
-     * Provide general command feature
-     *
-     * @param event, SlashCommandEvent
-     */
+
     /**
      * Build restaurant selection for replying to discord user
      *

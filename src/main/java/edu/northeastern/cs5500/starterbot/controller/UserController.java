@@ -145,8 +145,7 @@ public class UserController {
      * processedInput contains
      *
      * @param userId the discord id of the user
-     * @param k the number of last k orders
-     * @param restaurantName the name of the restaurant
+     * @param processedInput ArrayList, a list contains the most recent k orders
      * @return the ArrayList of last k orders
      */
     @Nonnull

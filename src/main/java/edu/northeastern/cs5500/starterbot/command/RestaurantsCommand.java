@@ -58,6 +58,7 @@ public class RestaurantsCommand implements SlashCommandHandler {
      * Helper function which returns the message for replying user
      *
      * @param restaurantsName the ArrayList of all the names of restaurants in the database
+     * @param cuisineType String, the cuisine type of dishes
      * @return the string for replying user
      */
     protected String buildReplyMessage(ArrayList<String> restaurantsName, String cuisineType) {
