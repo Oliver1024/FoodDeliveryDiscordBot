@@ -66,7 +66,7 @@ public class GroupCheckoutCommand implements SlashCommandHandler {
     /**
      * Build a reply embed to show the order after the user check out the current group order.
      *
-     * @param dishes the dishes the users in the discord guild have ordered
+     * @param orderedDishes the dishes the users in the discord guild have ordered
      * @param restaurantName the restaurant the guild is ordering at
      * @return a MessageEmbed object
      */

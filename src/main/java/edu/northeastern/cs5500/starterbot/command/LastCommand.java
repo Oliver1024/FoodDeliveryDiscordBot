@@ -91,7 +91,7 @@ public class LastCommand implements SlashCommandHandler {
     /**
      * check if the every word of target string is a valid number ot not
      *
-     * @param digit the String for check if it is digit
+     * @param potentialNumbers the String for check if it is digit
      * @return if all character are valid digit return true, else return false
      */
     public boolean checkIfStringIsNumber(String potentialNumbers) {
@@ -144,9 +144,9 @@ public class LastCommand implements SlashCommandHandler {
     }
 
     /**
-     * processing the time String from mongo db and formate it to yyyy-MM-dd HH:mm type String
+     * processing the time String from MongoDB and formate it to yyyy-MM-dd HH:mm type String
      *
-     * @param endTime a String get from mongo db.
+     * @param date a String get from MongoDB.
      * @return the time processed.
      */
     public String processTimeString(LocalDateTime date) {
