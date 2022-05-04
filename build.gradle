@@ -98,7 +98,7 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             element = 'CLASS'
-            excludes = ['**.command.**', '**.Bot', '**.App', '**CommandModule', '**.listener.**', '**.RepositoryModule', '**.DaggerBotComponent.**', '**.InMemoryRepository**', '**.MongoDBService**', '**.MongoDBRepository**']
+            excludes = ['**.Bot', '**.App', '**CommandModule', '**.listener.**', '**.RepositoryModule', '**.DaggerBotComponent.**', '**.InMemoryRepository**', '**.MongoDBService**', '**.MongoDBRepository**']
 
             limit {
                 counter = 'LINE'
@@ -108,21 +108,6 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'BRANCH'
                 minimum = 0.8
-            }
-        }
-
-        rule {
-            element = 'CLASS'
-            excludes = ['**.controller.**', '**.Bot', '**.App', '**CommandModule', '**.listener.**', '**.RepositoryModule', '**.DaggerBotComponent.**', '**.InMemoryRepository**', '**.MongoDBService**', '**.MongoDBRepository**']
-
-            limit {
-                counter = 'LINE'
-                minimum = 0.4
-            }
-
-            limit {
-                counter = 'BRANCH'
-                minimum = 0.2
             }
         }
     }

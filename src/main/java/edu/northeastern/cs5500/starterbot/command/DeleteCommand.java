@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
 import edu.northeastern.cs5500.starterbot.model.DishObject;
 import edu.northeastern.cs5500.starterbot.model.ShoppingCart;
@@ -45,6 +46,7 @@ public class DeleteCommand
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /delete");
@@ -73,6 +75,7 @@ public class DeleteCommand
      *
      * @param event, SelectionMenuEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSelectionMenu(SelectionMenuEvent event) {
         String dishString = event.getInteraction().getValues().get(0);
@@ -87,6 +90,7 @@ public class DeleteCommand
      *
      * @param event, ButtonClickEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onButtonClick(ButtonClickEvent event) {
         User user = event.getUser();
@@ -138,20 +142,18 @@ public class DeleteCommand
             String dishName, ArrayList<DishObject> totalDishes, String restaurantName) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle(":shopping_cart: Shopping cart:");
-        eb.setDescription(
-                "**"
-                        + dishName
-                        + "** has been removed! Your cart at **"
-                        + restaurantName
-                        + "** include:");
+        String strForDescription =
+                String.format(
+                        "**%s** has been removed! Your cart at **%s** includes:",
+                        dishName, restaurantName);
+        eb.setDescription(strForDescription);
 
         Double totalPrice = 0.0;
         for (int i = 0; i < totalDishes.size(); i++) {
-            DishObject curDish = totalDishes.get(i);
-            String dish = curDish.getDish();
-            Double price = curDish.getPrice();
-            totalPrice += price;
-            eb.addField((i + 1) + ". " + dish + ":", "$" + price.toString(), false);
+            String strForDish = String.format("%d. %s:", i + 1, totalDishes.get(i).getDish());
+            String strForPrice = String.format("$%s", totalDishes.get(i).getPrice().toString());
+            eb.addField(strForDish, strForPrice, false);
+            totalPrice += totalDishes.get(i).getPrice();
         }
         eb.addField(":receipt: Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
 

@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.DiscordGuildController;
 import edu.northeastern.cs5500.starterbot.controller.GuildShoppingCartController;
 import edu.northeastern.cs5500.starterbot.controller.RestaurantController;
@@ -54,6 +55,7 @@ public class GroupOrderCommand
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /grouporder");
@@ -80,6 +82,7 @@ public class GroupOrderCommand
      *
      * @param event, ButtonClickEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onButtonClick(ButtonClickEvent event) {
         String guildId = event.getGuild().getId();
@@ -134,6 +137,7 @@ public class GroupOrderCommand
      *
      * @param event, SelectionMenuEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSelectionMenu(SelectionMenuEvent event) {
         String guildId = event.getGuild().getId();
@@ -219,24 +223,30 @@ public class GroupOrderCommand
     protected MessageEmbed buildReplyEmbed(ArrayList<DishUserPair> dishes, String restaurantName) {
         EmbedBuilder eb = new EmbedBuilder();
         DishUserPair dishUserPair = dishes.get(dishes.size() - 1);
+
         eb.setTitle(":shopping_cart: Guild shopping cart:");
-        eb.setDescription(
-                "**"
-                        + dishUserPair.getUsername()
-                        + "** has added **"
-                        + dishUserPair.getDish().getDish()
-                        + "** into the guild shopping cart at **"
-                        + restaurantName
-                        + "**");
+
+        String strForDescription =
+                String.format(
+                        "**%s** has added **%s** into the guild shopping cart at **%s**",
+                        dishUserPair.getUsername(),
+                        dishUserPair.getDish().getDish(),
+                        restaurantName);
+        eb.setDescription(strForDescription);
+
         Double totalPrice = 0.0;
+
         for (int i = 0; i < dishes.size(); i++) {
             DishUserPair curPair = dishes.get(i);
             String dish = curPair.getDish().getDish();
             Double price = curPair.getDish().getPrice();
             String username = curPair.getUsername();
             totalPrice += price;
-            eb.addField(
-                    (i + 1) + ". " + dish + ": $" + price.toString(), "add by " + username, false);
+
+            String strForDish = String.format("%d. %s: $%s", i + 1, dish, price.toString());
+            String strForPrice = String.format("add by %s", username);
+
+            eb.addField(strForDish, strForPrice, false);
         }
         eb.addField(":receipt: Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
 

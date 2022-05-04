@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
 import edu.northeastern.cs5500.starterbot.controller.UserController;
 import edu.northeastern.cs5500.starterbot.model.DishObject;
@@ -39,6 +40,7 @@ public class ShowCartCommand implements SlashCommandHandler {
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         // check user is start a new order or not
@@ -59,14 +61,11 @@ public class ShowCartCommand implements SlashCommandHandler {
     }
 
     /**
-     * Helper function that check orderedDishes is empty or not, if orderedDishes is empty return
-     * price $0.0 otherwise, orderedDishes is not empty return listing of dishes and price and total
-     * price
+     * Helper function that builds the reply Embed for /ShowCartCommand.
      *
      * @param restaurantName String the name of restaurants
      * @param orderedDishes ArrayList the dishes that users ordered
-     * @return return Your shopping cart is empty. Total:$0.0, when orderedDishes is empty.
-     *     Otherwise, return listing of dishes and price of dishes and total price of orders.
+     * @return return a MessageEmbed Object
      */
     protected MessageEmbed buildEB(String restaurantName, ArrayList<DishObject> orderedDishes) {
         EmbedBuilder eb = new EmbedBuilder();
@@ -83,10 +82,10 @@ public class ShowCartCommand implements SlashCommandHandler {
         // if orderedDishes is not empty return dish and price
         else {
             for (int i = 0; i < orderedDishes.size(); i++) {
-                eb.addField(
-                        (i + 1) + ". " + orderedDishes.get(i).getDish() + ":",
-                        "$" + orderedDishes.get(i).getPrice().toString(),
-                        false);
+                String strForDish = String.format("%d. %s:", i + 1, orderedDishes.get(i).getDish());
+                String strForPrice =
+                        String.format("$%s", orderedDishes.get(i).getPrice().toString());
+                eb.addField(strForDish, strForPrice, false);
                 totalPrice += orderedDishes.get(i).getPrice();
             }
             eb.addField(":receipt: Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);

@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.RestaurantController;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
 import edu.northeastern.cs5500.starterbot.model.DishObject;
@@ -47,6 +48,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /order");
@@ -74,6 +76,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
      *
      * @param event, SelectionMenuEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSelectionMenu(SelectionMenuEvent event) {
         User user = event.getUser();
@@ -92,6 +95,7 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
      *
      * @param event, ButtonClickEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onButtonClick(ButtonClickEvent event) {
         User user = event.getUser();
@@ -120,12 +124,13 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
         EmbedBuilder eb = new EmbedBuilder();
         DishObject newDish = totalDishes.get(totalDishes.size() - 1);
         eb.setTitle(":shopping_cart: Shopping cart:");
-        eb.setDescription(
-                "**"
-                        + newDish.getDish()
-                        + "** has been added! Your cart at **"
-                        + restaurantName
-                        + "** include:");
+
+        String strForDescription =
+                String.format(
+                        "**%s** has been added! Your cart at **%s** includes:",
+                        newDish.getDish(), restaurantName);
+        eb.setDescription(strForDescription);
+
         Double totalPrice = 0.0;
 
         for (int i = 0; i < totalDishes.size(); i++) {
@@ -133,13 +138,12 @@ public class OrderCommand implements SlashCommandHandler, ButtonClickHandler, Se
             String dish = curDish.getDish();
             Double price = curDish.getPrice();
             totalPrice += price;
-            eb.addField(
-                    (i + 1) + ". " + dish + ":", ":heavy_dollar_sign:" + price.toString(), false);
+
+            String strForDish = String.format("%d. %s:", i + 1, dish);
+            String strForPrice = String.format("$%s", price.toString());
+            eb.addField(strForDish, strForPrice, false);
         }
-        eb.addField(
-                ":receipt: Total:",
-                ":heavy_dollar_sign:" + Math.round(totalPrice * 100.0) / 100.0,
-                false);
+        eb.addField(":receipt: Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
 
         eb.setColor(Color.GREEN);
         return eb.build();

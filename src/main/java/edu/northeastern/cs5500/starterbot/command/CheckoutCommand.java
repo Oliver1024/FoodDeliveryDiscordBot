@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
 import edu.northeastern.cs5500.starterbot.controller.UserController;
 import edu.northeastern.cs5500.starterbot.model.DishObject;
@@ -40,6 +41,7 @@ public class CheckoutCommand implements SlashCommandHandler {
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /checkout");
@@ -69,15 +71,14 @@ public class CheckoutCommand implements SlashCommandHandler {
     protected MessageEmbed buildEB(String restaurantName, ArrayList<DishObject> orderedDishes) {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle(":grin: Thanks for ordering!");
-        eb.setDescription("Your order at **" + restaurantName + "** includes:");
+        eb.setDescription(String.format("Your order at **%s** includes:", restaurantName));
 
         Double totalPrice = 0.0;
 
         for (int i = 0; i < orderedDishes.size(); i++) {
-            eb.addField(
-                    (i + 1) + ". " + orderedDishes.get(i).getDish(),
-                    "$" + orderedDishes.get(i).getPrice().toString(),
-                    false);
+            String strForDish = String.format("%d. %s", i + 1, orderedDishes.get(i).getDish());
+            String strForPrice = String.format("$%s", orderedDishes.get(i).getPrice().toString());
+            eb.addField(strForDish, strForPrice, false);
             totalPrice += orderedDishes.get(i).getPrice();
         }
         eb.addField(":receipt: Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);

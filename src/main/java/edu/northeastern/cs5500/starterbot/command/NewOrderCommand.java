@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.RestaurantController;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
 import java.awt.Color;
@@ -46,6 +47,7 @@ public class NewOrderCommand
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /neworder");
@@ -73,6 +75,7 @@ public class NewOrderCommand
      *
      * @param event, SelectionMenuEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSelectionMenu(SelectionMenuEvent event) {
         User user = event.getUser();
@@ -88,6 +91,7 @@ public class NewOrderCommand
      *
      * @param event, ButtonClickEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onButtonClick(ButtonClickEvent event) {
         User user = event.getUser();

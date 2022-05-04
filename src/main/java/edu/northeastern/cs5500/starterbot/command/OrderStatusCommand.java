@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.UserController;
 import edu.northeastern.cs5500.starterbot.model.DishObject;
 import edu.northeastern.cs5500.starterbot.model.Order;
@@ -39,6 +40,7 @@ public class OrderStatusCommand implements SlashCommandHandler {
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /orderstatus");
@@ -61,12 +63,13 @@ public class OrderStatusCommand implements SlashCommandHandler {
             eb.setTitle("You don't have any undelivered orders");
         } else {
             for (Order order : undeliveredOrders) {
+                String orderStatus = buildOrderStatusString(order);
                 String name =
-                        "Your order at "
-                                + order.getRestaurantName()
-                                + " "
-                                + buildOrderStatusString(order);
+                        String.format(
+                                "Your order at %s %s", order.getRestaurantName(), orderStatus);
+                ;
                 String value = "Ordered dishes: " + buildDishesString(order.getOrderItems());
+
                 eb.addField(name, value, false);
             }
         }

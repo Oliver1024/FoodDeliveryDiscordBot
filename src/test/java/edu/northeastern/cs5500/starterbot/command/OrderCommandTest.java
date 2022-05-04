@@ -43,17 +43,17 @@ public class OrderCommandTest {
 
         String expectedTitle = ":shopping_cart: Shopping cart:";
         String expectedDescription =
-                "**dish2** has been added! Your cart at **restaurant1** include:";
+                "**dish2** has been added! Your cart at **restaurant1** includes:";
 
         assertEquals(expectedTitle, actual.getTitle());
         assertEquals(expectedDescription, actual.getDescription());
         assertEquals(3, actual.getFields().size());
 
         assertEquals("1. dish1:", actual.getFields().get(0).getName());
-        assertEquals(":heavy_dollar_sign:9.9", actual.getFields().get(0).getValue());
+        assertEquals("$9.9", actual.getFields().get(0).getValue());
 
         assertEquals("2. dish2:", actual.getFields().get(1).getName());
-        assertEquals(":heavy_dollar_sign:19.9", actual.getFields().get(1).getValue());
+        assertEquals("$19.9", actual.getFields().get(1).getValue());
     }
 
     @Test

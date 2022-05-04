@@ -13,7 +13,6 @@
 
 _________
 
-
 ## **Bot Description:**
 
 DashBot is a discord online food ordering bot for users to order foods from different restaurants. It provides several functions such as ordering food, recommending dishes from restaurants, checking order status, checking history orders, and ordering together with other discord members.
@@ -48,14 +47,18 @@ For Info Checking:
  - **`/last num_k restaurant_name`**: show last num_k numbers of history orders at the given restaurant
 
 _____
-**Code Coverage:**
 
-*For classes in controller:*
+**Build the Bot Locally:**
+
+    ./gradlew spotlessApply build
+
+**Run the Bot Locally:**
+ - replace line 33 in Bot.java file with your bot token.
+ - replace line 28 in /service/MongoDBService.java file with this MongoDB link (“mongodb+srv://DdAdimin:5500_orca@cluster0.shnoj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority”) or just use the default link in the file.
+_____
+
+**Rule for Code Coverage:**
 |line test | branch test |
 |--|--|
 | >= 80% | >= 80% |
-
-*For classes in command:*
-|line test | branch test |
-|--|--|
-| >= 40% | >= 20% |
+_____
