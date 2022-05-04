@@ -42,7 +42,7 @@ public class CheckoutCommandTest {
         String expectedTitle = ":grin: Thanks for ordering!";
         assertEquals(expectedTitle, eb.getTitle());
 
-        String expectedDescrption = "Your order at **" + "restaurant1" + "** includes:";
+        String expectedDescrption = "Your order at **restaurant1** includes:";
         assertEquals(expectedDescrption, eb.getDescription());
 
         assertTrue(eb.getFields().size() == 3);

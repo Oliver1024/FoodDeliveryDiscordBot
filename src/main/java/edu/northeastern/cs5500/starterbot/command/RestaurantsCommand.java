@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.RestaurantController;
 import java.util.ArrayList;
 import javax.inject.Inject;
@@ -42,6 +43,7 @@ public class RestaurantsCommand implements SlashCommandHandler {
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /restaurants");

@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.RestaurantController;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
 import edu.northeastern.cs5500.starterbot.model.DishObject;
@@ -44,6 +45,7 @@ public class MenuCommand implements SlashCommandHandler {
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /menu");
@@ -83,11 +85,10 @@ public class MenuCommand implements SlashCommandHandler {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle(":scroll: " + restaurantName + "'s menu: ");
 
-        for (int index = 0; index < resultMenu.size(); index++) {
-            eb.addField(
-                    index + 1 + ". " + resultMenu.get(index).getDish() + ": ",
-                    "$" + resultMenu.get(index).getPrice().toString(),
-                    true);
+        for (int i = 0; i < resultMenu.size(); i++) {
+            String strForDish = String.format("%d. %s:", i + 1, resultMenu.get(i).getDish());
+            String strForPrice = String.format("$%s", resultMenu.get(i).getPrice().toString());
+            eb.addField(strForDish, strForPrice, true);
         }
         eb.setColor(Color.BLUE);
         return eb.build();

@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.RestaurantController;
 import edu.northeastern.cs5500.starterbot.controller.UserController;
 import edu.northeastern.cs5500.starterbot.model.DishObject;
@@ -51,6 +52,7 @@ public class LastCommand implements SlashCommandHandler {
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /last");
@@ -67,6 +69,41 @@ public class LastCommand implements SlashCommandHandler {
             result = userController.getLastKNumsOrders(user.getId(), processedInput);
             event.replyEmbeds(buildReplyEmbed(result)).queue();
         }
+    }
+
+    /**
+     * Return MessageEmbed object with ArrayList of result.
+     *
+     * @param result the arrayList contains all order history
+     * @return MessageEmbed object
+     */
+    protected MessageEmbed buildReplyEmbed(ArrayList<Order> result) {
+        EmbedBuilder eb = new EmbedBuilder();
+        // check if the name of restaurant the user has order
+        if (result.size() == 0) {
+            eb.setTitle(
+                    "the name of restaurant you typed do not have any order before, you can type /restaurants to check other restaurants");
+        } else {
+            eb.setTitle(":page_with_curl: Your last " + result.size() + " orders:");
+
+            int index = 1;
+            for (int i = result.size() - 1; i >= 0; i--) {
+                Order curOrder = result.get(i);
+                String time = processTimeString(curOrder.getOrderTime());
+                String strForRestaurant =
+                        String.format(
+                                "%d. %s, :timer: %s", index, curOrder.getRestaurantName(), time);
+
+                eb.addField(
+                        strForRestaurant,
+                        ":stew: order dishes: "
+                                + buildOrderedDishesString(result.get(i).getOrderItems()),
+                        false);
+                index++;
+            }
+        }
+        eb.setColor(Color.BLUE);
+        return eb.build();
     }
 
     /**
@@ -153,37 +190,5 @@ public class LastCommand implements SlashCommandHandler {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formaDatetime = date.format(formatter);
         return formaDatetime;
-    }
-
-    /**
-     * Return MessageEmbed object with ArrayList of result.
-     *
-     * @param result the arrayList contains all order history
-     * @return MessageEmbed object
-     */
-    protected MessageEmbed buildReplyEmbed(ArrayList<Order> result) {
-        EmbedBuilder eb = new EmbedBuilder();
-        // check if the name of restaurant the user has order
-        if (result.size() == 0) {
-            eb.setTitle(
-                    "the name of restaurant you typed do not have any order before, you can type /restaurants to check other restaurants");
-        } else {
-            eb.setTitle(":page_with_curl: Your last " + result.size() + " orders:");
-            int index = 1;
-            for (int i = result.size() - 1; i >= 0; i--) {
-                eb.addField(
-                        index
-                                + ". "
-                                + result.get(i).getRestaurantName()
-                                + ", :timer: "
-                                + processTimeString(result.get(i).getOrderTime()),
-                        ":stew: order dishes: "
-                                + buildOrderedDishesString(result.get(i).getOrderItems()),
-                        false);
-                index++;
-            }
-        }
-        eb.setColor(Color.BLUE);
-        return eb.build();
     }
 }

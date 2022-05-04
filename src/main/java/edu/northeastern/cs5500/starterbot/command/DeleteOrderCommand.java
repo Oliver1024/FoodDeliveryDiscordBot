@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -37,13 +38,15 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /deleteorder");
         User user = event.getUser();
         String restaurantName = shoppingCartController.getRestaurantName(user.getId());
         if (restaurantName == null) {
-            event.reply("Your don't have an order, please type '/neworder' to start a new order")
+            event.reply(
+                            ":exclamation: Your don't have an order, please type '/neworder' to start a new order")
                     .setEphemeral(true)
                     .queue();
             return;
@@ -56,6 +59,7 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
      *
      * @param event, ButtonClickEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onButtonClick(ButtonClickEvent event) {
         String choice = event.getButton().getLabel();
@@ -100,9 +104,9 @@ public class DeleteOrderCommand implements SlashCommandHandler, ButtonClickHandl
                                 Button.danger(this.getName() + ":no", "No")));
         messageBuilder =
                 messageBuilder.setContent(
-                        "Do you really want to delete the current shopping cart at **"
-                                + restaurantName
-                                + "**?");
+                        String.format(
+                                "Do you really want to delete the current shopping cart at **%s**?",
+                                restaurantName));
 
         return messageBuilder.build();
     }

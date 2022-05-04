@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.RestaurantController;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
 import edu.northeastern.cs5500.starterbot.model.Restaurant;
@@ -46,6 +47,7 @@ public class InfoCommand implements SlashCommandHandler {
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /info");

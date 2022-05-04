@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.DiscordGuildController;
 import edu.northeastern.cs5500.starterbot.controller.GuildShoppingCartController;
 import edu.northeastern.cs5500.starterbot.model.DishUserPair;
@@ -39,6 +40,7 @@ public class GroupCheckoutCommand implements SlashCommandHandler {
      *
      * @param event, SlashCommandEvent
      */
+    @ExcludeFromJacocoGeneratedReport
     @Override
     public void onSlashCommand(SlashCommandEvent event) {
         log.info("event: /groupcheckout");
@@ -78,15 +80,16 @@ public class GroupCheckoutCommand implements SlashCommandHandler {
         Double totalPrice = 0.0;
 
         for (int i = 0; i < orderedDishes.size(); i++) {
-            eb.addField(
-                    (i + 1)
-                            + ". "
-                            + orderedDishes.get(i).getDish().getDish()
-                            + ": $"
-                            + orderedDishes.get(i).getDish().getPrice().toString(),
-                    " add by " + orderedDishes.get(i).getUsername(),
-                    false);
-            totalPrice += orderedDishes.get(i).getDish().getPrice();
+            DishUserPair curPair = orderedDishes.get(i);
+            String dish = curPair.getDish().getDish();
+            Double price = curPair.getDish().getPrice();
+            String username = curPair.getUsername();
+            totalPrice += price;
+
+            String strForDish = String.format("%d. %s: $%s", i + 1, dish, price.toString());
+            String strForPrice = String.format("add by %s", username);
+
+            eb.addField(strForDish, strForPrice, false);
         }
         eb.addField(":receipt: Total:", "$" + Math.round(totalPrice * 100.0) / 100.0, false);
         eb.setColor(Color.PINK);
