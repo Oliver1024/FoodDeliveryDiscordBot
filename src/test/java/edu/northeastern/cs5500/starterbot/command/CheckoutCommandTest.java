@@ -1,9 +1,11 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.northeastern.cs5500.starterbot.model.DishObject;
+import edu.northeastern.cs5500.starterbot.model.ShoppingCart;
 import java.util.ArrayList;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,20 @@ public class CheckoutCommandTest {
     void testGetCommandData() {
         String expectedDescrption = "press enter to checkout";
         assertEquals(expectedDescrption, checkoutCommand.getCommandData().getDescription());
+    }
+
+    @Test
+    void testMessageForNoOrderOrNoDishes() {
+        ShoppingCart shoppingCart1 = null;
+        String expected1 =
+                ":slight_frown: You don't have an ongoing order! Please use '/neworder' to start an order";
+        assertThat(checkoutCommand.messageForNoOrderOrNoDishes(shoppingCart1)).isEqualTo(expected1);
+
+        ShoppingCart shoppingCart2 = new ShoppingCart();
+        shoppingCart2.setOrderItems(new ArrayList<DishObject>());
+        String expected2 =
+                ":slight_frown: You don't have any dishes in your shopping cart! Please use '/order' to order dishes";
+        assertThat(checkoutCommand.messageForNoOrderOrNoDishes(shoppingCart2)).isEqualTo(expected2);
     }
 
     @Test

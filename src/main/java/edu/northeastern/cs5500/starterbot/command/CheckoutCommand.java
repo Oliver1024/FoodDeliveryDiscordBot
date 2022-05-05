@@ -1,5 +1,6 @@
 package edu.northeastern.cs5500.starterbot.command;
 
+import com.mongodb.lang.Nullable;
 import edu.northeastern.cs5500.starterbot.annotation.ExcludeFromJacocoGeneratedReport;
 import edu.northeastern.cs5500.starterbot.controller.ShoppingCartController;
 import edu.northeastern.cs5500.starterbot.controller.UserController;
@@ -48,17 +49,32 @@ public class CheckoutCommand implements SlashCommandHandler {
         User user = event.getUser();
         ShoppingCart shoppingCart = shoppingCartController.getShoppingCart(user.getId());
 
-        if (shoppingCart == null) {
-            event.reply(
-                            ":slight_frown: You don't have an ongoing order! Please use '/neworder' to start an order")
-                    .setEphemeral(true)
-                    .queue();
+        String message = messageForNoOrderOrNoDishes(shoppingCart);
+        if (message != null) {
+            event.reply(message).setEphemeral(true).queue();
             return;
         }
         MessageEmbed eb = buildEB(shoppingCart.getRestaurantName(), shoppingCart.getOrderItems());
         userController.addOrder(shoppingCart);
         shoppingCartController.deleteCart(user.getId());
         event.replyEmbeds(eb).queue();
+    }
+
+    /**
+     * Helper function which builds the reply message when the user doesn't have a shopping cart or
+     * the shopping cart is empty.
+     *
+     * @param shoppingCart the user's shopping cart
+     * @return String
+     */
+    @Nullable
+    protected String messageForNoOrderOrNoDishes(ShoppingCart shoppingCart) {
+        if (shoppingCart == null) {
+            return ":slight_frown: You don't have an ongoing order! Please use '/neworder' to start an order";
+        } else if (shoppingCart.getOrderItems().size() == 0) {
+            return ":slight_frown: You don't have any dishes in your shopping cart! Please use '/order' to order dishes";
+        }
+        return null;
     }
 
     /**
