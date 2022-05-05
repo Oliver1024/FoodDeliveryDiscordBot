@@ -7,6 +7,7 @@ import edu.northeastern.cs5500.starterbot.repository.GenericRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 public class DiscordGuildController {
@@ -49,6 +50,7 @@ public class DiscordGuildController {
      * @param guildShoppingCart the target shopping cart that user need to add
      * @return a new guild order.
      */
+    @Nonnull
     private GuildOrder createNewGuildOrder(GuildShoppingCart guildShoppingCart) {
         LocalDateTime curTime = LocalDateTime.now();
         GuildOrder newGuildOrder = new GuildOrder();
@@ -65,6 +67,7 @@ public class DiscordGuildController {
      * @param GuildId the target the groupId that user need to add
      * @return a new discord guild
      */
+    @Nonnull
     private DiscordGuild createGuild(String guildId) {
         DiscordGuild guild = new DiscordGuild();
         guild.setGuildId(guildId);
