@@ -9,7 +9,7 @@
 
 **Bot Design Documentation:**    [link](https://docs.google.com/document/d/1bOdwu1bHmWbQuZFGMOB2F5kCT1mINrbw/edit)
 
-**Group Shared Folder:** [link](https://drive.google.com/drive/folders/1Jjf900uefhaXrXVbYwHZmeIfLFwHTrH5)
+**Group Shared Folder:** 
 
 _________
 
