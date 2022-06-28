@@ -7,7 +7,7 @@
 
 **Bot Invitation:**   [link](https://discord.com/oauth2/authorize?client_id=942640033666580550&permissions=526133808128&scope=bot%20applications.commands)
 
-**Bot Design Documentation:**    [link]([https://docs.google.com/document/d/1bOdwu1bHmWbQuZFGMOB2F5kCT1mINrbw/edit](https://docs.google.com/document/d/e/2PACX-1vRmSM6Zwpvhf6-cFOGq6yM5neOgHiTCt_SRroHH-5ZN7CMsjqlab4MNBAbZ2O9Kpg/pub))
+**Bot Design Documentation:**    [link](https://docs.google.com/document/d/e/2PACX-1vRmSM6Zwpvhf6-cFOGq6yM5neOgHiTCt_SRroHH-5ZN7CMsjqlab4MNBAbZ2O9Kpg/pub)
 
 
 _________
